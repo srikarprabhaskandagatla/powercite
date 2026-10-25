@@ -1,0 +1,47 @@
+{
+  "utility_by_town": {
+    "source": "https://s3.us-east-1.amazonaws.com/download.massgis.digital.mass.gov/shapefiles/state/pubutil.zip",
+    "brockton": "national_grid",
+    "fall_river": "national_grid",
+    "new_bedford": "eversource_south_shore",
+    "worcester": "national_grid",
+    "lowell": "national_grid"
+  },
+  "pages": [
+    {
+      "id": "ngrid_ma_rates",
+      "kind": "tariff",
+      "utility": "national_grid",
+      "url": "https://www.nationalgridus.com/media/pdfs/billing-payments/electric-rates/ma/cm4394_maweb.pdf",
+      "title": "National Grid, Massachusetts Electric Company, Summary of Rates 2025"
+    },
+    {
+      "id": "eversource_south_shore_rates",
+      "kind": "tariff",
+      "utility": "eversource_south_shore",
+      "url": "https://www.eversource.com/content/docs/default-source/rates-tariffs/ema-south-shore-rates.pdf",
+      "title": "Eversource, NSTAR Electric, South Shore service area electric rates"
+    },
+    {
+      "id": "eversource_greater_boston_rates",
+      "kind": "tariff",
+      "utility": "eversource_greater_boston",
+      "url": "https://www.eversource.com/content/docs/default-source/rates-tariffs/ema-greater-boston-rates.pdf",
+      "title": "Eversource, NSTAR Electric, Greater Boston service area electric rates"
+    },
+    {
+      "id": "ngrid_connectedsolutions",
+      "kind": "program",
+      "utility": "national_grid",
+      "url": "https://www.nationalgridus.com/ma-business/energy-saving-programs/connectedsolutions",
+      "title": "National Grid ConnectedSolutions incentives for business customers"
+    },
+    {
+      "id": "masssave_connectedsolutions_batteries",
+      "kind": "program",
+      "utility": "all",
+      "url": "https://www.masssave.com/saving/residential-rebates/connectedsolutions-batteries",
+      "title": "Mass Save ConnectedSolutions battery program for home customers"
+    }
+  ]
+}
