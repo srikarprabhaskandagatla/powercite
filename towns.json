@@ -1,7 +1,0 @@
-[
-  {"id": "brockton", "name": "Brockton", "osm": "Brockton, Massachusetts, USA", "massgis_town_id": 44, "massgis_zip": "L3_SHP_M044_BROCKTON"},
-  {"id": "fall_river", "name": "Fall River", "osm": "Fall River, Massachusetts, USA", "massgis_town_id": 95, "massgis_zip": "L3_SHP_M095_FALLRIVER"},
-  {"id": "new_bedford", "name": "New Bedford", "osm": "New Bedford, Massachusetts, USA", "massgis_town_id": 201, "massgis_zip": "L3_SHP_M201_NEWBEDFORD"},
-  {"id": "worcester", "name": "Worcester", "osm": "Worcester, Massachusetts, USA", "massgis_town_id": 348, "massgis_zip": "L3_SHP_M348_WORCESTER"},
-  {"id": "lowell", "name": "Lowell", "osm": "Lowell, Massachusetts, USA", "massgis_town_id": 160, "massgis_zip": "L3_SHP_M160_LOWELL"}
-]
