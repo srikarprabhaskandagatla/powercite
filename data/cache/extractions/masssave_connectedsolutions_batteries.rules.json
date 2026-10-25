@@ -1,0 +1,14 @@
+{
+  "page_id": "masssave_connectedsolutions_batteries",
+  "url": "https://www.masssave.com/saving/residential-rebates/connectedsolutions-batteries",
+  "method": "rules",
+  "attempts": 1,
+  "extracted_at": "2026-10-25T01:41:40+00:00",
+  "utility": "all",
+  "effective_date": null,
+  "effective_quote": null,
+  "demand_charges": [],
+  "incentives": [],
+  "rejected": [],
+  "utility_named": "all"
+}
