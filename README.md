@@ -29,6 +29,8 @@
   <a href="#files">Files</a>
   •
   <a href="#scope-and-honesty">Scope</a>
+  •
+  <a href="#license">License</a>
 </p>
 
 ---
@@ -107,3 +109,7 @@ Then open port 8765 in a browser.
 ## Scope and honesty
 
 This is a learning project built in a few days. Peak kW is estimated from floor area, not measured. Grid capacity is a distance to the nearest substation, not real feeder data. The demo ran without an API key, which means tariffs came from rules, pitch lines from templates, and RAG shows evidence without a written answer. The LLM paths are built and guarded but not yet run live. The rate class rule is the same for every utility, which overstates savings in New Bedford. A real tool would need interval meter data, hosting capacity maps and per utility rate rules.
+
+## License
+
+The code is under the [MIT License](LICENSE). The data keeps its own terms. OpenStreetMap data is under the Open Database License, with credit to OpenStreetMap contributors. MassGIS parcels are public data from the Commonwealth of Massachusetts. Tariff pages belong to their utilities and are cached only for reference.
