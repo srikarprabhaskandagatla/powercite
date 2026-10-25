@@ -5,3 +5,4 @@ __pycache__/
 *.pyc
 .ipynb_checkpoints/
 /src/extract_power.py
+src/cache/
