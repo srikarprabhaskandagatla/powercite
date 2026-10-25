@@ -1,0 +1,17 @@
+pandas
+numpy
+geopandas
+shapely
+pyproj
+osmnx
+requests
+python-dotenv
+pydantic
+trafilatura
+pymupdf
+tavily-python
+anthropic
+rapidfuzz
+faiss-cpu
+sentence-transformers
+osmium
