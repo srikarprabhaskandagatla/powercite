@@ -7,15 +7,17 @@
 <h4 align="center">Rank business sites for behind the meter batteries in five Massachusetts towns, with every number traced to its source.</h4>
 
 <p align="center">
-  <img src="//img.shields.io/badge/-Python-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python">
-  <img src="//img.shields.io/badge/-GeoPandas-139C5A?style=flat-square&logo=pandas&logoColor=white" alt="GeoPandas">
-  <img src="//img.shields.io/badge/-FAISS-0467DF?style=flat-square&logo=meta&logoColor=white" alt="FAISS">
-  <img src="//img.shields.io/badge/-Sentence%20Transformers-FFD21E?style=flat-square&logo=huggingface&logoColor=black" alt="Sentence Transformers">
-  <img src="//img.shields.io/badge/-Claude-D97757?style=flat-square&logo=anthropic&logoColor=white" alt="Claude">
-  <img src="//img.shields.io/badge/-Leaflet-199900?style=flat-square&logo=leaflet&logoColor=white" alt="Leaflet">
+  <img src="https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python">
+  <img src="https://img.shields.io/badge/-GeoPandas-139C5A?style=flat-square&logo=pandas&logoColor=white" alt="GeoPandas">
+  <img src="https://img.shields.io/badge/-FAISS-0467DF?style=flat-square&logo=meta&logoColor=white" alt="FAISS">
+  <img src="https://img.shields.io/badge/-Sentence%20Transformers-FFD21E?style=flat-square&logo=huggingface&logoColor=black" alt="Sentence Transformers">
+  <img src="https://img.shields.io/badge/-Claude-D97757?style=flat-square&logo=anthropic&logoColor=white" alt="Claude">
+  <img src="https://img.shields.io/badge/-Leaflet-199900?style=flat-square&logo=leaflet&logoColor=white" alt="Leaflet">
 </p>
 
 <p align="center">
+  <a href="https://srikarprabhaskandagatla.github.io/powercite/">Live Demo</a>
+  •
   <a href="#why-this-matters">Why It Matters</a>
   •
   <a href="#pipeline">Pipeline</a>
@@ -31,9 +33,9 @@
 
 ---
 
-PowerCite joins tax parcels, OpenStreetMap buildings and the power grid into 6,311 business sites across Brockton, Fall River, New Bedford, Worcester and Lowell. It reads the utility tariff pages to find the real demand charge, then scores, ranks and explains every site. Embeddings match business names to parcels and find lookalike sites. A small RAG answers tariff questions with citations. The results are shown on a static map page in `docs/`.
+PowerCite joins tax parcels, OpenStreetMap buildings and the power grid into 6,311 business sites across Brockton, Fall River, New Bedford, Worcester and Lowell. It reads the utility tariff pages to find the real demand charge, then scores, ranks and explains every site. Embeddings match business names to parcels and find lookalike sites. A small RAG answers tariff questions with citations. The results are shown on a static map page in `docs/`, live at [srikarprabhaskandagatla.github.io/powercite](https://srikarprabhaskandagatla.github.io/powercite/).
 
-The full design, with the reasons behind each choice, is in [DESIGN.md](DESIGN.md).
+The full design, with the reasons behind each choice, is in [docs/DESIGN.md](docs/DESIGN.md).
 
 ## Why this matters
 
@@ -76,7 +78,7 @@ cp .env.example .env
 
 Keys in `.env` are optional. Without them, every step uses its cache or rules path.
 
-The raw data download and the full run order are in [DESIGN.md](DESIGN.md#commands). To view the page with the data already in the repo
+The raw data download and the full run order are in the [design doc](docs/DESIGN.md#6-commands). To view the page with the data already in the repo
 
 ```bash
 python -m http.server 8765 --directory docs
@@ -88,9 +90,9 @@ Then open port 8765 in a browser.
 
 | Path | Purpose |
 |---|---|
-| `towns.json` | the five towns and their MassGIS ids |
-| `sources.json` | tariff and program pages to fetch |
-| `questions.json` | RAG evaluation questions |
+| `inputs/towns.json` | the five towns and their MassGIS ids |
+| `inputs/sources.json` | tariff and program pages to fetch |
+| `inputs/questions.json` | RAG evaluation questions |
 | `src/config/` | paths and model assumptions |
 | `src/data_sources/` | download parcels, buildings and grid |
 | `src/features/` | join buildings to lots, build sites |
@@ -100,7 +102,7 @@ Then open port 8765 in a browser.
 | `src/scoring/` | score, rank and explain |
 | `src/web/` | export JSON for the page |
 | `data/processed/` | small output tables |
-| `docs/` | the map page |
+| `docs/` | the map page and the design doc |
 
 ## Scope and honesty
 
