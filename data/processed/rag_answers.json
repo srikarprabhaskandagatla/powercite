@@ -1,0 +1,478 @@
+[
+  {
+    "id": "q01",
+    "question": "What is the National Grid G-2 demand charge per kW in Massachusetts?",
+    "retrieval_hit": true,
+    "answer": null,
+    "citations": [],
+    "method": "evidence only",
+    "evidence": [
+      {
+        "page_id": "ngrid_ma_rates",
+        "page_no": 3,
+        "header": "National Grid, Massachusetts Electric Company, Summary of Rates 2025, page 3",
+        "url": "https://www.nationalgridus.com/media/pdfs/billing-payments/electric-rates/ma/cm4394_maweb.pdf",
+        "score": 0.8629999756813049,
+        "text": "designed for medium business customers with usage of more than 10,000 kWh per month and maximum demand of 200 kW. It is available for all purposes and contains a variety of special clauses and conditions. Rates for G-2 Delivery Service Customer Charge $45.00 per month Distribution Charge Demand $15.06 per kW Energy 1.460¢ per kWh Transition Charge (0.036)¢ per kWh Transmission Charge 3.734¢ per"
+      },
+      {
+        "page_id": "ngrid_ma_rates",
+        "page_no": 3,
+        "header": "National Grid, Massachusetts Electric Company, Summary of Rates 2025, page 3",
+        "url": "https://www.nationalgridus.com/media/pdfs/billing-payments/electric-rates/ma/cm4394_maweb.pdf",
+        "score": 0.8209999799728394,
+        "text": "per kWh Distributed Solar Charge 0.612¢ per kWh Net Metering Recovery Chg 1.295¢ per kWh Electric Vehicle Prog. Charge 0.130¢ per kWh Renewable Energy Charge 0.050¢ per kWh G-2 – General Service Demand Rate – The G-2 delivery service rate is designed for medium business customers with usage of more than 10,000 kWh per month and maximum demand of 200 kW. It is available for all purposes and"
+      },
+      {
+        "page_id": "ngrid_ma_rates",
+        "page_no": 3,
+        "header": "National Grid, Massachusetts Electric Company, Summary of Rates 2025, page 3",
+        "url": "https://www.nationalgridus.com/media/pdfs/billing-payments/electric-rates/ma/cm4394_maweb.pdf",
+        "score": 0.8090000152587891,
+        "text": "fined later in this document. Rates for G-3 Delivery Service Customer Charge $350.00 per month Distribution Charge Demand $10.48 per kW Energy On-Peak 1.216¢ per kWh Energy Off-Peak 0.946¢ per kWh Transition Charge (0.037)¢ per kWh Transmission Charge* 3.832¢ per kWh Energy Efficiency Charge (0.309)¢ per kWh Distributed Solar Charge 0.275¢ per kWh Net Metering Chg 0.606¢ per kWh Electric Vehicle"
+      }
+    ]
+  },
+  {
+    "id": "q02",
+    "question": "What is the National Grid G-3 demand charge per kW?",
+    "retrieval_hit": true,
+    "answer": null,
+    "citations": [],
+    "method": "evidence only",
+    "evidence": [
+      {
+        "page_id": "ngrid_ma_rates",
+        "page_no": 3,
+        "header": "National Grid, Massachusetts Electric Company, Summary of Rates 2025, page 3",
+        "url": "https://www.nationalgridus.com/media/pdfs/billing-payments/electric-rates/ma/cm4394_maweb.pdf",
+        "score": 0.8529999852180481,
+        "text": "fined later in this document. Rates for G-3 Delivery Service Customer Charge $350.00 per month Distribution Charge Demand $10.48 per kW Energy On-Peak 1.216¢ per kWh Energy Off-Peak 0.946¢ per kWh Transition Charge (0.037)¢ per kWh Transmission Charge* 3.832¢ per kWh Energy Efficiency Charge (0.309)¢ per kWh Distributed Solar Charge 0.275¢ per kWh Net Metering Chg 0.606¢ per kWh Electric Vehicle"
+      },
+      {
+        "page_id": "ngrid_ma_rates",
+        "page_no": 3,
+        "header": "National Grid, Massachusetts Electric Company, Summary of Rates 2025, page 3",
+        "url": "https://www.nationalgridus.com/media/pdfs/billing-payments/electric-rates/ma/cm4394_maweb.pdf",
+        "score": 0.8410000205039978,
+        "text": " for any customer who has a 12-month average monthly demand of 200 kW or greater for three consecutive months. This rate contains a variety of special clauses and conditions, including different rates during “Peak” and “Off-Peak” hours, which are defined later in this document. Rates for G-3 Delivery Service Customer Charge $350.00 per month Distribution Charge Demand $10.48 per kW Energy On-Peak"
+      },
+      {
+        "page_id": "eversource_greater_boston_rates",
+        "page_no": 4,
+        "header": "Eversource, NSTAR Electric, Greater Boston service area electric rates, page 4",
+        "url": "https://www.eversource.com/content/docs/default-source/rates-tariffs/ema-greater-boston-rates.pdf",
+        "score": 0.824999988079071,
+        "text": "G-3 – Large General Service (G-3 – M.D.P.U. No. 13) • Customer Charge (per month): $370.00 • Peak Distribution Energy Charge (per kWh): $0.01085 • Off-Peak Distribution Energy Charge (per kWh): $0.01085 • Distribution Demand Charge (per kW): $15.97 • Transition Energy Charge (per kWh): -$0.00077 • Transmission Demand Charge (per kW): $14.08 • Transmission Coincident Peak Demand Charge (per"
+      }
+    ]
+  },
+  {
+    "id": "q03",
+    "question": "Which business customers must take the National Grid G-3 rate?",
+    "retrieval_hit": true,
+    "answer": null,
+    "citations": [],
+    "method": "evidence only",
+    "evidence": [
+      {
+        "page_id": "ngrid_ma_rates",
+        "page_no": 3,
+        "header": "National Grid, Massachusetts Electric Company, Summary of Rates 2025, page 3",
+        "url": "https://www.nationalgridus.com/media/pdfs/billing-payments/electric-rates/ma/cm4394_maweb.pdf",
+        "score": 0.7419999837875366,
+        "text": "fined later in this document. Rates for G-3 Delivery Service Customer Charge $350.00 per month Distribution Charge Demand $10.48 per kW Energy On-Peak 1.216¢ per kWh Energy Off-Peak 0.946¢ per kWh Transition Charge (0.037)¢ per kWh Transmission Charge* 3.832¢ per kWh Energy Efficiency Charge (0.309)¢ per kWh Distributed Solar Charge 0.275¢ per kWh Net Metering Chg 0.606¢ per kWh Electric Vehicle"
+      },
+      {
+        "page_id": "ngrid_ma_rates",
+        "page_no": 3,
+        "header": "National Grid, Massachusetts Electric Company, Summary of Rates 2025, page 3",
+        "url": "https://www.nationalgridus.com/media/pdfs/billing-payments/electric-rates/ma/cm4394_maweb.pdf",
+        "score": 0.7310000061988831,
+        "text": "ount: (LF > 15%) Please see each tariff for more information. Special Clauses and Conditions in Commercial and Industrial Rates Customers on Rates G-2 and G-3 are eligible to receive a discount for High Voltage Metering and Transformer Ownership (High Voltage Delivery) if the customer meets the criteria for receipt of the discounts. There are also other terms not summarized above. Please see each"
+      },
+      {
+        "page_id": "ngrid_ma_rates",
+        "page_no": 3,
+        "header": "National Grid, Massachusetts Electric Company, Summary of Rates 2025, page 3",
+        "url": "https://www.nationalgridus.com/media/pdfs/billing-payments/electric-rates/ma/cm4394_maweb.pdf",
+        "score": 0.7269999980926514,
+        "text": " for any customer who has a 12-month average monthly demand of 200 kW or greater for three consecutive months. This rate contains a variety of special clauses and conditions, including different rates during “Peak” and “Off-Peak” hours, which are defined later in this document. Rates for G-3 Delivery Service Customer Charge $350.00 per month Distribution Charge Demand $10.48 per kW Energy On-Peak"
+      }
+    ]
+  },
+  {
+    "id": "q04",
+    "question": "What is the monthly customer charge on National Grid G-2?",
+    "retrieval_hit": true,
+    "answer": null,
+    "citations": [],
+    "method": "evidence only",
+    "evidence": [
+      {
+        "page_id": "ngrid_ma_rates",
+        "page_no": 3,
+        "header": "National Grid, Massachusetts Electric Company, Summary of Rates 2025, page 3",
+        "url": "https://www.nationalgridus.com/media/pdfs/billing-payments/electric-rates/ma/cm4394_maweb.pdf",
+        "score": 0.8339999914169312,
+        "text": "designed for medium business customers with usage of more than 10,000 kWh per month and maximum demand of 200 kW. It is available for all purposes and contains a variety of special clauses and conditions. Rates for G-2 Delivery Service Customer Charge $45.00 per month Distribution Charge Demand $15.06 per kW Energy 1.460¢ per kWh Transition Charge (0.036)¢ per kWh Transmission Charge 3.734¢ per"
+      },
+      {
+        "page_id": "eversource_south_shore_rates",
+        "page_no": 3,
+        "header": "Eversource, NSTAR Electric, South Shore service area electric rates, page 3",
+        "url": "https://www.eversource.com/content/docs/default-source/rates-tariffs/ema-south-shore-rates.pdf",
+        "score": 0.8240000009536743,
+        "text": "G-2 – Medium General Service (G-2 – M.D.P.U. No. 30) • Customer Charge (per month): $370.00 • Distribution Demand Charge (per kVA): $3.72 • Distribution Energy Charge (per kWh): $0.03331 • Transition Energy Charge (per kWh): -$0.00077 • Transmission Demand Charge (per kVA): $13.74 • Revenue Decoupling Charge (per kWh): -$0.00025 • Distributed Solar Charge (per kWh): $0.00332 • Net Metering"
+      },
+      {
+        "page_id": "ngrid_ma_rates",
+        "page_no": 3,
+        "header": "National Grid, Massachusetts Electric Company, Summary of Rates 2025, page 3",
+        "url": "https://www.nationalgridus.com/media/pdfs/billing-payments/electric-rates/ma/cm4394_maweb.pdf",
+        "score": 0.7950000166893005,
+        "text": "per kWh Distributed Solar Charge 0.612¢ per kWh Net Metering Recovery Chg 1.295¢ per kWh Electric Vehicle Prog. Charge 0.130¢ per kWh Renewable Energy Charge 0.050¢ per kWh G-2 – General Service Demand Rate – The G-2 delivery service rate is designed for medium business customers with usage of more than 10,000 kWh per month and maximum demand of 200 kW. It is available for all purposes and"
+      }
+    ]
+  },
+  {
+    "id": "q05",
+    "question": "What are the Eversource South Shore G-2 demand charges?",
+    "retrieval_hit": true,
+    "answer": null,
+    "citations": [],
+    "method": "evidence only",
+    "evidence": [
+      {
+        "page_id": "eversource_south_shore_rates",
+        "page_no": 3,
+        "header": "Eversource, NSTAR Electric, South Shore service area electric rates, page 3",
+        "url": "https://www.eversource.com/content/docs/default-source/rates-tariffs/ema-south-shore-rates.pdf",
+        "score": 0.7829999923706055,
+        "text": "G-2 – Medium General Service (G-2 – M.D.P.U. No. 30) • Customer Charge (per month): $370.00 • Distribution Demand Charge (per kVA): $3.72 • Distribution Energy Charge (per kWh): $0.03331 • Transition Energy Charge (per kWh): -$0.00077 • Transmission Demand Charge (per kVA): $13.74 • Revenue Decoupling Charge (per kWh): -$0.00025 • Distributed Solar Charge (per kWh): $0.00332 • Net Metering"
+      },
+      {
+        "page_id": "eversource_south_shore_rates",
+        "page_no": 4,
+        "header": "Eversource, NSTAR Electric, South Shore service area electric rates, page 4",
+        "url": "https://www.eversource.com/content/docs/default-source/rates-tariffs/ema-south-shore-rates.pdf",
+        "score": 0.7549999952316284,
+        "text": "EV-2 – General Service Optional Electric Vehicle Charging (EV-2 – M.D.P.U. No. 79) EV-2A: 0% <= Load Factor <= 5% • Customer Charge (per month): $225.04 • Distribution Demand Charge (per kW): $0.00 • Distribution Energy Charge (per kWh): $0.05454 • Transmission Energy Charge (per kWh): $0.03651 • Transition Charge (per kWh): -$0.00077 • Revenue Decoupling Charge (per kWh): -$0.00025 • Distributed"
+      },
+      {
+        "page_id": "eversource_south_shore_rates",
+        "page_no": 3,
+        "header": "Eversource, NSTAR Electric, South Shore service area electric rates, page 3",
+        "url": "https://www.eversource.com/content/docs/default-source/rates-tariffs/ema-south-shore-rates.pdf",
+        "score": 0.7419999837875366,
+        "text": "r (G-4 – M.D.P.U. No. 32)(CLOSED) • Customer Charge (per month): $15.00 • Distribution Demand Charge (per kW): $2.59 • Distribution Energy Charge (per kWh): $0.05035 • Transition Energy Charge (per kWh): -$0.00077 • Transmission Demand Charge (per kW): $7.35 • Revenue Decoupling Charge (per kWh): -$0.00034 • Distributed Solar Charge (per kWh): $0.00450 • Net Metering Recovery Surcharge (per kWh):"
+      }
+    ]
+  },
+  {
+    "id": "q06",
+    "question": "Does Eversource South Shore bill G-2 demand per kW or per kVA?",
+    "retrieval_hit": true,
+    "answer": null,
+    "citations": [],
+    "method": "evidence only",
+    "evidence": [
+      {
+        "page_id": "eversource_south_shore_rates",
+        "page_no": 3,
+        "header": "Eversource, NSTAR Electric, South Shore service area electric rates, page 3",
+        "url": "https://www.eversource.com/content/docs/default-source/rates-tariffs/ema-south-shore-rates.pdf",
+        "score": 0.824999988079071,
+        "text": "G-2 – Medium General Service (G-2 – M.D.P.U. No. 30) • Customer Charge (per month): $370.00 • Distribution Demand Charge (per kVA): $3.72 • Distribution Energy Charge (per kWh): $0.03331 • Transition Energy Charge (per kWh): -$0.00077 • Transmission Demand Charge (per kVA): $13.74 • Revenue Decoupling Charge (per kWh): -$0.00025 • Distributed Solar Charge (per kWh): $0.00332 • Net Metering"
+      },
+      {
+        "page_id": "eversource_south_shore_rates",
+        "page_no": 3,
+        "header": "Eversource, NSTAR Electric, South Shore service area electric rates, page 3",
+        "url": "https://www.eversource.com/content/docs/default-source/rates-tariffs/ema-south-shore-rates.pdf",
+        "score": 0.7839999794960022,
+        "text": "mission Demand Charge (per kVA): $13.74 • Revenue Decoupling Charge (per kWh): -$0.00025 • Distributed Solar Charge (per kWh): $0.00332 • Net Metering Recovery Surcharge (per kWh): $0.00355 • Energy Efficiency Charge (per kWh): $0.01389 • Renewable Energy Charge (per kWh): $0.00050 • Electric Vehicle Program Charge (per kWh): $0.00058 • Electric Sector Modernization Plan (per kWh) $0.00001 •"
+      },
+      {
+        "page_id": "eversource_south_shore_rates",
+        "page_no": 3,
+        "header": "Eversource, NSTAR Electric, South Shore service area electric rates, page 3",
+        "url": "https://www.eversource.com/content/docs/default-source/rates-tariffs/ema-south-shore-rates.pdf",
+        "score": 0.777999997138977,
+        "text": "per kWh): $0.01389 • Renewable Energy Charge (per kWh): $0.00050 • Electric Vehicle Program Charge (per kWh): $0.00035 • Electric Sector Modernization Plan (per kWh) $0.00000 • Provisional System Planning Factor (per kWh) $0.00002 G-4 – General Power (G-4 – M.D.P.U. No. 32)(CLOSED) • Customer Charge (per month): $15.00 • Distribution Demand Charge (per kW): $2.59 • Distribution Energy Charge (per"
+      }
+    ]
+  },
+  {
+    "id": "q07",
+    "question": "What is the optional coincident peak demand charge on Eversource South Shore G-3?",
+    "retrieval_hit": true,
+    "answer": null,
+    "citations": [],
+    "method": "evidence only",
+    "evidence": [
+      {
+        "page_id": "eversource_south_shore_rates",
+        "page_no": 3,
+        "header": "Eversource, NSTAR Electric, South Shore service area electric rates, page 3",
+        "url": "https://www.eversource.com/content/docs/default-source/rates-tariffs/ema-south-shore-rates.pdf",
+        "score": 0.7879999876022339,
+        "text": "Transmission Coincident Peak Demand Charge (per kW)(Optional): $22.39 • Revenue Decoupling Charge (per kWh): -$0.00015 • Distributed Solar Charge (per kWh): $0.00204 • Net Metering Recovery Surcharge (per kWh): $0.00219 • Energy Efficiency Charge (per kWh): $0.01389 • Renewable Energy Charge (per kWh): $0.00050 • Electric Vehicle Program Charge (per kWh): $0.00035 • Electric Sector Modernization"
+      },
+      {
+        "page_id": "eversource_greater_boston_rates",
+        "page_no": 4,
+        "header": "Eversource, NSTAR Electric, Greater Boston service area electric rates, page 4",
+        "url": "https://www.eversource.com/content/docs/default-source/rates-tariffs/ema-greater-boston-rates.pdf",
+        "score": 0.7770000100135803,
+        "text": "G-3 – Large General Service (G-3 – M.D.P.U. No. 13) • Customer Charge (per month): $370.00 • Peak Distribution Energy Charge (per kWh): $0.01085 • Off-Peak Distribution Energy Charge (per kWh): $0.01085 • Distribution Demand Charge (per kW): $15.97 • Transition Energy Charge (per kWh): -$0.00077 • Transmission Demand Charge (per kW): $14.08 • Transmission Coincident Peak Demand Charge (per"
+      },
+      {
+        "page_id": "eversource_south_shore_rates",
+        "page_no": 3,
+        "header": "Eversource, NSTAR Electric, South Shore service area electric rates, page 3",
+        "url": "https://www.eversource.com/content/docs/default-source/rates-tariffs/ema-south-shore-rates.pdf",
+        "score": 0.7739999890327454,
+        "text": "n Plan (per kWh) $0.00001 • Provisional System Planning Factor (per kWh) $0.00006 G-7 – Optional General Time of Use (G-7 – M.D.P.U. No. 35)(CLOSED) • Customer Charge (per month): $20.00 • Distribution Demand Charge (per kW): $4.71 • Distribution Peak Load Energy Charge (per kWh): $0.06293 • Distribution Low Load Energy Charge (per kWh): $0.05323 • Transition Energy Charge (per kWh): -$0.00077 •"
+      }
+    ]
+  },
+  {
+    "id": "q08",
+    "question": "When do the Eversource South Shore rates take effect?",
+    "retrieval_hit": true,
+    "answer": null,
+    "citations": [],
+    "method": "evidence only",
+    "evidence": [
+      {
+        "page_id": "eversource_south_shore_rates",
+        "page_no": 1,
+        "header": "Eversource, NSTAR Electric, South Shore service area electric rates, page 1",
+        "url": "https://www.eversource.com/content/docs/default-source/rates-tariffs/ema-south-shore-rates.pdf",
+        "score": 0.7720000147819519,
+        "text": "Wh) $0.00001 • Provisional System Planning Factor (per kWh) $0.00008 2026 Summary of Eastern Massachusetts Electric Rates for South Shore Service Area Rates Effective: September 1, 2026 The following rates are available to our customers and have been approved by the Massachusetts Department of Public Utilities. In addition to the Delivery Service Charges, to calculate your total bill you will"
+      },
+      {
+        "page_id": "eversource_south_shore_rates",
+        "page_no": 3,
+        "header": "Eversource, NSTAR Electric, South Shore service area electric rates, page 3",
+        "url": "https://www.eversource.com/content/docs/default-source/rates-tariffs/ema-south-shore-rates.pdf",
+        "score": 0.7599999904632568,
+        "text": "r general power purposes only at existing service locations to Customers in the South Shore, Cape Cod & Martha’s Vineyard service area who were taking service under this rate schedule as of February 8, 1980. This rate is available only at existing service locations to Customers in the South Shore, Cape Cod & Martha’s Vineyard service area who were taking service as of February 8, 1980 under an"
+      },
+      {
+        "page_id": "eversource_south_shore_rates",
+        "page_no": 3,
+        "header": "Eversource, NSTAR Electric, South Shore service area electric rates, page 3",
+        "url": "https://www.eversource.com/content/docs/default-source/rates-tariffs/ema-south-shore-rates.pdf",
+        "score": 0.7400000095367432,
+        "text": "g service locations to Customers in the South Shore, Cape Cod & Martha’s Vineyard service area who were taking service as of February 8, 1980 under an all electric school rate schedule or under a special contract for all electric school service. This rate is for customers with a load that is less than 100 kW. Eastern Daylight Time, Peak Load is from 9 a.m. to 6 p.m., Monday through Friday. During"
+      }
+    ]
+  },
+  {
+    "id": "q09",
+    "question": "What is the Eversource Greater Boston G-2 distribution demand charge?",
+    "retrieval_hit": false,
+    "answer": null,
+    "citations": [],
+    "method": "evidence only",
+    "evidence": [
+      {
+        "page_id": "eversource_greater_boston_rates",
+        "page_no": 5,
+        "header": "Eversource, NSTAR Electric, Greater Boston service area electric rates, page 5",
+        "url": "https://www.eversource.com/content/docs/default-source/rates-tariffs/ema-greater-boston-rates.pdf",
+        "score": 0.7459999918937683,
+        "text": "EV-2 – General Service Optional Electric Vehicle Charging (EV-2 – M.D.P.U. No. 79) EV-2A: 0% <= Load Factor <= 5% • Customer Charge (per month): $225.04 • Distribution Demand Charge (per kW): $0.00 • Distribution Energy Charge (per kWh): $0.05454 • Transmission Energy Charge (per kWh): $0.03651 • Transition Charge (per kWh): -$0.00077 • Revenue Decoupling Charge (per kWh): -$0.00025 • Distributed"
+      },
+      {
+        "page_id": "eversource_south_shore_rates",
+        "page_no": 3,
+        "header": "Eversource, NSTAR Electric, South Shore service area electric rates, page 3",
+        "url": "https://www.eversource.com/content/docs/default-source/rates-tariffs/ema-south-shore-rates.pdf",
+        "score": 0.7429999709129333,
+        "text": "G-2 – Medium General Service (G-2 – M.D.P.U. No. 30) • Customer Charge (per month): $370.00 • Distribution Demand Charge (per kVA): $3.72 • Distribution Energy Charge (per kWh): $0.03331 • Transition Energy Charge (per kWh): -$0.00077 • Transmission Demand Charge (per kVA): $13.74 • Revenue Decoupling Charge (per kWh): -$0.00025 • Distributed Solar Charge (per kWh): $0.00332 • Net Metering"
+      },
+      {
+        "page_id": "eversource_greater_boston_rates",
+        "page_no": 4,
+        "header": "Eversource, NSTAR Electric, Greater Boston service area electric rates, page 4",
+        "url": "https://www.eversource.com/content/docs/default-source/rates-tariffs/ema-greater-boston-rates.pdf",
+        "score": 0.7419999837875366,
+        "text": "G-3 – Large General Service (G-3 – M.D.P.U. No. 13) • Customer Charge (per month): $370.00 • Peak Distribution Energy Charge (per kWh): $0.01085 • Off-Peak Distribution Energy Charge (per kWh): $0.01085 • Distribution Demand Charge (per kW): $15.97 • Transition Energy Charge (per kWh): -$0.00077 • Transmission Demand Charge (per kW): $14.08 • Transmission Coincident Peak Demand Charge (per"
+      }
+    ]
+  },
+  {
+    "id": "q10",
+    "question": "How much does ConnectedSolutions pay a business battery on Daily Dispatch?",
+    "retrieval_hit": true,
+    "answer": null,
+    "citations": [],
+    "method": "evidence only",
+    "evidence": [
+      {
+        "page_id": "ngrid_connectedsolutions",
+        "page_no": 1,
+        "header": "National Grid ConnectedSolutions incentives for business customers, page 1",
+        "url": "https://www.nationalgridus.com/ma-business/energy-saving-programs/connectedsolutions",
+        "score": 0.800000011920929,
+        "text": "ted Dispatch | Daily Dispatch | Daily Dispatch (Battery)* | Smart Thermostats | Small Scale Batteries | | Typical Events per summer (Jun – Sept) | 2–8 events | 30–60 events | 30–60 events | ~15 events | 30–60 events | | Event duration | 3 hr | 2–3 hr | 2–3 hr | 3 hr | 2–3 hr | | Incentive | $45/kW | $200/kW | $200/kW | $50 at enrollment $200 annually | $275/kW | | Ideal Customers | Great for"
+      },
+      {
+        "page_id": "ngrid_connectedsolutions",
+        "page_no": 1,
+        "header": "National Grid ConnectedSolutions incentives for business customers, page 1",
+        "url": "https://www.nationalgridus.com/ma-business/energy-saving-programs/connectedsolutions",
+        "score": 0.7749999761581421,
+        "text": "en the day before an event takes place. Battery incentives are available up to 150% of your site’s peak load. Yes – incentives vary by performance and location. Higher incentives are offered in ConnectedSolutions Plus areas. More Information Program Materials for ConnectedSolutions for Commercial / Industrial Customers Application For ConnectedSolutions For Commercial / Industrial Customers More"
+      },
+      {
+        "page_id": "masssave_connectedsolutions_batteries",
+        "page_no": 1,
+        "header": "Mass Save ConnectedSolutions battery program for home customers, page 1",
+        "url": "https://www.masssave.com/saving/residential-rebates/connectedsolutions-batteries",
+        "score": 0.7599999904632568,
+        "text": "ts use battery storage systems to be prepared for power outages. Through ConnectedSolutions, residents receive incentives for lowering and/or shifting electricity usage during times of peak demand (like hotter days during the summer). Residents will receive $275 per kilowatt (kW) for a battery’s average contribution during summer events. Discover additional ways to electrify your home and lower"
+      }
+    ]
+  },
+  {
+    "id": "q11",
+    "question": "How much does Mass Save pay a home battery per kW?",
+    "retrieval_hit": true,
+    "answer": null,
+    "citations": [],
+    "method": "evidence only",
+    "evidence": [
+      {
+        "page_id": "masssave_connectedsolutions_batteries",
+        "page_no": 1,
+        "header": "Mass Save ConnectedSolutions battery program for home customers, page 1",
+        "url": "https://www.masssave.com/saving/residential-rebates/connectedsolutions-batteries",
+        "score": 0.847000002861023,
+        "text": "s between June 1 and September 30, between the hours of 3:00 p.m. and 8:00 p.m. - Receive Incentives Your Mass Save Sponsor will pay $275 per kilowatt (kW) for your battery’s average contribution during summer events. For a typical battery capable of a 5-kW continuous contribution during these events, customers could receive up to $1,375 per year of participation. There are environmental"
+      },
+      {
+        "page_id": "masssave_connectedsolutions_batteries",
+        "page_no": 1,
+        "header": "Mass Save ConnectedSolutions battery program for home customers, page 1",
+        "url": "https://www.masssave.com/saving/residential-rebates/connectedsolutions-batteries",
+        "score": 0.7990000247955322,
+        "text": "lifying inverters include: The Sponsors of Mass Save offer 0% Financing HEAT Loans to make energy efficiency upgrades more affordable to Massachusetts residents. Through this loan, you could qualify for a loan up to $25,000 toward qualified home improvements. Batteries are eligible for up to $25,000 in financing. Not Sure Where to Start? Start your home energy efficiency journey with a no-cost"
+      },
+      {
+        "page_id": "masssave_connectedsolutions_batteries",
+        "page_no": 1,
+        "header": "Mass Save ConnectedSolutions battery program for home customers, page 1",
+        "url": "https://www.masssave.com/saving/residential-rebates/connectedsolutions-batteries",
+        "score": 0.7960000038146973,
+        "text": "your battery during times of peak electricity demand. Your Mass Save Sponsor will automatically send a signal to your system no more than 60 times per summer, with each event lasting a maximum of three hours. Summer events will occur on non-holidays between June 1 and September 30, between the hours of 3:00 p.m. and 8:00 p.m. - Receive Incentives Your Mass Save Sponsor will pay $275 per kilowatt"
+      }
+    ]
+  },
+  {
+    "id": "q12",
+    "question": "How many battery events per summer can ConnectedSolutions call, and how long is each?",
+    "retrieval_hit": true,
+    "answer": null,
+    "citations": [],
+    "method": "evidence only",
+    "evidence": [
+      {
+        "page_id": "ngrid_connectedsolutions",
+        "page_no": 1,
+        "header": "National Grid ConnectedSolutions incentives for business customers, page 1",
+        "url": "https://www.nationalgridus.com/ma-business/energy-saving-programs/connectedsolutions",
+        "score": 0.7609999775886536,
+        "text": "ted Dispatch | Daily Dispatch | Daily Dispatch (Battery)* | Smart Thermostats | Small Scale Batteries | | Typical Events per summer (Jun – Sept) | 2–8 events | 30–60 events | 30–60 events | ~15 events | 30–60 events | | Event duration | 3 hr | 2–3 hr | 2–3 hr | 3 hr | 2–3 hr | | Incentive | $45/kW | $200/kW | $200/kW | $50 at enrollment $200 annually | $275/kW | | Ideal Customers | Great for"
+      },
+      {
+        "page_id": "masssave_connectedsolutions_batteries",
+        "page_no": 1,
+        "header": "Mass Save ConnectedSolutions battery program for home customers, page 1",
+        "url": "https://www.masssave.com/saving/residential-rebates/connectedsolutions-batteries",
+        "score": 0.7440000176429749,
+        "text": "ts use battery storage systems to be prepared for power outages. Through ConnectedSolutions, residents receive incentives for lowering and/or shifting electricity usage during times of peak demand (like hotter days during the summer). Residents will receive $275 per kilowatt (kW) for a battery’s average contribution during summer events. Discover additional ways to electrify your home and lower"
+      },
+      {
+        "page_id": "masssave_connectedsolutions_batteries",
+        "page_no": 1,
+        "header": "Mass Save ConnectedSolutions battery program for home customers, page 1",
+        "url": "https://www.masssave.com/saving/residential-rebates/connectedsolutions-batteries",
+        "score": 0.7360000014305115,
+        "text": "your battery during times of peak electricity demand. Your Mass Save Sponsor will automatically send a signal to your system no more than 60 times per summer, with each event lasting a maximum of three hours. Summer events will occur on non-holidays between June 1 and September 30, between the hours of 3:00 p.m. and 8:00 p.m. - Receive Incentives Your Mass Save Sponsor will pay $275 per kilowatt"
+      }
+    ]
+  },
+  {
+    "id": "q13",
+    "question": "At what hours do summer ConnectedSolutions battery events happen?",
+    "retrieval_hit": true,
+    "answer": null,
+    "citations": [],
+    "method": "evidence only",
+    "evidence": [
+      {
+        "page_id": "masssave_connectedsolutions_batteries",
+        "page_no": 1,
+        "header": "Mass Save ConnectedSolutions battery program for home customers, page 1",
+        "url": "https://www.masssave.com/saving/residential-rebates/connectedsolutions-batteries",
+        "score": 0.7360000014305115,
+        "text": "ts use battery storage systems to be prepared for power outages. Through ConnectedSolutions, residents receive incentives for lowering and/or shifting electricity usage during times of peak demand (like hotter days during the summer). Residents will receive $275 per kilowatt (kW) for a battery’s average contribution during summer events. Discover additional ways to electrify your home and lower"
+      },
+      {
+        "page_id": "ngrid_connectedsolutions",
+        "page_no": 1,
+        "header": "National Grid ConnectedSolutions incentives for business customers, page 1",
+        "url": "https://www.nationalgridus.com/ma-business/energy-saving-programs/connectedsolutions",
+        "score": 0.7239999771118164,
+        "text": "ted Dispatch | Daily Dispatch | Daily Dispatch (Battery)* | Smart Thermostats | Small Scale Batteries | | Typical Events per summer (Jun – Sept) | 2–8 events | 30–60 events | 30–60 events | ~15 events | 30–60 events | | Event duration | 3 hr | 2–3 hr | 2–3 hr | 3 hr | 2–3 hr | | Incentive | $45/kW | $200/kW | $200/kW | $50 at enrollment $200 annually | $275/kW | | Ideal Customers | Great for"
+      },
+      {
+        "page_id": "masssave_connectedsolutions_batteries",
+        "page_no": 1,
+        "header": "Mass Save ConnectedSolutions battery program for home customers, page 1",
+        "url": "https://www.masssave.com/saving/residential-rebates/connectedsolutions-batteries",
+        "score": 0.7179999947547913,
+        "text": "your battery during times of peak electricity demand. Your Mass Save Sponsor will automatically send a signal to your system no more than 60 times per summer, with each event lasting a maximum of three hours. Summer events will occur on non-holidays between June 1 and September 30, between the hours of 3:00 p.m. and 8:00 p.m. - Receive Incentives Your Mass Save Sponsor will pay $275 per kilowatt"
+      }
+    ]
+  },
+  {
+    "id": "q14",
+    "question": "How large can a battery be for the residential ConnectedSolutions program?",
+    "retrieval_hit": true,
+    "answer": null,
+    "citations": [],
+    "method": "evidence only",
+    "evidence": [
+      {
+        "page_id": "masssave_connectedsolutions_batteries",
+        "page_no": 1,
+        "header": "Mass Save ConnectedSolutions battery program for home customers, page 1",
+        "url": "https://www.masssave.com/saving/residential-rebates/connectedsolutions-batteries",
+        "score": 0.8050000071525574,
+        "text": "ts use battery storage systems to be prepared for power outages. Through ConnectedSolutions, residents receive incentives for lowering and/or shifting electricity usage during times of peak demand (like hotter days during the summer). Residents will receive $275 per kilowatt (kW) for a battery’s average contribution during summer events. Discover additional ways to electrify your home and lower"
+      },
+      {
+        "page_id": "masssave_connectedsolutions_batteries",
+        "page_no": 1,
+        "header": "Mass Save ConnectedSolutions battery program for home customers, page 1",
+        "url": "https://www.masssave.com/saving/residential-rebates/connectedsolutions-batteries",
+        "score": 0.7960000038146973,
+        "text": " Details. - Must be an existing customer of Cape Light Compact, Eversource, or National Grid - Must be one of the qualifying systems listed below with an inverter size less than 50kW. Systems 50 kW or larger should enroll through the Commercial ConnectedSolutions Program - Battery systems must either be installed with a new solar panel system, added to an existing solar system, or installed as a"
+      },
+      {
+        "page_id": "masssave_connectedsolutions_batteries",
+        "page_no": 1,
+        "header": "Mass Save ConnectedSolutions battery program for home customers, page 1",
+        "url": "https://www.masssave.com/saving/residential-rebates/connectedsolutions-batteries",
+        "score": 0.7770000100135803,
+        "text": "improvements. Batteries are eligible for up to $25,000 in financing. Not Sure Where to Start? Start your home energy efficiency journey with a no-cost virtual or in-person home energy assessment. An Energy Specialist will seek out inefficiencies, recommend upgrades, and help you access available rebates and incentives. Case Study: All-Electric Home in Acton When setting out to build a new home,"
+      }
+    ]
+  }
+]
