@@ -1,0 +1,33 @@
+{
+  "embedding_only": {
+    "predicted": 614,
+    "precision": 0.463,
+    "recall": 0.227
+  },
+  "fuzzy_address_only": {
+    "predicted": 960,
+    "precision": 0.659,
+    "recall": 0.506
+  },
+  "text_combined": {
+    "predicted": 729,
+    "precision": 0.931,
+    "recall": 0.543
+  },
+  "text_plus_location": {
+    "predicted": 723,
+    "precision": 0.957,
+    "recall": 0.554
+  },
+  "final": {
+    "predicted": 723,
+    "precision": 0.957,
+    "recall": 0.554
+  },
+  "truth_positives": 1250,
+  "llm_judge": {
+    "asked": 80,
+    "same": 0,
+    "no key": 80
+  }
+}
