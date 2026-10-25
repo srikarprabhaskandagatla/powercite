@@ -1,0 +1,22 @@
+[
+  {
+    "id": "brockton",
+    "name": "Brockton"
+  },
+  {
+    "id": "fall_river",
+    "name": "Fall River"
+  },
+  {
+    "id": "new_bedford",
+    "name": "New Bedford"
+  },
+  {
+    "id": "worcester",
+    "name": "Worcester"
+  },
+  {
+    "id": "lowell",
+    "name": "Lowell"
+  }
+]

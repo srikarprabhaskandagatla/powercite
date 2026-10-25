@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PowerCite Site Ranker</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+:root {
+  color-scheme: light;
+  --surface-0: #f4f3f0;
+  --surface-1: #fcfcfb;
+  --surface-2: #efeee9;
+  --border: #dddcd6;
+  --text-primary: #0b0b0b;
+  --text-secondary: #52514e;
+  --text-muted: #7a7974;
+  --accent: #2a78d6;
+  --ring: #fcfcfb;
+  --boundary: #52514e;
+  --substation: #52514e;
+  --bar: #2a78d6;
+  --bin-1: #86b6ef;
+  --bin-2: #5598e7;
+  --bin-3: #2a78d6;
+  --bin-4: #1c5cab;
+  --bin-5: #104281;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --surface-0: #121211;
+    --surface-1: #1a1a19;
+    --surface-2: #242422;
+    --border: #383835;
+    --text-primary: #f0efec;
+    --text-secondary: #c3c2b7;
+    --text-muted: #8f8e86;
+    --accent: #6da7ec;
+    --ring: #1a1a19;
+    --boundary: #c3c2b7;
+    --substation: #c3c2b7;
+    --bar: #3987e5;
+    --bin-1: #184f95;
+    --bin-2: #256abf;
+    --bin-3: #3987e5;
+    --bin-4: #6da7ec;
+    --bin-5: #b7d3f6;
+  }
+  :root:not([data-theme="light"]) .base-tiles { filter: invert(1) hue-rotate(180deg) brightness(0.9) contrast(0.85); }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --surface-0: #121211;
+  --surface-1: #1a1a19;
+  --surface-2: #242422;
+  --border: #383835;
+  --text-primary: #f0efec;
+  --text-secondary: #c3c2b7;
+  --text-muted: #8f8e86;
+  --accent: #6da7ec;
+  --ring: #1a1a19;
+  --boundary: #c3c2b7;
+  --substation: #c3c2b7;
+  --bar: #3987e5;
+  --bin-1: #184f95;
+  --bin-2: #256abf;
+  --bin-3: #3987e5;
+  --bin-4: #6da7ec;
+  --bin-5: #b7d3f6;
+}
+:root[data-theme="dark"] .base-tiles { filter: invert(1) hue-rotate(180deg) brightness(0.9) contrast(0.85); }
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--surface-0);
+  color: var(--text-primary);
+  font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+.wrap { max-width: 1280px; margin: 0 auto; padding: 0 16px; }
+header { padding: 16px 0 8px; display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: end; justify-content: space-between; }
+h1 { font-size: 22px; margin: 0; }
+h2 { font-size: 16px; margin: 0 0 8px; }
+.sub { color: var(--text-secondary); margin: 2px 0 0; }
+select, button {
+  font: inherit;
+  color: var(--text-primary);
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 10px;
+}
+button { cursor: pointer; }
+button:hover, select:hover { border-color: var(--text-muted); }
+button:focus-visible, select:focus-visible, input:focus-visible, tr:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.panel { background: var(--surface-1); border: 1px solid var(--border); border-radius: 8px; padding: 14px; }
+.controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px 18px; align-items: end; margin-bottom: 16px; }
+.slider label { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-secondary); }
+.slider label b { color: var(--text-primary); font-weight: 600; font-variant-numeric: tabular-nums; }
+.slider input { width: 100%; accent-color: var(--accent); }
+.layout { display: grid; grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr); gap: 16px; margin-bottom: 16px; }
+.map-wrap { position: relative; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: var(--surface-1); }
+#map { height: min(68vh, 620px); background: var(--surface-1); }
+.legend {
+  position: absolute; right: 10px; bottom: 22px; z-index: 500;
+  background: var(--surface-1); border: 1px solid var(--border); border-radius: 8px;
+  padding: 8px 10px; font-size: 12px; color: var(--text-secondary); min-width: 160px;
+}
+.legend h3 { font-size: 12px; margin: 0 0 4px; color: var(--text-primary); }
+.legend-row { display: flex; align-items: center; gap: 8px; margin: 2px 0; font-variant-numeric: tabular-nums; }
+.swatch { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--ring); box-shadow: 0 0 0 1px var(--border); }
+.sq { width: 10px; height: 10px; border: 2px solid var(--substation); }
+.legend .note { margin-top: 4px; color: var(--text-muted); }
+.side { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.empty { color: var(--text-muted); margin: 0; }
+.card h3 { margin: 0; font-size: 17px; }
+.card .addr { color: var(--text-secondary); margin: 2px 0 10px; }
+.kv { display: grid; grid-template-columns: auto 1fr; gap: 3px 12px; margin: 0 0 10px; font-size: 14px; }
+.kv dt { color: var(--text-muted); }
+.kv dd { margin: 0; font-variant-numeric: tabular-nums; }
+.pitch { margin: 8px 0 0; }
+.factors { margin: 10px 0 0; }
+.factor { display: grid; grid-template-columns: 110px 1fr 40px; gap: 8px; align-items: center; font-size: 13px; color: var(--text-secondary); margin: 3px 0; }
+.factor .track { height: 8px; background: var(--surface-2); border-radius: 4px; overflow: hidden; }
+.factor .fill { height: 100%; background: var(--bar); border-radius: 0 4px 4px 0; }
+.factor span:last-child { text-align: right; font-variant-numeric: tabular-nums; color: var(--text-primary); }
+.badge { display: inline-block; font-size: 12px; padding: 1px 8px; border: 1px solid var(--border); border-radius: 999px; color: var(--text-secondary); }
+.look { list-style: none; margin: 0; padding: 0; }
+.look li { margin: 0 0 6px; }
+.look button { width: 100%; text-align: left; padding: 8px 10px; }
+.look .meta { display: block; color: var(--text-muted); font-size: 12px; }
+.table-wrap { max-height: 460px; overflow: auto; border: 1px solid var(--border); border-radius: 8px; background: var(--surface-1); }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+thead th { position: sticky; top: 0; background: var(--surface-2); text-align: left; font-weight: 600; padding: 8px 10px; color: var(--text-secondary); }
+td { padding: 7px 10px; border-top: 1px solid var(--border); vertical-align: top; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+tbody tr { cursor: pointer; }
+tbody tr:hover { background: var(--surface-2); }
+tbody tr.selected { background: var(--surface-2); box-shadow: inset 3px 0 0 var(--accent); }
+.move { color: var(--text-muted); font-size: 12px; }
+.row-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin: 0 0 8px; flex-wrap: wrap; }
+.qa { display: grid; grid-template-columns: minmax(240px, 1fr) minmax(0, 2fr); gap: 16px; margin: 16px 0 32px; }
+.qlist { list-style: none; margin: 0; padding: 0; }
+.qlist li { margin: 0 0 6px; }
+.qlist button { width: 100%; text-align: left; }
+.qlist button[aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 3px 0 0 var(--accent); }
+.evidence { border-left: 3px solid var(--border); padding: 2px 0 2px 10px; margin: 10px 0; }
+.evidence .head { font-size: 13px; color: var(--text-secondary); margin: 0 0 4px; }
+.evidence p { margin: 0; font-size: 14px; }
+.notice { color: var(--text-secondary); background: var(--surface-2); border-radius: 6px; padding: 8px 10px; margin: 0 0 10px; font-size: 14px; }
+mark { background: transparent; color: var(--text-primary); font-weight: 700; text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; }
+.tariff dd { white-space: normal; }
+a { color: var(--accent); }
+.status { color: var(--text-muted); font-size: 13px; margin: 6px 0 0; }
+.leaflet-tooltip { background: var(--surface-1); color: var(--text-primary); border: 1px solid var(--border); box-shadow: none; }
+@media (max-width: 900px) {
+  .layout, .qa { grid-template-columns: 1fr; }
+  #map { height: 58vh; }
+}
+@media (max-width: 600px) {
+  .legend { position: static; margin: 8px; }
+  .hide-sm { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>PowerCite</h1>
+      <p class="sub" id="subtitle">Battery site ranking for Massachusetts towns</p>
+    </div>
+    <label>Town
+      <select id="town-select" aria-label="Choose a town"></select>
+    </label>
+  </header>
+
+  <section class="panel controls" aria-label="Score weights">
+    <div id="sliders" class="controls" style="margin:0;grid-column:1/-1"></div>
+    <div style="grid-column:1/-1;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+      <button id="reset">Reset weights</button>
+      <span class="status" id="weight-note"></span>
+    </div>
+  </section>
+
+  <div class="layout">
+    <div>
+      <div class="map-wrap">
+        <div id="map" role="region" aria-label="Map of ranked battery sites"></div>
+        <div class="legend" id="legend"></div>
+      </div>
+      <p class="status" id="status">Loading</p>
+    </div>
+    <aside class="side">
+      <section class="panel card" id="card" aria-live="polite">
+        <p class="empty">Click a dot or a table row to see a site.</p>
+      </section>
+      <section class="panel">
+        <h2>Lookalike sites</h2>
+        <div id="lookalikes"><p class="empty">Pick a site to see the 5 most similar sites in all towns.</p></div>
+      </section>
+    </aside>
+  </div>
+
+  <section>
+    <div class="row-head">
+      <h2 style="margin:0">Ranked sites</h2>
+      <button id="toggle-rows">Show all 300</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="num">Rank</th>
+            <th>Site</th>
+            <th class="hide-sm">Use</th>
+            <th class="num">Score</th>
+            <th class="num">Value a month</th>
+            <th class="hide-sm">Confidence</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="qa">
+    <div class="panel">
+      <h2>Tariff questions</h2>
+      <ul class="qlist" id="questions"></ul>
+    </div>
+    <div class="panel">
+      <div id="tariff" class="tariff"></div>
+      <div id="answer"><p class="empty">Pick a question to see its answer and the source text.</p></div>
+    </div>
+  </section>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const FACTORS = [
+  ["savings", "Savings"],
+  ["spikiness", "Load spikiness"],
+  ["space", "Open space"],
+  ["grid", "Near substation"],
+  ["confidence", "Data confidence"]
+];
+const UTILITY_NAMES = {
+  national_grid: "National Grid",
+  eversource_south_shore: "Eversource South Shore",
+  eversource_greater_boston: "Eversource Greater Boston"
+};
+const BINS = 5;
+const TABLE_ROWS = 50;
+
+const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+const money = v => "$" + Math.round(v).toLocaleString("en-US");
+const num = v => Math.round(v).toLocaleString("en-US");
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const $ = id => document.getElementById(id);
+
+const state = { towns: [], data: null, weights: {}, defaults: {}, selected: null, markers: new Map(), showAll: false, rag: [], question: null };
+
+const map = L.map("map", { preferCanvas: true });
+L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  maxZoom: 19,
+  className: "base-tiles",
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+let townLayer = L.layerGroup().addTo(map);
+
+function quantileEdges(values) {
+  const sorted = [...values].sort((a, b) => a - b);
+  return Array.from({ length: BINS - 1 }, (_, i) => sorted[Math.floor((i + 1) * sorted.length / BINS)]);
+}
+
+function binOf(score, edges) {
+  return edges.filter(e => score >= e).length;
+}
+
+function buildSliders() {
+  $("sliders").innerHTML = FACTORS.map(([key, label]) => `
+    <div class="slider">
+      <label for="w-${key}">${label}<b id="wv-${key}"></b></label>
+      <input type="range" id="w-${key}" min="0" max="100" step="5" value="${Math.round(state.weights[key] * 100)}">
+    </div>`).join("");
+  FACTORS.forEach(([key]) => {
+    $(`w-${key}`).addEventListener("input", e => {
+      state.weights[key] = Number(e.target.value) / 100;
+      rescore();
+    });
+  });
+}
+
+function weightShares() {
+  const total = FACTORS.reduce((t, [k]) => t + state.weights[k], 0);
+  return Object.fromEntries(FACTORS.map(([k]) => [k, total > 0 ? state.weights[k] / total : 0]));
+}
+
+function rescore() {
+  const shares = weightShares();
+  FACTORS.forEach(([k]) => { $(`wv-${k}`).textContent = `${Math.round(shares[k] * 100)}%`; });
+  const changed = FACTORS.some(([k]) => Math.abs(state.weights[k] - state.defaults[k]) > 1e-9);
+  $("weight-note").textContent = changed
+    ? "Custom weights. Ranks and colors are live. Arrows in the table show the move from the default rank."
+    : "Default weights from the pipeline.";
+
+  const sites = state.data.sites;
+  sites.forEach(s => {
+    s.live = 100 * FACTORS.reduce((t, [k]) => t + shares[k] * s[`f_${k}`], 0);
+  });
+  [...sites].sort((a, b) => b.live - a.live).forEach((s, i) => { s.liveRank = i + 1; });
+
+  const edges = quantileEdges(sites.map(s => s.live));
+  sites.forEach(s => { s.bin = binOf(s.live, edges); });
+  [...sites].sort((a, b) => a.live - b.live).forEach(s => {
+    const m = state.markers.get(s.id);
+    m.setStyle(markerStyle(s));
+    m.bringToFront();
+  });
+  const sel = state.markers.get(state.selected);
+  if (sel) sel.bringToFront();
+  drawLegend(edges, sites.map(s => s.live));
+  renderTable();
+  if (state.selected) renderCard(state.data.sites.find(s => s.id === state.selected));
+}
+
+function markerStyle(s) {
+  const selected = s.id === state.selected;
+  return {
+    color: selected ? css("--text-primary") : css("--ring"),
+    weight: selected ? 3 : 2,
+    fillColor: css(`--bin-${s.bin + 1}`),
+    fillOpacity: 1
+  };
+}
+
+function drawLegend(edges, scores) {
+  const bounds = [Math.min(...scores), ...edges, Math.max(...scores)];
+  const rows = Array.from({ length: BINS }, (_, i) => BINS - 1 - i).map(i =>
+    `<div class="legend-row"><span class="swatch" style="background:var(--bin-${i + 1})"></span>${bounds[i].toFixed(1)} to ${bounds[i + 1].toFixed(1)}</div>`
+  ).join("");
+  $("legend").innerHTML = `<h3>Score, by fifths</h3>${rows}
+    <div class="legend-row"><span class="sq"></span>Substation</div>
+    <div class="note">Bigger dot, more value a month.</div>`;
+}
+
+function renderTable() {
+  const sites = [...state.data.sites].sort((a, b) => a.liveRank - b.liveRank);
+  const shown = state.showAll ? sites : sites.slice(0, TABLE_ROWS);
+  $("rows").innerHTML = shown.map(s => {
+    const move = s.rank - s.liveRank;
+    const arrow = move > 0 ? ` <span class="move" aria-label="up ${move}">up ${move}</span>` : move < 0 ? ` <span class="move" aria-label="down ${-move}">down ${-move}</span>` : "";
+    return `<tr data-id="${esc(s.id)}" tabindex="0" class="${s.id === state.selected ? "selected" : ""}">
+      <td class="num">${s.liveRank}${arrow}</td>
+      <td><b>${esc(s.name)}</b><br><span class="move">${esc(s.addr)}</span></td>
+      <td class="hide-sm">${esc(s.use)}</td>
+      <td class="num">${s.live.toFixed(1)}</td>
+      <td class="num">${money(s.value)}</td>
+      <td class="hide-sm">${esc(s.confidence)}</td>
+    </tr>`;
+  }).join("");
+  $("toggle-rows").textContent = state.showAll ? `Show top ${TABLE_ROWS}` : `Show all ${sites.length}`;
+}
+
+function renderCard(s) {
+  const shares = weightShares();
+  const factors = FACTORS.map(([k, label]) => {
+    const part = 100 * shares[k] * s[`f_${k}`];
+    return `<div class="factor"><span>${label}</span><span class="track"><span class="fill" style="width:${Math.min(100, s[`f_${k}`] * 100)}%"></span></span><span>${part.toFixed(1)}</span></div>`;
+  }).join("");
+  $("card").innerHTML = `
+    <h3>#${s.liveRank} ${esc(s.name)}</h3>
+    <p class="addr">${esc(s.addr)}, ${esc(state.data.name)} <span class="badge">${esc(s.confidence)} confidence</span></p>
+    <dl class="kv">
+      <dt>Score</dt><dd>${s.live.toFixed(1)}</dd>
+      <dt>Use</dt><dd>${esc(s.use)}</dd>
+      <dt>Value</dt><dd>${money(s.value)} a month</dd>
+      <dt>Bill savings</dt><dd>${money(s.bill)}, ${esc(s.rate_class)} at $${s.rate.toFixed(2)}/kW</dd>
+      <dt>Incentive</dt><dd>${money(s.incentive)} a month</dd>
+      <dt>Peak guess</dt><dd>${num(s.peak_kw)} kW, battery ${s.battery_kw} kW</dd>
+      <dt>Floor area</dt><dd>${num(s.floor_area)} m2</dd>
+      <dt>Substation</dt><dd>${num(s.dist_sub)} m, ${esc(s.substation || "unnamed")}</dd>
+      <dt>Open lot</dt><dd>${num(s.open_lot)} m2</dd>
+      <dt>Owner</dt><dd>${esc(s.owner)}</dd>
+    </dl>
+    <div class="factors" aria-label="Score parts">${factors}</div>
+    <p class="pitch">${esc(s.pitch)}</p>`;
+}
+
+function renderLookalikes(s) {
+  const list = state.data.lookalikes[s.id] || [];
+  if (!list.length) {
+    $("lookalikes").innerHTML = `<p class="empty">No lookalikes saved for this site.</p>`;
+    return;
+  }
+  const townName = id => (state.towns.find(t => t.id === id) || { name: id }).name;
+  $("lookalikes").innerHTML = `<ul class="look">${list.map(m => {
+    const ratio = s.floor_area > 0 ? m.floor_area / s.floor_area : 1;
+    const size = ratio >= 1 ? `${ratio.toFixed(1)}x the size` : `${(1 / ratio).toFixed(1)}x smaller`;
+    return `<li><button data-town="${esc(m.town)}" data-id="${esc(m.id)}">
+      <b>${esc(m.name)}</b>
+      <span class="meta">${esc(m.addr)}, ${esc(townName(m.town))}, rank ${m.rank} there</span>
+      <span class="meta">${esc(m.use)}, ${size}, ${money(m.value)} a month</span>
+    </button></li>`;
+  }).join("")}</ul>`;
+}
+
+function select(id, fly) {
+  const prev = state.markers.get(state.selected);
+  state.selected = id;
+  const s = state.data.sites.find(x => x.id === id);
+  if (prev) prev.setStyle(markerStyle(state.data.sites.find(x => x.id === prev.siteId)));
+  if (!s) return;
+  const m = state.markers.get(id);
+  m.setStyle(markerStyle(s));
+  m.bringToFront();
+  if (fly) map.flyTo([s.lat, s.lon], Math.max(map.getZoom(), 16), { duration: 0.6 });
+  renderCard(s);
+  renderLookalikes(s);
+  document.querySelectorAll("#rows tr").forEach(tr => tr.classList.toggle("selected", tr.dataset.id === id));
+  const row = document.querySelector(`#rows tr[data-id="${CSS.escape(id)}"]`);
+  if (row) row.scrollIntoView({ block: "nearest" });
+}
+
+function renderTariff() {
+  const t = state.data.tariff;
+  const rows = Object.entries(t.classes).map(([cls, info]) =>
+    `<dt>${esc(cls)}</dt><dd>$${info.usd_per_kw.toFixed(2)} per kW. Source text, <q>${info.quotes.map(esc).join("; ")}</q>. <a href="${esc(info.url)}" target="_blank" rel="noopener">PDF</a>${info.effective ? `, effective ${esc(info.effective)}` : ""}</dd>`
+  ).join("");
+  $("tariff").innerHTML = `<h2>${esc(state.data.name)} demand charges</h2>
+    <p class="sub" style="margin:0 0 8px">Utility, ${esc(UTILITY_NAMES[t.utility] || t.utility)}</p>
+    <dl class="kv">${rows}</dl>`;
+}
+
+function highlight(text, terms) {
+  let out = esc(text);
+  terms.forEach(t => {
+    const safe = esc(t).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    out = out.replace(new RegExp(safe, "g"), m => `<mark>${m}</mark>`);
+  });
+  return out;
+}
+
+function renderQuestions() {
+  $("questions").innerHTML = state.rag.map(q =>
+    `<li><button data-q="${esc(q.id)}" aria-pressed="${q.id === state.question}">${esc(q.question)}</button></li>`
+  ).join("");
+}
+
+function showAnswer(id) {
+  state.question = id;
+  renderQuestions();
+  const q = state.rag.find(x => x.id === id);
+  const numbers = (q.answer || "").match(/\d+(?:\.\d+)?/g) || [];
+  const head = q.answer
+    ? `<p>${esc(q.answer)}</p>`
+    : `<p class="notice">No model answer. This demo runs without an API key, which is why only the retrieved source text is shown. Add a key and rerun the pipeline to get a cited answer.</p>`;
+  const evidence = q.evidence.map(e => `<div class="evidence">
+      <p class="head">${esc(e.header)}, match ${e.score.toFixed(2)}, <a href="${esc(e.url)}" target="_blank" rel="noopener">source</a></p>
+      <p>${highlight(e.text, numbers)}</p>
+    </div>`).join("");
+  $("answer").innerHTML = `<h2>${esc(q.question)}</h2>${head}<p class="status">Top 3 passages found by retrieval${q.retrieval_hit ? "" : ". The expected passage was not in the top 3 for this question"}.</p>${evidence}`;
+}
+
+async function loadTown(id, selectId) {
+  const data = await (await fetch(`data/${id}.json`)).json();
+  state.data = data;
+  state.selected = null;
+  state.markers.clear();
+  townLayer.remove();
+  townLayer = L.layerGroup();
+  $("town-select").value = id;
+  history.replaceState(null, "", `?town=${encodeURIComponent(id)}`);
+  $("subtitle").textContent = `${data.name}, top ${data.sites.length} battery sites`;
+
+  const border = L.geoJSON(data.boundary, { style: { color: css("--boundary"), weight: 2, fill: false, dashArray: "4 4" }, interactive: false });
+  map.fitBounds(border.getBounds(), { padding: [12, 12] });
+  townLayer.addTo(map);
+  border.addTo(townLayer);
+
+  data.substations.forEach(s => {
+    L.marker([s.lat, s.lon], {
+      icon: L.divIcon({ className: "", html: `<div class="sq"></div>`, iconSize: [10, 10] }),
+      keyboard: false
+    }).bindTooltip(`${esc(s.name)}, ${esc(s.type)}${s.voltage ? ", " + esc(s.voltage) + " V" : ""}`).addTo(townLayer);
+  });
+
+  const maxValue = Math.max(...data.sites.map(s => s.value));
+  data.sites.forEach(s => {
+    const m = L.circleMarker([s.lat, s.lon], { radius: 4 + 6 * Math.sqrt(Math.max(s.value, 0) / maxValue) })
+      .bindTooltip(() => `#${s.liveRank} ${esc(s.name)}, score ${s.live.toFixed(1)}, ${money(s.value)} a month`)
+      .on("click", () => select(s.id, false))
+      .addTo(townLayer);
+    m.siteId = s.id;
+    state.markers.set(s.id, m);
+  });
+
+  rescore();
+  renderTariff();
+  $("card").innerHTML = `<p class="empty">Click a dot or a table row to see a site.</p>`;
+  $("lookalikes").innerHTML = `<p class="empty">Pick a site to see the 5 most similar sites in all towns.</p>`;
+  $("status").textContent = `${data.sites.length} sites and ${data.substations.length} substations. Hover a dot for a summary, click it for details.`;
+  if (selectId) {
+    if (data.sites.some(s => s.id === selectId)) select(selectId, true);
+    else $("status").textContent = `That lookalike is not in the top ${data.sites.length} of ${data.name}, which is why it is not on this map.`;
+  }
+}
+
+async function init() {
+  const [towns, rag] = await Promise.all([
+    fetch("data/towns.json").then(r => r.json()),
+    fetch("data/rag.json").then(r => r.json())
+  ]);
+  state.towns = towns;
+  state.rag = rag;
+  $("town-select").innerHTML = towns.map(t => `<option value="${esc(t.id)}">${esc(t.name)}</option>`).join("");
+  const first = await fetch(`data/${towns[0].id}.json`).then(r => r.json());
+  state.defaults = { ...first.weights };
+  state.weights = { ...first.weights };
+  buildSliders();
+  renderQuestions();
+
+  $("town-select").addEventListener("change", e => loadTown(e.target.value));
+  $("reset").addEventListener("click", () => {
+    state.weights = { ...state.defaults };
+    FACTORS.forEach(([k]) => { $(`w-${k}`).value = Math.round(state.weights[k] * 100); });
+    rescore();
+  });
+  $("toggle-rows").addEventListener("click", () => { state.showAll = !state.showAll; renderTable(); });
+  $("rows").addEventListener("click", e => {
+    const tr = e.target.closest("tr[data-id]");
+    if (tr) select(tr.dataset.id, true);
+  });
+  $("rows").addEventListener("keydown", e => {
+    const tr = e.target.closest("tr[data-id]");
+    if (tr && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); select(tr.dataset.id, true); }
+  });
+  $("lookalikes").addEventListener("click", e => {
+    const b = e.target.closest("button[data-id]");
+    if (!b) return;
+    if (b.dataset.town === state.data.id) select(b.dataset.id, true);
+    else loadTown(b.dataset.town, b.dataset.id);
+  });
+  $("questions").addEventListener("click", e => {
+    const b = e.target.closest("button[data-q]");
+    if (b) showAnswer(b.dataset.q);
+  });
+
+  const wanted = new URLSearchParams(location.search).get("town");
+  await loadTown(towns.some(t => t.id === wanted) ? wanted : towns[0].id);
+}
+
+init().catch(err => { $("status").textContent = `Could not load the data. ${err.message}`; });
+</script>
+</body>
+</html>
