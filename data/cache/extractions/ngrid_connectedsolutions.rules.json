@@ -1,0 +1,14 @@
+{
+  "page_id": "ngrid_connectedsolutions",
+  "url": "https://www.nationalgridus.com/ma-business/energy-saving-programs/connectedsolutions",
+  "method": "rules",
+  "attempts": 1,
+  "extracted_at": "2026-10-25T01:41:40+00:00",
+  "utility": "national_grid",
+  "effective_date": null,
+  "effective_quote": null,
+  "demand_charges": [],
+  "incentives": [],
+  "rejected": [],
+  "utility_named": "national_grid"
+}
