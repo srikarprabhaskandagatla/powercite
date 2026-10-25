@@ -1,0 +1,31 @@
+{
+  "page_id": "ngrid_ma_rates",
+  "url": "https://www.nationalgridus.com/media/pdfs/billing-payments/electric-rates/ma/cm4394_maweb.pdf",
+  "method": "rules",
+  "attempts": 1,
+  "extracted_at": "2026-10-25T01:41:40+00:00",
+  "utility": "national_grid",
+  "effective_date": null,
+  "effective_quote": null,
+  "demand_charges": [
+    {
+      "rate_class": "G-2",
+      "component": "distribution",
+      "usd_per_unit": 15.06,
+      "unit": "kW",
+      "optional": false,
+      "quote": "Demand $15.06 per kW"
+    },
+    {
+      "rate_class": "G-3",
+      "component": "distribution",
+      "usd_per_unit": 10.48,
+      "unit": "kW",
+      "optional": false,
+      "quote": "Demand $10.48 per kW"
+    }
+  ],
+  "incentives": [],
+  "rejected": [],
+  "utility_named": "national_grid"
+}
