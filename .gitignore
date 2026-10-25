@@ -1,0 +1,7 @@
+.env
+data/raw/
+logs/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+/src/extract_power.py
