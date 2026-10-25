@@ -1,0 +1,193 @@
+{
+  "brockton": {
+    "utility": "national_grid",
+    "G-2": {
+      "usd_per_kw": 15.06,
+      "components": [
+        {
+          "rate_class": "G-2",
+          "component": "distribution",
+          "usd_per_unit": 15.06,
+          "unit": "kW",
+          "optional": false,
+          "quote": "Demand $15.06 per kW"
+        }
+      ],
+      "effective_date": null,
+      "url": "https://www.nationalgridus.com/media/pdfs/billing-payments/electric-rates/ma/cm4394_maweb.pdf",
+      "method": "rules"
+    },
+    "G-3": {
+      "usd_per_kw": 10.48,
+      "components": [
+        {
+          "rate_class": "G-3",
+          "component": "distribution",
+          "usd_per_unit": 10.48,
+          "unit": "kW",
+          "optional": false,
+          "quote": "Demand $10.48 per kW"
+        }
+      ],
+      "effective_date": null,
+      "url": "https://www.nationalgridus.com/media/pdfs/billing-payments/electric-rates/ma/cm4394_maweb.pdf",
+      "method": "rules"
+    }
+  },
+  "fall_river": {
+    "utility": "national_grid",
+    "G-2": {
+      "usd_per_kw": 15.06,
+      "components": [
+        {
+          "rate_class": "G-2",
+          "component": "distribution",
+          "usd_per_unit": 15.06,
+          "unit": "kW",
+          "optional": false,
+          "quote": "Demand $15.06 per kW"
+        }
+      ],
+      "effective_date": null,
+      "url": "https://www.nationalgridus.com/media/pdfs/billing-payments/electric-rates/ma/cm4394_maweb.pdf",
+      "method": "rules"
+    },
+    "G-3": {
+      "usd_per_kw": 10.48,
+      "components": [
+        {
+          "rate_class": "G-3",
+          "component": "distribution",
+          "usd_per_unit": 10.48,
+          "unit": "kW",
+          "optional": false,
+          "quote": "Demand $10.48 per kW"
+        }
+      ],
+      "effective_date": null,
+      "url": "https://www.nationalgridus.com/media/pdfs/billing-payments/electric-rates/ma/cm4394_maweb.pdf",
+      "method": "rules"
+    }
+  },
+  "new_bedford": {
+    "utility": "eversource_south_shore",
+    "G-2": {
+      "usd_per_kw": 17.46,
+      "components": [
+        {
+          "rate_class": "G-2",
+          "component": "distribution",
+          "usd_per_unit": 3.72,
+          "unit": "kVA",
+          "optional": false,
+          "quote": "Distribution Demand Charge (per kVA): $3.72"
+        },
+        {
+          "rate_class": "G-2",
+          "component": "transmission",
+          "usd_per_unit": 13.74,
+          "unit": "kVA",
+          "optional": false,
+          "quote": "Transmission Demand Charge (per kVA): $13.74"
+        }
+      ],
+      "effective_date": "September 1, 2026",
+      "url": "https://www.eversource.com/content/docs/default-source/rates-tariffs/ema-south-shore-rates.pdf",
+      "method": "rules"
+    },
+    "G-3": {
+      "usd_per_kw": 18.09,
+      "components": [
+        {
+          "rate_class": "G-3",
+          "component": "distribution",
+          "usd_per_unit": 4.01,
+          "unit": "kW",
+          "optional": false,
+          "quote": "Distribution Demand Charge (per kW): $4.01"
+        },
+        {
+          "rate_class": "G-3",
+          "component": "transmission",
+          "usd_per_unit": 14.08,
+          "unit": "kW",
+          "optional": false,
+          "quote": "Transmission Demand Charge (per kW): $14.08"
+        }
+      ],
+      "effective_date": "September 1, 2026",
+      "url": "https://www.eversource.com/content/docs/default-source/rates-tariffs/ema-south-shore-rates.pdf",
+      "method": "rules"
+    }
+  },
+  "worcester": {
+    "utility": "national_grid",
+    "G-2": {
+      "usd_per_kw": 15.06,
+      "components": [
+        {
+          "rate_class": "G-2",
+          "component": "distribution",
+          "usd_per_unit": 15.06,
+          "unit": "kW",
+          "optional": false,
+          "quote": "Demand $15.06 per kW"
+        }
+      ],
+      "effective_date": null,
+      "url": "https://www.nationalgridus.com/media/pdfs/billing-payments/electric-rates/ma/cm4394_maweb.pdf",
+      "method": "rules"
+    },
+    "G-3": {
+      "usd_per_kw": 10.48,
+      "components": [
+        {
+          "rate_class": "G-3",
+          "component": "distribution",
+          "usd_per_unit": 10.48,
+          "unit": "kW",
+          "optional": false,
+          "quote": "Demand $10.48 per kW"
+        }
+      ],
+      "effective_date": null,
+      "url": "https://www.nationalgridus.com/media/pdfs/billing-payments/electric-rates/ma/cm4394_maweb.pdf",
+      "method": "rules"
+    }
+  },
+  "lowell": {
+    "utility": "national_grid",
+    "G-2": {
+      "usd_per_kw": 15.06,
+      "components": [
+        {
+          "rate_class": "G-2",
+          "component": "distribution",
+          "usd_per_unit": 15.06,
+          "unit": "kW",
+          "optional": false,
+          "quote": "Demand $15.06 per kW"
+        }
+      ],
+      "effective_date": null,
+      "url": "https://www.nationalgridus.com/media/pdfs/billing-payments/electric-rates/ma/cm4394_maweb.pdf",
+      "method": "rules"
+    },
+    "G-3": {
+      "usd_per_kw": 10.48,
+      "components": [
+        {
+          "rate_class": "G-3",
+          "component": "distribution",
+          "usd_per_unit": 10.48,
+          "unit": "kW",
+          "optional": false,
+          "quote": "Demand $10.48 per kW"
+        }
+      ],
+      "effective_date": null,
+      "url": "https://www.nationalgridus.com/media/pdfs/billing-payments/electric-rates/ma/cm4394_maweb.pdf",
+      "method": "rules"
+    }
+  }
+}
