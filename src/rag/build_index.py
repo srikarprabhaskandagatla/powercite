@@ -3,7 +3,7 @@ import re
 import faiss
 import numpy as np
 import pandas as pd
-from config.towns import DATA_RAW, ROOT
+from config.towns import DATA_RAW, INPUTS
 from embeddings.embed_records import embed
 from research.fetch_pages import load_page, load_sources
 
@@ -55,7 +55,7 @@ def retrieve(question, chunks, index, model, k=TOP_K):
 
 
 def load_questions():
-    return json.loads((ROOT / "questions.json").read_text())
+    return json.loads((INPUTS / "questions.json").read_text())
 
 
 def hit(question, hits):
