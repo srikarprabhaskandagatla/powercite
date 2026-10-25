@@ -2,7 +2,7 @@ import argparse
 import json
 from datetime import datetime, timezone
 from dotenv import load_dotenv
-from config.towns import DATA_CACHE, DATA_PROCESSED, ROOT, load_towns
+from config.towns import DATA_CACHE, DATA_PROCESSED, INPUTS, ROOT, load_towns
 from research.extractors import MODEL, extract_llm, extract_rules, has_key
 from research.fetch_pages import load_page, load_sources
 from research.validate import validate
@@ -55,7 +55,7 @@ def extract(page, refresh=False):
 
 
 def tariff_table(records):
-    utility_of_town = json.loads((ROOT / "sources.json").read_text())["utility_by_town"]
+    utility_of_town = json.loads((INPUTS / "sources.json").read_text())["utility_by_town"]
     by_utility = {}
     for record in records:
         for charge in record["demand_charges"]:
