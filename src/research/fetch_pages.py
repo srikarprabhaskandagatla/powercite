@@ -1,6 +1,6 @@
 import argparse
 import json
-from config.towns import DATA_CACHE, DATA_RAW, ROOT
+from config.towns import DATA_CACHE, DATA_RAW, INPUTS
 from research.clean import fetch_and_clean
 
 PAGES_CACHE = DATA_CACHE / "pages"
@@ -8,7 +8,7 @@ PAGES_RAW = DATA_RAW / "pages"
 
 
 def load_sources():
-    return json.loads((ROOT / "sources.json").read_text())["pages"]
+    return json.loads((INPUTS / "sources.json").read_text())["pages"]
 
 
 def cache_path(page_id):
