@@ -1,0 +1,96 @@
+{
+  "page_id": "eversource_greater_boston_rates",
+  "url": "https://www.eversource.com/content/docs/default-source/rates-tariffs/ema-greater-boston-rates.pdf",
+  "method": "rules",
+  "attempts": 1,
+  "extracted_at": "2026-10-25T01:41:40+00:00",
+  "utility": "eversource_greater_boston",
+  "effective_date": "September 1, 2026",
+  "effective_quote": "Effective: September 1, 2026",
+  "demand_charges": [
+    {
+      "rate_class": "G-2",
+      "component": "distribution",
+      "usd_per_unit": 20.21,
+      "unit": "kW",
+      "optional": false,
+      "quote": "Distribution Demand Charge (per kW): $20.21"
+    },
+    {
+      "rate_class": "G-2",
+      "component": "transmission",
+      "usd_per_unit": 13.74,
+      "unit": "kW",
+      "optional": false,
+      "quote": "Transmission Demand Charge (per kW): $13.74"
+    },
+    {
+      "rate_class": "G-3",
+      "component": "distribution",
+      "usd_per_unit": 15.97,
+      "unit": "kW",
+      "optional": false,
+      "quote": "Distribution Demand Charge (per kW): $15.97"
+    },
+    {
+      "rate_class": "G-3",
+      "component": "transmission",
+      "usd_per_unit": 14.08,
+      "unit": "kW",
+      "optional": false,
+      "quote": "Transmission Demand Charge (per kW): $14.08"
+    },
+    {
+      "rate_class": "G-3",
+      "component": "transmission coincident peak",
+      "usd_per_unit": 22.39,
+      "unit": "kW",
+      "optional": true,
+      "quote": "Transmission Coincident Peak Demand Charge (per kW)(Optional): $22.39"
+    },
+    {
+      "rate_class": "G-3",
+      "component": "distribution",
+      "usd_per_unit": 3.64,
+      "unit": "kW",
+      "optional": false,
+      "quote": "Distribution Demand Charge (per kW): $3.64"
+    },
+    {
+      "rate_class": "G-3",
+      "component": "distribution",
+      "usd_per_unit": 7.29,
+      "unit": "kW",
+      "optional": false,
+      "quote": "Distribution Demand Charge (per kW): $7.29"
+    },
+    {
+      "rate_class": "G-3",
+      "component": "distribution",
+      "usd_per_unit": 14.59,
+      "unit": "kW",
+      "optional": false,
+      "quote": "Distribution Demand Charge (per kW): $14.59"
+    }
+  ],
+  "incentives": [],
+  "rejected": [
+    {
+      "kind": "demand_charges",
+      "item": {
+        "rate_class": "G-3",
+        "component": "distribution",
+        "usd_per_unit": 0.0,
+        "unit": "kW",
+        "optional": false,
+        "quote": "Distribution Demand Charge (per kW): $0.00"
+      },
+      "checks": {
+        "quote_in_page": true,
+        "value_in_quote": true,
+        "value_in_range": false
+      }
+    }
+  ],
+  "utility_named": "eversource_greater_boston"
+}
