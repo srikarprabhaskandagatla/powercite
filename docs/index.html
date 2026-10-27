@@ -441,6 +441,7 @@ const DEMO_QUESTIONS = {
     keys: ["$200/kW"]
   }
 };
+const MIN_SAVINGS_SHARE = 0.2;
 const BINS = 5;
 const BIN_WORDS = ["Low", "Weak", "Fair", "Good", "Best"];
 
@@ -503,9 +504,17 @@ function setMenuOpen(menu, toggle, open) {
   $(toggle).setAttribute("aria-expanded", String(open));
 }
 
-function weightShares() {
+function rawShares() {
   const total = FACTORS.reduce((t, [k]) => t + state.weights[k], 0);
   return Object.fromEntries(FACTORS.map(([k]) => [k, total > 0 ? state.weights[k] / total : 0]));
+}
+
+function weightShares() {
+  const raw = rawShares();
+  if (raw.savings >= MIN_SAVINGS_SHARE) return raw;
+  const rest = 1 - raw.savings;
+  return Object.fromEntries(FACTORS.map(([k]) => [k,
+    k === "savings" ? MIN_SAVINGS_SHARE : rest > 0 ? raw[k] / rest * (1 - MIN_SAVINGS_SHARE) : 0]));
 }
 
 function inFocus(s) {
@@ -516,9 +525,10 @@ function rescore() {
   const shares = weightShares();
   FACTORS.forEach(([k]) => { $(`wv-${k}`).textContent = `${Math.round(shares[k] * 100)}%`; });
   const changed = FACTORS.some(([k]) => Math.abs(state.weights[k] - state.defaults[k]) > 1e-9);
-  $("weight-note").textContent = changed
-    ? "Custom."
-    : "";
+  const floored = rawShares().savings < MIN_SAVINGS_SHARE;
+  $("weight-note").textContent = floored
+    ? "Savings stays at 20% or more, which keeps money in every ranking."
+    : changed ? "Custom." : "";
 
   const sites = state.data.sites;
   sites.forEach(s => {
