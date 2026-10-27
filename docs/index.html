@@ -19,22 +19,23 @@
   --text-primary: #0b0b0b;
   --text-secondary: #4a4946;
   --text-muted: #6b6a65;
-  --accent: #c2410c;
-  --ring: #8c8b85;
+  --accent: #b5542a;
+  --ring: #5f5e5a;
   --boundary: #52514e;
   --substation: #52514e;
-  --bar: #ea580c;
+  --bar: #f2782a;
   --dim: #c9c8c2;
   --glass: rgba(252, 252, 251, 0.72);
-  --good: #c2410c;
-  --good-bg: #fff1e6;
+  --good: #a5481f;
+  --good-bg: #fbf0e8;
   --ink: #141414;
   --ink-text: #fcfcfb;
-  --bin-1: #fed7aa;
-  --bin-2: #fdba74;
-  --bin-3: #fb923c;
-  --bin-4: #ea580c;
-  --bin-5: #9a3412;
+  --on-accent: #ffffff;
+  --bin-1: #fcc79a;
+  --bin-2: #fba862;
+  --bin-3: #f78a3a;
+  --bin-4: #f06d1f;
+  --bin-5: #d9530c;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
@@ -57,11 +58,12 @@
     --good-bg: rgba(251, 146, 60, 0.16);
     --ink: #ffffff;
     --ink-text: #121211;
-    --bin-1: #7c2d12;
-    --bin-2: #c2410c;
-    --bin-3: #f97316;
-    --bin-4: #fdba74;
-    --bin-5: #ffedd5;
+    --on-accent: #1c0d03;
+    --bin-1: #8a3a14;
+    --bin-2: #b04a17;
+    --bin-3: #d9601c;
+    --bin-4: #f2782a;
+    --bin-5: #ff9445;
   }
   :root:not([data-theme="light"]) .base-tiles { filter: invert(1) hue-rotate(180deg) brightness(0.9) contrast(0.85); }
 }
@@ -85,11 +87,12 @@
   --good-bg: rgba(251, 146, 60, 0.16);
   --ink: #ffffff;
   --ink-text: #121211;
-  --bin-1: #7c2d12;
-  --bin-2: #c2410c;
-  --bin-3: #f97316;
-  --bin-4: #fdba74;
-  --bin-5: #ffedd5;
+  --on-accent: #1c0d03;
+  --bin-1: #8a3a14;
+  --bin-2: #b04a17;
+  --bin-3: #d9601c;
+  --bin-4: #f2782a;
+  --bin-5: #ff9445;
 }
 :root[data-theme="dark"] .base-tiles { filter: invert(1) hue-rotate(180deg) brightness(0.9) contrast(0.85); }
 * { box-sizing: border-box; }
@@ -115,7 +118,9 @@ header {
   padding: 10px 16px; background: var(--surface-1); border-bottom: 1px solid var(--border);
   position: relative; z-index: 2000;
 }
-.brand { display: flex; align-items: center; gap: 10px; }
+.brand { display: flex; align-items: center; gap: 10px; justify-self: start; color: inherit; text-decoration: none; border-radius: 8px; }
+.brand:hover h1 { color: var(--accent); }
+.brand:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 .brand svg { width: 30px; height: 30px; flex: none; }
 h1 { font: 700 22px/1 "Space Grotesk", "Inter", sans-serif; letter-spacing: -0.02em; margin: 0; }
 h2 { font-size: 15px; font-weight: 600; margin: 0; }
@@ -151,6 +156,7 @@ main { display: grid; grid-template-columns: clamp(260px, 25vw, 340px) minmax(0,
 .list-head { padding: 12px 12px 8px; border-bottom: 1px solid var(--border); }
 .list-head p { margin: 4px 0 0; color: var(--text-secondary); font-size: 12px; }
 .list-scroll { overflow-y: auto; overflow-x: hidden; min-height: 0; flex: 1; }
+.credit { margin: 0; padding: 6px 12px; border-top: 1px solid var(--border); font-size: 11px; color: var(--text-muted); }
 table { width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed; }
 col.c-rank { width: 40px; }
 col.c-fit { width: 38px; }
@@ -172,13 +178,13 @@ tbody tr.faded { opacity: 0.45; }
   -webkit-backdrop-filter: blur(14px) saturate(1.4);
   backdrop-filter: blur(14px) saturate(1.4);
   border: 1.5px solid var(--accent); border-radius: 10px;
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent), 0 6px 24px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
 }
 .map-wrap .leaflet-bar {
   border: 1.5px solid var(--accent) !important; border-radius: 10px; overflow: hidden;
   background: var(--glass); background-clip: border-box;
   -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent), 0 6px 24px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
 }
 .map-wrap .leaflet-bar a { background: transparent; color: var(--text-primary); border-bottom-color: var(--border); border-radius: 0 !important; }
 .map-wrap .leaflet-bar a:hover { background: var(--surface-2); color: var(--accent); }
@@ -246,7 +252,8 @@ tbody tr.faded { opacity: 0.45; }
 .slider input::-moz-range-track { background: transparent; }
 .slider input:active::-webkit-slider-thumb { transform: scale(1.1); }
 .weights p { margin: 4px 0 0; font-size: 12px; color: var(--text-muted); }
-.focus { top: 10px; left: calc(50% + 20px); transform: translateX(-50%); padding: 6px 8px 6px 12px; display: flex; gap: 10px; align-items: center; font-size: 13px; max-width: calc(100% - 140px); }
+.focus { top: 10px; left: 56px; padding: 6px 8px 6px 12px; display: flex; gap: 10px; align-items: center; font-size: 13px; max-width: calc(100% - 66px); }
+.map-wrap.has-card .focus { max-width: calc(100% - 56px - min(360px, calc(100% - 20px)) - 20px); }
 .bottom { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 12px; min-height: 0; }
 .box { display: flex; flex-direction: column; min-height: 0; padding: 10px 12px; }
 .box-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin: 0 0 8px; }
@@ -266,7 +273,7 @@ tbody tr.faded { opacity: 0.45; }
 .quote { margin: 0; font-size: 13px; color: var(--text-secondary); border-left: 3px solid var(--accent); padding: 2px 0 2px 10px; }
 .quote .head { display: block; font-size: 12px; color: var(--text-muted); margin-top: 4px; }
 .ask input { flex: 1; min-width: 0; }
-.primary { background: var(--accent); border-color: var(--accent); color: #ffffff; font-weight: 600; padding: 6px 16px; border-radius: 8px; }
+.primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); font-weight: 600; padding: 6px 16px; border-radius: 8px; }
 .primary:hover { filter: brightness(1.08); border-color: var(--accent); }
 .chat { margin: 0 0 6px; font-size: 13px; }
 .chat .me { display: inline-block; background: var(--surface-2); border-radius: 10px; padding: 4px 10px; margin: 0 0 6px; }
@@ -296,7 +303,7 @@ a { color: var(--accent); }
   .bottom { grid-template-columns: 1fr; }
   .box { max-height: 60vh; }
   .card { width: calc(100% - 20px); max-height: 55%; }
-  .focus { max-width: calc(100% - 20px); top: auto; bottom: 10px; }
+  .focus, .map-wrap.has-card .focus { left: 10px; max-width: calc(100% - 20px); top: auto; bottom: 10px; }
   .legend { display: none; }
 }
 </style>
@@ -304,10 +311,10 @@ a { color: var(--accent); }
 <body>
 <div class="app">
   <header>
-    <div class="brand">
+    <a class="brand" href="https://github.com/srikarprabhaskandagatla/powercite" target="_blank" rel="noopener" title="View the code on GitHub">
       <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="8" width="23" height="16" rx="3" fill="#ea580c"/><rect x="26" y="13" width="3" height="6" rx="1" fill="#ea580c"/><path d="M16 10l-5 8h4l-1 6 5-8h-4z" fill="#ffffff"/></svg>
       <h1>PowerCite</h1>
-    </div>
+    </a>
     <p class="town-title" id="town-title" aria-live="polite"></p>
     <div class="head-controls">
       <div class="pop">
@@ -351,6 +358,7 @@ a { color: var(--accent); }
           <tbody id="rows"></tbody>
         </table>
       </div>
+      <p class="credit">Map data &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors</p>
     </aside>
 
     <div class="right">
@@ -369,7 +377,7 @@ a { color: var(--accent); }
           <div class="box-head">
             <h2>Similar results</h2>
           </div>
-          <div class="box-scroll" id="lookalikes"><p class="empty">Pick a site to see 5 like it.</p></div>
+          <div class="box-scroll" id="lookalikes"><p class="empty">Pick a site to see 5 other places like it.</p></div>
         </section>
 
         <section class="panel box" aria-label="Questions about rates">
@@ -444,7 +452,7 @@ const $ = id => document.getElementById(id);
 
 const state = { towns: [], data: null, weights: {}, defaults: {}, selected: null, markers: new Map(), rag: [], question: null, focus: null };
 
-const map = L.map("map", { preferCanvas: true, zoomControl: false });
+const map = L.map("map", { preferCanvas: true, zoomControl: false, attributionControl: false });
 L.control.zoom({ position: "topleft" }).addTo(map);
 L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
   maxZoom: 19,
@@ -541,7 +549,7 @@ function markerStyle(s) {
   const on = inFocus(s) && (!state.selected || selected);
   return {
     color: selected ? css("--text-primary") : css("--ring"),
-    weight: selected ? 3 : on ? 1.5 : 1,
+    weight: selected ? 3 : on ? 2 : 1,
     fillColor: on ? css(`--bin-${s.bin + 1}`) : css("--dim"),
     fillOpacity: on ? 1 : state.selected ? 0.35 : 0.6,
     opacity: on || selected ? 1 : 0.4
@@ -585,6 +593,7 @@ function renderCard(s) {
   const weak = s.weak && s.weak !== "No clear weak point" ? `<p><b>Weak.</b> ${esc(s.weak)}</p>` : "";
   const card = $("card");
   card.hidden = false;
+  card.parentElement.classList.add("has-card");
   card.innerHTML = `
     <div class="card-top">
       <h3>#${s.liveRank} ${esc(s.name)}</h3>
@@ -642,7 +651,8 @@ function clearSelection() {
   state.selected = null;
   restyle();
   $("card").hidden = true;
-  $("lookalikes").innerHTML = `<p class="empty">Pick a site to see 5 like it.</p>`;
+  $("card").parentElement.classList.remove("has-card");
+  $("lookalikes").innerHTML = `<p class="empty">Pick a site to see 5 other places like it.</p>`;
   document.querySelectorAll("#rows tr.selected").forEach(tr => tr.classList.remove("selected"));
 }
 
