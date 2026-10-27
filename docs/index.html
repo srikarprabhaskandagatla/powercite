@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>PowerCite Site Ranker</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='3' y='8' width='23' height='16' rx='3' fill='%231c5cab'/%3E%3Crect x='26' y='13' width='3' height='6' rx='1' fill='%231c5cab'/%3E%3Cpath d='M16 10l-5 8h4l-1 6 5-8h-4z' fill='%23ffffff'/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='3' y='8' width='23' height='16' rx='3' fill='%2317804a'/%3E%3Crect x='26' y='13' width='3' height='6' rx='1' fill='%2317804a'/%3E%3Cpath d='M16 10l-5 8h4l-1 6 5-8h-4z' fill='%23ffffff'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,22 +19,22 @@
   --text-primary: #0b0b0b;
   --text-secondary: #52514e;
   --text-muted: #7a7974;
-  --accent: #2a78d6;
+  --accent: #17804a;
   --ring: #fcfcfb;
   --boundary: #52514e;
   --substation: #52514e;
-  --bar: #2a78d6;
+  --bar: #17804a;
   --dim: #c9c8c2;
   --glass: rgba(252, 252, 251, 0.72);
   --good: #17804a;
   --good-bg: #e2f3e9;
   --ink: #141414;
   --ink-text: #fcfcfb;
-  --bin-1: #86b6ef;
-  --bin-2: #5598e7;
-  --bin-3: #2a78d6;
-  --bin-4: #1c5cab;
-  --bin-5: #104281;
+  --bin-1: #9fd8b3;
+  --bin-2: #5fbf87;
+  --bin-3: #2b9d5f;
+  --bin-4: #17804a;
+  --bin-5: #0c5a33;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
@@ -46,22 +46,22 @@
     --text-primary: #f0efec;
     --text-secondary: #c3c2b7;
     --text-muted: #8f8e86;
-    --accent: #6da7ec;
+    --accent: #5cc98d;
     --ring: #1a1a19;
     --boundary: #c3c2b7;
     --substation: #c3c2b7;
-    --bar: #3987e5;
+    --bar: #2f9e62;
     --dim: #3a3a37;
     --glass: rgba(26, 26, 25, 0.72);
     --good: #5cc98d;
     --good-bg: rgba(92, 201, 141, 0.14);
     --ink: #f0efec;
     --ink-text: #121211;
-    --bin-1: #184f95;
-    --bin-2: #256abf;
-    --bin-3: #3987e5;
-    --bin-4: #6da7ec;
-    --bin-5: #b7d3f6;
+    --bin-1: #145c36;
+    --bin-2: #1f7d4a;
+    --bin-3: #2f9e62;
+    --bin-4: #5cc98d;
+    --bin-5: #a9e6c3;
   }
   :root:not([data-theme="light"]) .base-tiles { filter: invert(1) hue-rotate(180deg) brightness(0.9) contrast(0.85); }
 }
@@ -74,25 +74,31 @@
   --text-primary: #f0efec;
   --text-secondary: #c3c2b7;
   --text-muted: #8f8e86;
-  --accent: #6da7ec;
+  --accent: #5cc98d;
   --ring: #1a1a19;
   --boundary: #c3c2b7;
   --substation: #c3c2b7;
-  --bar: #3987e5;
+  --bar: #2f9e62;
   --dim: #3a3a37;
   --glass: rgba(26, 26, 25, 0.72);
   --good: #5cc98d;
   --good-bg: rgba(92, 201, 141, 0.14);
   --ink: #f0efec;
   --ink-text: #121211;
-  --bin-1: #184f95;
-  --bin-2: #256abf;
-  --bin-3: #3987e5;
-  --bin-4: #6da7ec;
-  --bin-5: #b7d3f6;
+  --bin-1: #145c36;
+  --bin-2: #1f7d4a;
+  --bin-3: #2f9e62;
+  --bin-4: #5cc98d;
+  --bin-5: #a9e6c3;
 }
 :root[data-theme="dark"] .base-tiles { filter: invert(1) hue-rotate(180deg) brightness(0.9) contrast(0.85); }
 * { box-sizing: border-box; }
+* { scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--text-muted) 45%, transparent) transparent; }
+::-webkit-scrollbar { width: 8px; height: 8px; background: transparent; }
+::-webkit-scrollbar-track, ::-webkit-scrollbar-corner { background: transparent; }
+::-webkit-scrollbar-button { display: none; width: 0; height: 0; }
+::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--text-muted) 45%, transparent); border-radius: 999px; border: 2px solid transparent; background-clip: padding-box; }
+::-webkit-scrollbar-thumb:hover { background-color: var(--accent); }
 html, body { height: 100%; }
 body {
   margin: 0;
@@ -235,13 +241,20 @@ tbody tr.faded { opacity: 0.45; }
 .look { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
 .look button { width: 100%; text-align: left; padding: 6px 10px; }
 .look .meta { display: block; color: var(--text-muted); font-size: 12px; }
-.faq { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 12px; min-height: 0; flex: 1; }
+.faq { display: flex; flex-direction: column; gap: 8px; min-height: 0; flex: 1; }
 .ask { display: flex; gap: 6px; margin: 0 0 8px; }
+.ask[hidden] { display: none; }
+.qlist { display: flex; flex-wrap: wrap; gap: 6px; }
+.qlist li { margin: 0; }
+.qlist button { width: auto; border-radius: 999px; padding: 5px 12px; }
+.short { margin: 0 0 6px; font-size: 14px; }
+.short b { color: var(--accent); }
+.quote { margin: 0; font-size: 13px; color: var(--text-secondary); border-left: 3px solid var(--accent); padding: 2px 0 2px 10px; }
+.quote .head { display: block; font-size: 12px; color: var(--text-muted); margin-top: 4px; }
 .ask input { flex: 1; min-width: 0; }
 .ask input:disabled, .ask button:disabled { opacity: 0.6; cursor: not-allowed; }
 .qlist { list-style: none; margin: 0; padding: 0; }
-.qlist li { margin: 0 0 4px; }
-.qlist button { width: 100%; text-align: left; font-size: 13px; padding: 5px 8px; }
+.qlist button { font-size: 13px; }
 .qlist button[aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 3px 0 0 var(--accent); }
 .evidence { border-left: 3px solid var(--border); padding: 2px 0 2px 10px; margin: 8px 0; }
 .evidence .head { font-size: 12px; color: var(--text-secondary); margin: 0 0 4px; }
@@ -274,7 +287,7 @@ a { color: var(--accent); }
 <div class="app">
   <header>
     <div class="brand">
-      <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="8" width="23" height="16" rx="3" fill="#1c5cab"/><rect x="26" y="13" width="3" height="6" rx="1" fill="#1c5cab"/><path d="M16 10l-5 8h4l-1 6 5-8h-4z" fill="#ffffff"/></svg>
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="8" width="23" height="16" rx="3" fill="#17804a"/><rect x="26" y="13" width="3" height="6" rx="1" fill="#17804a"/><path d="M16 10l-5 8h4l-1 6 5-8h-4z" fill="#ffffff"/></svg>
       <h1>PowerCite</h1>
     </div>
     <p class="town-title" id="town-title" aria-live="polite"></p>
@@ -346,12 +359,12 @@ a { color: var(--accent); }
             <h2>Questions about electric rates</h2>
             <span class="muted">Answers come from the utility's own pages</span>
           </div>
-          <div class="ask">
+          <div class="ask" hidden>
             <input type="text" placeholder="Ask your own question (coming soon)" disabled aria-label="Ask a question, coming soon">
             <button disabled>Ask</button>
           </div>
           <div class="faq">
-            <div class="box-scroll"><ul class="qlist" id="questions"></ul></div>
+            <ul class="qlist" id="questions"></ul>
             <div class="box-scroll" id="answer"><p class="empty">Pick a question. The map will show which sites it is about.</p></div>
           </div>
         </section>
@@ -380,6 +393,23 @@ const TOWN_UTILITY = {
   new_bedford: "eversource_south_shore",
   worcester: "national_grid",
   lowell: "national_grid"
+};
+const DEMO_QUESTIONS = {
+  q02: {
+    label: "National Grid G-3 rate",
+    short: "Large National Grid customers pay <b>$10.48 per kW</b> of their monthly peak.",
+    keys: ["Demand $10.48 per kW"]
+  },
+  q05: {
+    label: "Eversource G-2 rate",
+    short: "Eversource South Shore G-2 pays <b>$3.72 + $13.74 per kVA</b>, which is $17.46 in all.",
+    keys: ["Distribution Demand Charge (per kVA): $3.72", "Transmission Demand Charge (per kVA): $13.74"]
+  },
+  q10: {
+    label: "Battery program pay",
+    short: "ConnectedSolutions Daily Dispatch pays a business battery <b>$200 per kW</b> each summer.",
+    keys: ["$200/kW"]
+  }
 };
 const BINS = 5;
 const BIN_WORDS = ["Low", "Below average", "Average", "Good", "Best"];
@@ -673,8 +703,16 @@ function highlight(text, terms) {
 
 function renderQuestions() {
   $("questions").innerHTML = state.rag.map(q =>
-    `<li><button data-q="${esc(q.id)}" aria-pressed="${q.id === state.question}">${esc(q.question)}</button></li>`
+    `<li><button data-q="${esc(q.id)}" aria-pressed="${q.id === state.question}" title="${esc(q.question)}">${esc(DEMO_QUESTIONS[q.id].label)}</button></li>`
   ).join("");
+}
+
+function snippet(text, keys) {
+  const spots = keys.map(k => text.indexOf(k)).filter(i => i >= 0);
+  if (!spots.length) return esc(text.slice(0, 160)) + "...";
+  const start = Math.max(0, Math.min(...spots) - 50);
+  const end = Math.min(text.length, Math.max(...keys.map(k => { const i = text.indexOf(k); return i < 0 ? 0 : i + k.length; })) + 30);
+  return (start > 0 ? "..." : "") + highlight(text.slice(start, end), keys) + (end < text.length ? "..." : "");
 }
 
 function showAnswer(id) {
@@ -686,15 +724,11 @@ function showAnswer(id) {
     $("answer").innerHTML = `<p class="empty">Pick a question. The map will show which sites it is about.</p>`;
     return;
   }
-  const numbers = (q.answer || "").match(/\d+(?:\.\d+)?/g) || [];
-  const head = q.answer
-    ? `<p>${esc(q.answer)}</p>`
-    : `<p class="notice">Here is the text we found in the utility's own pages. The key part is usually in the first passage.</p>`;
-  const evidence = q.evidence.map(e => `<div class="evidence">
-      <p class="head">${esc(e.header)}, <a href="${esc(e.url)}" target="_blank" rel="noopener">open source</a></p>
-      <p>${highlight(e.text, numbers)}</p>
-    </div>`).join("");
-  $("answer").innerHTML = `${head}${evidence}`;
+  const demo = DEMO_QUESTIONS[q.id];
+  const e = q.evidence.find(x => demo.keys.some(k => x.text.includes(k))) || q.evidence[0];
+  const page = e.header.split(",")[0];
+  $("answer").innerHTML = `<p class="short">${demo.short}</p>
+    <p class="quote">${snippet(e.text, demo.keys)}<span class="head">From ${esc(page)}, page ${esc(e.page_no)}. <a href="${esc(e.url)}" target="_blank" rel="noopener">Open page</a></span></p>`;
 }
 
 async function loadTown(id, selectId) {
@@ -752,7 +786,7 @@ async function init() {
     fetch("data/rag.json").then(r => r.json())
   ]);
   state.towns = towns;
-  state.rag = rag;
+  state.rag = rag.filter(q => DEMO_QUESTIONS[q.id]);
   renderTownMenu();
   const first = await fetch(`data/${towns[0].id}.json`).then(r => r.json());
   state.defaults = { ...first.weights };
