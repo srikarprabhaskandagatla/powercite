@@ -52,8 +52,6 @@
 
 <p align="center">
   <strong>Live Demo</strong> <a href="https://srikarprabhaskandagatla.github.io/powercite/">srikarprabhaskandagatla.github.io/powercite</a>
-  <br>
-  <sub>Static page on GitHub Pages · Pipeline run offline on a SLURM cluster</sub>
 </p>
 
 ---
