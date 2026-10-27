@@ -9,7 +9,6 @@ python-dotenv
 pydantic
 trafilatura
 pymupdf
-tavily-python
 anthropic
 rapidfuzz
 faiss-cpu
