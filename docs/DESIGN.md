@@ -62,7 +62,9 @@ rag (cited answers) ------------------------------^
 | RAG chunks | 400 chars, 150 overlap, document header | the header lifts hit@3 from 57% to 93% | no header |
 | Answers | Claude document blocks with citations, number check | every claim tied to cited text | free text answers |
 | Score | weighted sum of 5 percentile features | no labels to train on; weights are shown and editable | LightGBM |
-| Web | static page, Leaflet, precomputed JSON | free hosting, no keys, no server | Streamlit, a live API |
+| Web | one static HTML page, Leaflet, plain JavaScript, precomputed JSON | free hosting, no keys, no server, no build step | Streamlit, React, a live API |
+| Sites on the page | top 300 per town | small files, a readable map | every site |
+| Map encoding | color is fit in five equal groups, size is money a month | each dot shows both at once | color for money, which repeats the size |
 
 ## 5. Evaluation
 
@@ -130,3 +132,23 @@ python -m http.server 8765 --directory ../docs
 | LLM paths not run live | run them, compare against the rules path |
 | Match recall 0.55 | more candidates, OSM tags, tune the judge band |
 | Five towns | all of Massachusetts as a SLURM array, approximate FAISS index |
+| Money a month is before battery cost | add cost and payback per site |
+| Ask box is a placeholder | live RAG answers behind a small API |
+
+## 8. Website
+
+The page is `docs/index.html`. It reads `docs/data/towns.json`, one file per town and `rag.json`, and makes no other calls except map tiles and fonts.
+
+| Part | What it does |
+|---|---|
+| Header | PowerCite links to the repo, the town name sits in the middle, then the Town menu, Priorities and the theme button |
+| Rankings | top 300 sites with rank, fit and money a month, scrolling on its own |
+| Map | one dot per site, a square per substation, fills the rest of the screen |
+| Site card | fit, money split into lower bill and program pay, reason, weak point, breakdown, details with a rate source link |
+| Similar results | the 5 lookalikes, from any town; one click opens that town on that site |
+| Rates | 3 of the 14 questions, each with a short answer and its source quote; the map colors the sites the question is about |
+| Ask box | placeholder that replies it is under construction |
+
+**What updates live.** Moving a Priorities slider scores every site again in the browser with the new weights. The list, dot colors and card update at once, and each row shows how far it moved.
+
+**Look.** Light and dark themes with an orange accent, glass panels on the map, and the theme saved in the browser.
