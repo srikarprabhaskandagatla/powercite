@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>PowerCite Site Ranker</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='3' y='8' width='23' height='16' rx='3' fill='%231c5cab'/%3E%3Crect x='26' y='13' width='3' height='6' rx='1' fill='%231c5cab'/%3E%3Cpath d='M16 10l-5 8h4l-1 6 5-8h-4z' fill='%23ffffff'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
 :root {
@@ -21,6 +22,7 @@
   --substation: #52514e;
   --bar: #2a78d6;
   --dim: #c9c8c2;
+  --glass: rgba(252, 252, 251, 0.72);
   --bin-1: #86b6ef;
   --bin-2: #5598e7;
   --bin-3: #2a78d6;
@@ -43,6 +45,7 @@
     --substation: #c3c2b7;
     --bar: #3987e5;
     --dim: #3a3a37;
+    --glass: rgba(26, 26, 25, 0.72);
     --bin-1: #184f95;
     --bin-2: #256abf;
     --bin-3: #3987e5;
@@ -66,6 +69,7 @@
   --substation: #c3c2b7;
   --bar: #3987e5;
   --dim: #3a3a37;
+  --glass: rgba(26, 26, 25, 0.72);
   --bin-1: #184f95;
   --bin-2: #256abf;
   --bin-3: #3987e5;
@@ -85,11 +89,13 @@ body {
 header {
   display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: center; justify-content: space-between;
   padding: 10px 16px; background: var(--surface-1); border-bottom: 1px solid var(--border);
+  position: relative; z-index: 2000;
 }
 h1 { font-size: 19px; margin: 0; }
 h2 { font-size: 15px; margin: 0; }
 .sub { color: var(--text-secondary); margin: 0; font-size: 13px; }
 .head-controls { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.pop { position: relative; }
 select, button, input[type="text"] {
   font: inherit;
   color: var(--text-primary);
@@ -102,15 +108,19 @@ button { cursor: pointer; }
 button:hover, select:hover { border-color: var(--text-muted); }
 button:focus-visible, select:focus-visible, input:focus-visible, tr:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 button[aria-expanded="true"] { border-color: var(--accent); }
-main { display: grid; grid-template-columns: 360px minmax(0, 1fr); gap: 12px; padding: 12px 16px; min-height: 0; }
+main { display: grid; grid-template-columns: clamp(260px, 25vw, 340px) minmax(0, 1fr); gap: 12px; padding: 12px 16px; min-height: 0; }
 .panel { background: var(--surface-1); border: 1px solid var(--border); border-radius: 8px; }
-.list { display: flex; flex-direction: column; min-height: 0; }
+.list { display: flex; flex-direction: column; min-height: 0; min-width: 0; }
 .list-head { padding: 12px 12px 8px; border-bottom: 1px solid var(--border); }
 .list-head p { margin: 4px 0 0; color: var(--text-secondary); font-size: 12px; }
-.list-scroll { overflow: auto; min-height: 0; flex: 1; }
-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-thead th { position: sticky; top: 0; z-index: 1; background: var(--surface-2); text-align: left; font-weight: 600; padding: 7px 8px; color: var(--text-secondary); }
-td { padding: 7px 8px; border-top: 1px solid var(--border); vertical-align: top; }
+.list-scroll { overflow-y: auto; overflow-x: hidden; min-height: 0; flex: 1; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed; }
+col.c-rank { width: 40px; }
+col.c-fit { width: 38px; }
+col.c-money { width: 66px; }
+thead th { position: sticky; top: 0; z-index: 1; background: var(--surface-2); text-align: left; font-weight: 600; padding: 7px 6px; color: var(--text-secondary); }
+td { padding: 6px 6px; border-top: 1px solid var(--border); vertical-align: top; }
+td.name b, td.name span { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
 tbody tr { cursor: pointer; }
 tbody tr:hover { background: var(--surface-2); }
@@ -118,13 +128,16 @@ tbody tr.selected { background: var(--surface-2); box-shadow: inset 3px 0 0 var(
 tbody tr.faded { opacity: 0.45; }
 .muted { color: var(--text-muted); font-size: 12px; }
 .right { display: grid; grid-template-rows: minmax(0, 1fr) clamp(190px, 28vh, 260px); gap: 12px; min-height: 0; }
-.map-wrap { position: relative; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: var(--surface-1); min-height: 0; }
+.map-wrap { position: relative; isolation: isolate; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: var(--surface-1); min-height: 0; }
 #map { position: absolute; inset: 0; background: var(--surface-1); }
-.overlay {
-  position: absolute; z-index: 600;
-  background: var(--surface-1); border: 1px solid var(--border); border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+.glass {
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  backdrop-filter: blur(14px) saturate(1.4);
+  border: 1px solid var(--border); border-radius: 10px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.14);
 }
+.overlay { position: absolute; z-index: 600; }
 .legend { left: 10px; bottom: 22px; padding: 8px 10px; font-size: 12px; color: var(--text-secondary); max-width: 230px; }
 .legend h3 { font-size: 12px; margin: 0 0 4px; color: var(--text-primary); }
 .legend-row { display: flex; align-items: center; gap: 8px; margin: 2px 0; font-variant-numeric: tabular-nums; }
@@ -139,6 +152,7 @@ tbody tr.faded { opacity: 0.45; }
 .addr { color: var(--text-secondary); margin: 2px 0 10px; }
 .big { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 0 0 10px; }
 .big div { background: var(--surface-2); border-radius: 6px; padding: 8px 10px; }
+.card .big div, .card .factor .track { background: color-mix(in srgb, var(--surface-2) 70%, transparent); }
 .big b { display: block; font-size: 20px; font-variant-numeric: tabular-nums; }
 .big span { font-size: 12px; color: var(--text-secondary); }
 .why { margin: 0 0 10px; font-size: 13px; }
@@ -151,7 +165,7 @@ tbody tr.faded { opacity: 0.45; }
 .factor .fill { height: 100%; background: var(--bar); border-radius: 0 4px 4px 0; }
 .factor span:last-child { text-align: right; font-variant-numeric: tabular-nums; color: var(--text-primary); }
 .small-head { font-size: 12px; font-weight: 600; color: var(--text-secondary); margin: 10px 0 4px; }
-.weights { top: 10px; left: 56px; width: min(300px, calc(100% - 66px)); padding: 12px; }
+.weights { position: absolute; top: calc(100% + 8px); right: 0; width: min(300px, calc(100vw - 32px)); padding: 12px; z-index: 2001; }
 .slider { margin: 0 0 8px; }
 .slider label { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-secondary); }
 .slider label b { color: var(--text-primary); font-weight: 600; font-variant-numeric: tabular-nums; }
@@ -208,7 +222,14 @@ a { color: var(--accent); }
       <label>Town
         <select id="town-select" aria-label="Choose a town"></select>
       </label>
-      <button id="weights-toggle" aria-expanded="false" aria-controls="weights">Change what matters</button>
+      <div class="pop">
+        <button id="weights-toggle" aria-expanded="false" aria-controls="weights">Priorities</button>
+        <section class="weights glass" id="weights" hidden aria-label="Priorities">
+          <div id="sliders"></div>
+          <button id="reset">Reset</button>
+          <p id="weight-note"></p>
+        </section>
+      </div>
     </div>
   </header>
 
@@ -220,12 +241,13 @@ a { color: var(--accent); }
       </div>
       <div class="list-scroll" id="list-scroll">
         <table>
+          <colgroup><col class="c-rank"><col><col class="c-fit"><col class="c-money"></colgroup>
           <thead>
             <tr>
               <th class="num">#</th>
               <th>Business</th>
               <th class="num">Fit</th>
-              <th class="num">Money a month</th>
+              <th class="num" title="Money a month">$/mo</th>
             </tr>
           </thead>
           <tbody id="rows"></tbody>
@@ -236,14 +258,9 @@ a { color: var(--accent); }
     <div class="right">
       <div class="map-wrap">
         <div id="map" role="region" aria-label="Map of ranked battery sites"></div>
-        <div class="overlay legend" id="legend"></div>
-        <section class="overlay card" id="card" aria-live="polite" hidden></section>
-        <section class="overlay weights" id="weights" hidden aria-label="Score weights">
-          <div id="sliders"></div>
-          <button id="reset">Reset</button>
-          <p id="weight-note"></p>
-        </section>
-        <div class="overlay focus" id="focus" hidden>
+        <div class="overlay glass legend" id="legend"></div>
+        <section class="overlay glass card" id="card" aria-live="polite" hidden></section>
+        <div class="overlay glass focus" id="focus" hidden>
           <span id="focus-text"></span>
           <button class="close" id="focus-clear" aria-label="Show all sites">Show all</button>
         </div>
@@ -385,12 +402,13 @@ function restyle() {
 
 function markerStyle(s) {
   const selected = s.id === state.selected;
-  const on = inFocus(s);
+  const on = inFocus(s) && (!state.selected || selected);
   return {
     color: selected ? css("--text-primary") : css("--ring"),
     weight: selected ? 3 : on ? 2 : 1,
     fillColor: on ? css(`--bin-${s.bin + 1}`) : css("--dim"),
-    fillOpacity: on ? 1 : 0.6
+    fillOpacity: on ? 1 : state.selected ? 0.35 : 0.6,
+    opacity: on || selected ? 1 : 0.4
   };
 }
 
@@ -401,18 +419,18 @@ function drawLegend(edges, scores) {
   ).join("");
   $("legend").innerHTML = `<h3>Battery fit, 0 to 100</h3>${rows}
     <div class="legend-row"><span class="sq"></span>Power substation</div>
-    <div class="note">Darker dot means a better fit. Bigger dot means more money a month.</div>`;
+    <div class="note">Stronger color means a better fit. Bigger dot means more money a month.</div>`;
 }
 
 function renderTable() {
   const sites = [...state.data.sites].sort((a, b) => a.liveRank - b.liveRank);
   $("rows").innerHTML = sites.map(s => {
     const move = s.rank - s.liveRank;
-    const arrow = move > 0 ? `<br><span class="muted" aria-label="up ${move}">up ${move}</span>` : move < 0 ? `<br><span class="muted" aria-label="down ${-move}">down ${-move}</span>` : "";
+    const arrow = move > 0 ? `<br><span class="muted" aria-label="up ${move}">+${move}</span>` : move < 0 ? `<br><span class="muted" aria-label="down ${-move}">${move}</span>` : "";
     const cls = [s.id === state.selected ? "selected" : "", inFocus(s) ? "" : "faded"].join(" ");
-    return `<tr data-id="${esc(s.id)}" tabindex="0" class="${cls}">
+    return `<tr data-id="${esc(s.id)}" tabindex="0" class="${cls}" title="${esc(s.name)}, ${esc(s.addr)}">
       <td class="num">${s.liveRank}${arrow}</td>
-      <td><b>${esc(s.name)}</b><br><span class="muted">${esc(s.addr)}</span></td>
+      <td class="name"><b>${esc(s.name)}</b><span class="muted">${esc(s.addr)}</span></td>
       <td class="num">${Math.round(s.live)}</td>
       <td class="num">${money(s.value)}</td>
     </tr>`;
@@ -486,10 +504,8 @@ function renderLookalikes(s) {
 }
 
 function clearSelection() {
-  const prev = state.markers.get(state.selected);
-  const old = state.selected;
   state.selected = null;
-  if (prev) prev.setStyle(markerStyle(state.data.sites.find(x => x.id === old)));
+  restyle();
   $("card").hidden = true;
   $("look-for").textContent = "";
   $("lookalikes").innerHTML = `<p class="empty">Click a dot or a row. You will see the 5 most similar businesses in all five towns.</p>`;
@@ -497,15 +513,10 @@ function clearSelection() {
 }
 
 function select(id, fly) {
-  const prev = state.markers.get(state.selected);
-  const old = state.selected;
-  state.selected = id;
   const s = state.data.sites.find(x => x.id === id);
-  if (prev) prev.setStyle(markerStyle(state.data.sites.find(x => x.id === old)));
   if (!s) return;
-  const m = state.markers.get(id);
-  m.setStyle(markerStyle(s));
-  m.bringToFront();
+  state.selected = id;
+  restyle();
   if (fly) map.flyTo([s.lat, s.lon], Math.max(map.getZoom(), 16), { duration: 0.6 });
   renderCard(s);
   renderLookalikes(s);
@@ -628,7 +639,7 @@ async function loadTown(id, selectId) {
 
   const maxValue = Math.max(...data.sites.map(s => s.value));
   data.sites.forEach(s => {
-    const m = L.circleMarker([s.lat, s.lon], { radius: 4 + 6 * Math.sqrt(Math.max(s.value, 0) / maxValue) })
+    const m = L.circleMarker([s.lat, s.lon], { radius: 4 + 6 * Math.sqrt(Math.max(s.value, 0) / maxValue), bubblingMouseEvents: false })
       .bindTooltip(() => `#${s.liveRank} ${esc(s.name)}, fit ${Math.round(s.live)}, ${money(s.value)} a month`)
       .on("click", () => select(s.id, false))
       .addTo(townLayer);
@@ -664,10 +675,18 @@ async function init() {
   renderQuestions();
 
   $("town-select").addEventListener("change", e => loadTown(e.target.value));
-  $("weights-toggle").addEventListener("click", e => {
-    const open = $("weights").hidden;
+  const setWeightsOpen = open => {
     $("weights").hidden = !open;
-    e.currentTarget.setAttribute("aria-expanded", String(open));
+    $("weights-toggle").setAttribute("aria-expanded", String(open));
+  };
+  $("weights-toggle").addEventListener("click", () => setWeightsOpen($("weights").hidden));
+  document.addEventListener("click", e => {
+    if (!$("weights").hidden && !e.target.closest(".pop")) setWeightsOpen(false);
+  });
+  document.addEventListener("keydown", e => {
+    if (e.key !== "Escape") return;
+    if (!$("weights").hidden) setWeightsOpen(false);
+    else if (state.selected) clearSelection();
   });
   $("reset").addEventListener("click", () => {
     state.weights = { ...state.defaults };
@@ -701,6 +720,7 @@ async function init() {
     else $("focus").hidden = true;
   });
   window.addEventListener("resize", () => map.invalidateSize());
+  map.on("click", () => { if (state.selected) clearSelection(); });
 
   const wanted = new URLSearchParams(location.search).get("town");
   await loadTown(towns.some(t => t.id === wanted) ? wanted : towns[0].id);
