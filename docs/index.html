@@ -20,6 +20,7 @@
   --boundary: #52514e;
   --substation: #52514e;
   --bar: #2a78d6;
+  --dim: #c9c8c2;
   --bin-1: #86b6ef;
   --bin-2: #5598e7;
   --bin-3: #2a78d6;
@@ -41,6 +42,7 @@
     --boundary: #c3c2b7;
     --substation: #c3c2b7;
     --bar: #3987e5;
+    --dim: #3a3a37;
     --bin-1: #184f95;
     --bin-2: #256abf;
     --bin-3: #3987e5;
@@ -63,6 +65,7 @@
   --boundary: #c3c2b7;
   --substation: #c3c2b7;
   --bar: #3987e5;
+  --dim: #3a3a37;
   --bin-1: #184f95;
   --bin-2: #256abf;
   --bin-3: #3987e5;
@@ -71,18 +74,23 @@
 }
 :root[data-theme="dark"] .base-tiles { filter: invert(1) hue-rotate(180deg) brightness(0.9) contrast(0.85); }
 * { box-sizing: border-box; }
+html, body { height: 100%; }
 body {
   margin: 0;
   background: var(--surface-0);
   color: var(--text-primary);
-  font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif;
+  font: 14px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif;
 }
-.wrap { max-width: 1280px; margin: 0 auto; padding: 0 16px; }
-header { padding: 16px 0 8px; display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: end; justify-content: space-between; }
-h1 { font-size: 22px; margin: 0; }
-h2 { font-size: 16px; margin: 0 0 8px; }
-.sub { color: var(--text-secondary); margin: 2px 0 0; }
-select, button {
+.app { height: 100dvh; display: grid; grid-template-rows: auto minmax(0, 1fr); }
+header {
+  display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: center; justify-content: space-between;
+  padding: 10px 16px; background: var(--surface-1); border-bottom: 1px solid var(--border);
+}
+h1 { font-size: 19px; margin: 0; }
+h2 { font-size: 15px; margin: 0; }
+.sub { color: var(--text-secondary); margin: 0; font-size: 13px; }
+.head-controls { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+select, button, input[type="text"] {
   font: inherit;
   color: var(--text-primary);
   background: var(--surface-1);
@@ -93,165 +101,205 @@ select, button {
 button { cursor: pointer; }
 button:hover, select:hover { border-color: var(--text-muted); }
 button:focus-visible, select:focus-visible, input:focus-visible, tr:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.panel { background: var(--surface-1); border: 1px solid var(--border); border-radius: 8px; padding: 14px; }
-.controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px 18px; align-items: end; margin-bottom: 16px; }
-.slider label { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-secondary); }
-.slider label b { color: var(--text-primary); font-weight: 600; font-variant-numeric: tabular-nums; }
-.slider input { width: 100%; accent-color: var(--accent); }
-.layout { display: grid; grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr); gap: 16px; margin-bottom: 16px; }
-.map-wrap { position: relative; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: var(--surface-1); }
-#map { height: min(68vh, 620px); background: var(--surface-1); }
-.legend {
-  position: absolute; right: 10px; bottom: 22px; z-index: 500;
+button[aria-expanded="true"] { border-color: var(--accent); }
+main { display: grid; grid-template-columns: 360px minmax(0, 1fr); gap: 12px; padding: 12px 16px; min-height: 0; }
+.panel { background: var(--surface-1); border: 1px solid var(--border); border-radius: 8px; }
+.list { display: flex; flex-direction: column; min-height: 0; }
+.list-head { padding: 12px 12px 8px; border-bottom: 1px solid var(--border); }
+.list-head p { margin: 4px 0 0; color: var(--text-secondary); font-size: 12px; }
+.list-scroll { overflow: auto; min-height: 0; flex: 1; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+thead th { position: sticky; top: 0; z-index: 1; background: var(--surface-2); text-align: left; font-weight: 600; padding: 7px 8px; color: var(--text-secondary); }
+td { padding: 7px 8px; border-top: 1px solid var(--border); vertical-align: top; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+tbody tr { cursor: pointer; }
+tbody tr:hover { background: var(--surface-2); }
+tbody tr.selected { background: var(--surface-2); box-shadow: inset 3px 0 0 var(--accent); }
+tbody tr.faded { opacity: 0.45; }
+.muted { color: var(--text-muted); font-size: 12px; }
+.right { display: grid; grid-template-rows: minmax(0, 1fr) clamp(190px, 28vh, 260px); gap: 12px; min-height: 0; }
+.map-wrap { position: relative; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: var(--surface-1); min-height: 0; }
+#map { position: absolute; inset: 0; background: var(--surface-1); }
+.overlay {
+  position: absolute; z-index: 600;
   background: var(--surface-1); border: 1px solid var(--border); border-radius: 8px;
-  padding: 8px 10px; font-size: 12px; color: var(--text-secondary); min-width: 160px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
 }
+.legend { left: 10px; bottom: 22px; padding: 8px 10px; font-size: 12px; color: var(--text-secondary); max-width: 230px; }
 .legend h3 { font-size: 12px; margin: 0 0 4px; color: var(--text-primary); }
 .legend-row { display: flex; align-items: center; gap: 8px; margin: 2px 0; font-variant-numeric: tabular-nums; }
 .swatch { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--ring); box-shadow: 0 0 0 1px var(--border); }
 .sq { width: 10px; height: 10px; border: 2px solid var(--substation); }
 .legend .note { margin-top: 4px; color: var(--text-muted); }
-.side { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
-.empty { color: var(--text-muted); margin: 0; }
-.card h3 { margin: 0; font-size: 17px; }
-.card .addr { color: var(--text-secondary); margin: 2px 0 10px; }
-.kv { display: grid; grid-template-columns: auto 1fr; gap: 3px 12px; margin: 0 0 10px; font-size: 14px; }
+.card { top: 10px; right: 10px; width: min(360px, calc(100% - 20px)); max-height: calc(100% - 20px); overflow: auto; padding: 14px; }
+.card[hidden], .weights[hidden], .focus[hidden] { display: none; }
+.card-top { display: flex; justify-content: space-between; gap: 8px; align-items: start; }
+.card h3 { margin: 0; font-size: 16px; }
+.close { padding: 2px 8px; line-height: 1.2; }
+.addr { color: var(--text-secondary); margin: 2px 0 10px; }
+.big { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 0 0 10px; }
+.big div { background: var(--surface-2); border-radius: 6px; padding: 8px 10px; }
+.big b { display: block; font-size: 20px; font-variant-numeric: tabular-nums; }
+.big span { font-size: 12px; color: var(--text-secondary); }
+.why { margin: 0 0 10px; font-size: 13px; }
+.why p { margin: 0 0 4px; }
+.kv { display: grid; grid-template-columns: auto 1fr; gap: 3px 12px; margin: 0 0 10px; font-size: 13px; }
 .kv dt { color: var(--text-muted); }
 .kv dd { margin: 0; font-variant-numeric: tabular-nums; }
-.pitch { margin: 8px 0 0; }
-.factors { margin: 10px 0 0; }
-.factor { display: grid; grid-template-columns: 110px 1fr 40px; gap: 8px; align-items: center; font-size: 13px; color: var(--text-secondary); margin: 3px 0; }
+.factor { display: grid; grid-template-columns: 120px 1fr 36px; gap: 8px; align-items: center; font-size: 12px; color: var(--text-secondary); margin: 3px 0; }
 .factor .track { height: 8px; background: var(--surface-2); border-radius: 4px; overflow: hidden; }
 .factor .fill { height: 100%; background: var(--bar); border-radius: 0 4px 4px 0; }
 .factor span:last-child { text-align: right; font-variant-numeric: tabular-nums; color: var(--text-primary); }
-.badge { display: inline-block; font-size: 12px; padding: 1px 8px; border: 1px solid var(--border); border-radius: 999px; color: var(--text-secondary); }
-.look { list-style: none; margin: 0; padding: 0; }
-.look li { margin: 0 0 6px; }
-.look button { width: 100%; text-align: left; padding: 8px 10px; }
+.small-head { font-size: 12px; font-weight: 600; color: var(--text-secondary); margin: 10px 0 4px; }
+.weights { top: 10px; left: 56px; width: min(300px, calc(100% - 66px)); padding: 12px; }
+.slider { margin: 0 0 8px; }
+.slider label { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-secondary); }
+.slider label b { color: var(--text-primary); font-weight: 600; font-variant-numeric: tabular-nums; }
+.slider input { width: 100%; accent-color: var(--accent); }
+.weights p { margin: 4px 0 0; font-size: 12px; color: var(--text-muted); }
+.focus { top: 10px; left: 50%; transform: translateX(-50%); padding: 6px 8px 6px 12px; display: flex; gap: 10px; align-items: center; font-size: 13px; max-width: calc(100% - 140px); }
+.bottom { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 12px; min-height: 0; }
+.box { display: flex; flex-direction: column; min-height: 0; padding: 10px 12px; }
+.box-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin: 0 0 8px; }
+.box-scroll { overflow: auto; min-height: 0; flex: 1; }
+.empty { color: var(--text-muted); margin: 0; }
+.look { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.look button { width: 100%; text-align: left; padding: 6px 10px; }
 .look .meta { display: block; color: var(--text-muted); font-size: 12px; }
-.table-wrap { max-height: 460px; overflow: auto; border: 1px solid var(--border); border-radius: 8px; background: var(--surface-1); }
-table { width: 100%; border-collapse: collapse; font-size: 14px; }
-thead th { position: sticky; top: 0; background: var(--surface-2); text-align: left; font-weight: 600; padding: 8px 10px; color: var(--text-secondary); }
-td { padding: 7px 10px; border-top: 1px solid var(--border); vertical-align: top; }
-td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
-tbody tr { cursor: pointer; }
-tbody tr:hover { background: var(--surface-2); }
-tbody tr.selected { background: var(--surface-2); box-shadow: inset 3px 0 0 var(--accent); }
-.move { color: var(--text-muted); font-size: 12px; }
-.row-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin: 0 0 8px; flex-wrap: wrap; }
-.qa { display: grid; grid-template-columns: minmax(240px, 1fr) minmax(0, 2fr); gap: 16px; margin: 16px 0 32px; }
+.faq { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 12px; min-height: 0; flex: 1; }
+.ask { display: flex; gap: 6px; margin: 0 0 8px; }
+.ask input { flex: 1; min-width: 0; }
+.ask input:disabled, .ask button:disabled { opacity: 0.6; cursor: not-allowed; }
 .qlist { list-style: none; margin: 0; padding: 0; }
-.qlist li { margin: 0 0 6px; }
-.qlist button { width: 100%; text-align: left; }
+.qlist li { margin: 0 0 4px; }
+.qlist button { width: 100%; text-align: left; font-size: 13px; padding: 5px 8px; }
 .qlist button[aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 3px 0 0 var(--accent); }
-.evidence { border-left: 3px solid var(--border); padding: 2px 0 2px 10px; margin: 10px 0; }
-.evidence .head { font-size: 13px; color: var(--text-secondary); margin: 0 0 4px; }
-.evidence p { margin: 0; font-size: 14px; }
-.notice { color: var(--text-secondary); background: var(--surface-2); border-radius: 6px; padding: 8px 10px; margin: 0 0 10px; font-size: 14px; }
+.evidence { border-left: 3px solid var(--border); padding: 2px 0 2px 10px; margin: 8px 0; }
+.evidence .head { font-size: 12px; color: var(--text-secondary); margin: 0 0 4px; }
+.evidence p { margin: 0; font-size: 13px; }
+.notice { color: var(--text-secondary); background: var(--surface-2); border-radius: 6px; padding: 6px 8px; margin: 0 0 8px; font-size: 13px; }
 mark { background: transparent; color: var(--text-primary); font-weight: 700; text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; }
-.tariff dd { white-space: normal; }
 a { color: var(--accent); }
-.status { color: var(--text-muted); font-size: 13px; margin: 6px 0 0; }
 .leaflet-tooltip { background: var(--surface-1); color: var(--text-primary); border: 1px solid var(--border); box-shadow: none; }
-@media (max-width: 900px) {
-  .layout, .qa { grid-template-columns: 1fr; }
-  #map { height: 58vh; }
+@media (max-width: 1100px) {
+  .faq { grid-template-columns: 1fr; }
 }
-@media (max-width: 600px) {
-  .legend { position: static; margin: 8px; }
-  .hide-sm { display: none; }
+@media (max-width: 900px) {
+  .app { height: auto; display: block; }
+  main { grid-template-columns: 1fr; }
+  .right { grid-template-rows: 70vh auto; }
+  .list { order: 2; max-height: 60vh; }
+  .bottom { grid-template-columns: 1fr; }
+  .box { max-height: 60vh; }
+  .card { width: calc(100% - 20px); max-height: 55%; }
+  .focus { max-width: calc(100% - 20px); top: auto; bottom: 10px; }
+  .legend { display: none; }
 }
 </style>
 </head>
 <body>
-<div class="wrap">
+<div class="app">
   <header>
     <div>
       <h1>PowerCite</h1>
-      <p class="sub" id="subtitle">Battery site ranking for Massachusetts towns</p>
+      <p class="sub" id="subtitle">Which businesses would gain the most from a battery</p>
     </div>
-    <label>Town
-      <select id="town-select" aria-label="Choose a town"></select>
-    </label>
+    <div class="head-controls">
+      <label>Town
+        <select id="town-select" aria-label="Choose a town"></select>
+      </label>
+      <button id="weights-toggle" aria-expanded="false" aria-controls="weights">Change what matters</button>
+    </div>
   </header>
 
-  <section class="panel controls" aria-label="Score weights">
-    <div id="sliders" class="controls" style="margin:0;grid-column:1/-1"></div>
-    <div style="grid-column:1/-1;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
-      <button id="reset">Reset weights</button>
-      <span class="status" id="weight-note"></span>
-    </div>
-  </section>
+  <main>
+    <aside class="panel list" aria-label="Ranked sites">
+      <div class="list-head">
+        <h2>Best sites for a battery</h2>
+        <p><b>Fit</b> is a mark from 0 to 100. Higher means a better place for a battery. <b>Money</b> is a guess of what a battery could bring each month, before its cost.</p>
+      </div>
+      <div class="list-scroll" id="list-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th class="num">#</th>
+              <th>Business</th>
+              <th class="num">Fit</th>
+              <th class="num">Money a month</th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+    </aside>
 
-  <div class="layout">
-    <div>
+    <div class="right">
       <div class="map-wrap">
         <div id="map" role="region" aria-label="Map of ranked battery sites"></div>
-        <div class="legend" id="legend"></div>
+        <div class="overlay legend" id="legend"></div>
+        <section class="overlay card" id="card" aria-live="polite" hidden></section>
+        <section class="overlay weights" id="weights" hidden aria-label="Score weights">
+          <div id="sliders"></div>
+          <button id="reset">Reset</button>
+          <p id="weight-note"></p>
+        </section>
+        <div class="overlay focus" id="focus" hidden>
+          <span id="focus-text"></span>
+          <button class="close" id="focus-clear" aria-label="Show all sites">Show all</button>
+        </div>
       </div>
-      <p class="status" id="status">Loading</p>
-    </div>
-    <aside class="side">
-      <section class="panel card" id="card" aria-live="polite">
-        <p class="empty">Click a dot or a table row to see a site.</p>
-      </section>
-      <section class="panel">
-        <h2>Lookalike sites</h2>
-        <div id="lookalikes"><p class="empty">Pick a site to see the 5 most similar sites in all towns.</p></div>
-      </section>
-    </aside>
-  </div>
 
-  <section>
-    <div class="row-head">
-      <h2 style="margin:0">Ranked sites</h2>
-      <button id="toggle-rows">Show all 300</button>
-    </div>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th class="num">Rank</th>
-            <th>Site</th>
-            <th class="hide-sm">Use</th>
-            <th class="num">Score</th>
-            <th class="num">Value a month</th>
-            <th class="hide-sm">Confidence</th>
-          </tr>
-        </thead>
-        <tbody id="rows"></tbody>
-      </table>
-    </div>
-  </section>
+      <div class="bottom">
+        <section class="panel box" aria-label="Lookalike sites">
+          <div class="box-head">
+            <h2>Similar businesses</h2>
+            <span class="muted" id="look-for"></span>
+          </div>
+          <div class="box-scroll" id="lookalikes"><p class="empty">Click a dot or a row. You will see the 5 most similar businesses in all five towns.</p></div>
+        </section>
 
-  <section class="qa">
-    <div class="panel">
-      <h2>Tariff questions</h2>
-      <ul class="qlist" id="questions"></ul>
+        <section class="panel box" aria-label="Questions about rates">
+          <div class="box-head">
+            <h2>Questions about electric rates</h2>
+            <span class="muted">Answers come from the utility's own pages</span>
+          </div>
+          <div class="ask">
+            <input type="text" placeholder="Ask your own question (coming soon)" disabled aria-label="Ask a question, coming soon">
+            <button disabled>Ask</button>
+          </div>
+          <div class="faq">
+            <div class="box-scroll"><ul class="qlist" id="questions"></ul></div>
+            <div class="box-scroll" id="answer"><p class="empty">Pick a question. The map will show which sites it is about.</p></div>
+          </div>
+        </section>
+      </div>
     </div>
-    <div class="panel">
-      <div id="tariff" class="tariff"></div>
-      <div id="answer"><p class="empty">Pick a question to see its answer and the source text.</p></div>
-    </div>
-  </section>
+  </main>
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 const FACTORS = [
-  ["savings", "Savings"],
-  ["spikiness", "Load spikiness"],
-  ["space", "Open space"],
-  ["grid", "Near substation"],
-  ["confidence", "Data confidence"]
+  ["savings", "Bill savings", "How much the battery can cut the bill, compared with other sites"],
+  ["spikiness", "Spiky power use", "Businesses with short, sharp peaks gain more"],
+  ["space", "Room on the lot", "Open land to place a battery"],
+  ["grid", "Close to the grid", "Distance to the nearest substation"],
+  ["confidence", "Data quality", "How much we trust the numbers for this site"]
 ];
 const UTILITY_NAMES = {
   national_grid: "National Grid",
   eversource_south_shore: "Eversource South Shore",
   eversource_greater_boston: "Eversource Greater Boston"
 };
+const TOWN_UTILITY = {
+  brockton: "national_grid",
+  fall_river: "national_grid",
+  new_bedford: "eversource_south_shore",
+  worcester: "national_grid",
+  lowell: "national_grid"
+};
 const BINS = 5;
-const TABLE_ROWS = 50;
+const BIN_WORDS = ["Low", "Below average", "Average", "Good", "Best"];
 
 const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 const money = v => "$" + Math.round(v).toLocaleString("en-US");
@@ -259,9 +307,10 @@ const num = v => Math.round(v).toLocaleString("en-US");
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const $ = id => document.getElementById(id);
 
-const state = { towns: [], data: null, weights: {}, defaults: {}, selected: null, markers: new Map(), showAll: false, rag: [], question: null };
+const state = { towns: [], data: null, weights: {}, defaults: {}, selected: null, markers: new Map(), rag: [], question: null, focus: null };
 
-const map = L.map("map", { preferCanvas: true });
+const map = L.map("map", { preferCanvas: true, zoomControl: false });
+L.control.zoom({ position: "bottomright" }).addTo(map);
 L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
   maxZoom: 19,
   className: "base-tiles",
@@ -279,9 +328,10 @@ function binOf(score, edges) {
 }
 
 function buildSliders() {
-  $("sliders").innerHTML = FACTORS.map(([key, label]) => `
+  $("sliders").innerHTML = `<p style="margin:0 0 8px;color:var(--text-secondary)">Move a slider to make that part count more. The list and the map update right away.</p>` +
+    FACTORS.map(([key, label, help]) => `
     <div class="slider">
-      <label for="w-${key}">${label}<b id="wv-${key}"></b></label>
+      <label for="w-${key}" title="${esc(help)}">${label}<b id="wv-${key}"></b></label>
       <input type="range" id="w-${key}" min="0" max="100" step="5" value="${Math.round(state.weights[key] * 100)}">
     </div>`).join("");
   FACTORS.forEach(([key]) => {
@@ -297,13 +347,17 @@ function weightShares() {
   return Object.fromEntries(FACTORS.map(([k]) => [k, total > 0 ? state.weights[k] / total : 0]));
 }
 
+function inFocus(s) {
+  return !state.focus || state.focus.test(s);
+}
+
 function rescore() {
   const shares = weightShares();
   FACTORS.forEach(([k]) => { $(`wv-${k}`).textContent = `${Math.round(shares[k] * 100)}%`; });
   const changed = FACTORS.some(([k]) => Math.abs(state.weights[k] - state.defaults[k]) > 1e-9);
   $("weight-note").textContent = changed
-    ? "Custom weights. Ranks and colors are live. Arrows in the table show the move from the default rank."
-    : "Default weights from the pipeline.";
+    ? "Your own weights. The list shows how far each site moved."
+    : "Default weights. Bill savings counts the most.";
 
   const sites = state.data.sites;
   sites.forEach(s => {
@@ -313,85 +367,110 @@ function rescore() {
 
   const edges = quantileEdges(sites.map(s => s.live));
   sites.forEach(s => { s.bin = binOf(s.live, edges); });
-  [...sites].sort((a, b) => a.live - b.live).forEach(s => {
+  restyle();
+  drawLegend(edges, sites.map(s => s.live));
+  renderTable();
+  if (state.selected) renderCard(state.data.sites.find(s => s.id === state.selected));
+}
+
+function restyle() {
+  [...state.data.sites].sort((a, b) => (inFocus(a) - inFocus(b)) || (a.live - b.live)).forEach(s => {
     const m = state.markers.get(s.id);
     m.setStyle(markerStyle(s));
     m.bringToFront();
   });
   const sel = state.markers.get(state.selected);
   if (sel) sel.bringToFront();
-  drawLegend(edges, sites.map(s => s.live));
-  renderTable();
-  if (state.selected) renderCard(state.data.sites.find(s => s.id === state.selected));
 }
 
 function markerStyle(s) {
   const selected = s.id === state.selected;
+  const on = inFocus(s);
   return {
     color: selected ? css("--text-primary") : css("--ring"),
-    weight: selected ? 3 : 2,
-    fillColor: css(`--bin-${s.bin + 1}`),
-    fillOpacity: 1
+    weight: selected ? 3 : on ? 2 : 1,
+    fillColor: on ? css(`--bin-${s.bin + 1}`) : css("--dim"),
+    fillOpacity: on ? 1 : 0.6
   };
 }
 
 function drawLegend(edges, scores) {
   const bounds = [Math.min(...scores), ...edges, Math.max(...scores)];
   const rows = Array.from({ length: BINS }, (_, i) => BINS - 1 - i).map(i =>
-    `<div class="legend-row"><span class="swatch" style="background:var(--bin-${i + 1})"></span>${bounds[i].toFixed(1)} to ${bounds[i + 1].toFixed(1)}</div>`
+    `<div class="legend-row"><span class="swatch" style="background:var(--bin-${i + 1})"></span>${BIN_WORDS[i]} fit, ${Math.round(bounds[i])} to ${Math.round(bounds[i + 1])}</div>`
   ).join("");
-  $("legend").innerHTML = `<h3>Score, by fifths</h3>${rows}
-    <div class="legend-row"><span class="sq"></span>Substation</div>
-    <div class="note">Bigger dot, more value a month.</div>`;
+  $("legend").innerHTML = `<h3>Battery fit, 0 to 100</h3>${rows}
+    <div class="legend-row"><span class="sq"></span>Power substation</div>
+    <div class="note">Darker dot means a better fit. Bigger dot means more money a month.</div>`;
 }
 
 function renderTable() {
   const sites = [...state.data.sites].sort((a, b) => a.liveRank - b.liveRank);
-  const shown = state.showAll ? sites : sites.slice(0, TABLE_ROWS);
-  $("rows").innerHTML = shown.map(s => {
+  $("rows").innerHTML = sites.map(s => {
     const move = s.rank - s.liveRank;
-    const arrow = move > 0 ? ` <span class="move" aria-label="up ${move}">up ${move}</span>` : move < 0 ? ` <span class="move" aria-label="down ${-move}">down ${-move}</span>` : "";
-    return `<tr data-id="${esc(s.id)}" tabindex="0" class="${s.id === state.selected ? "selected" : ""}">
+    const arrow = move > 0 ? `<br><span class="muted" aria-label="up ${move}">up ${move}</span>` : move < 0 ? `<br><span class="muted" aria-label="down ${-move}">down ${-move}</span>` : "";
+    const cls = [s.id === state.selected ? "selected" : "", inFocus(s) ? "" : "faded"].join(" ");
+    return `<tr data-id="${esc(s.id)}" tabindex="0" class="${cls}">
       <td class="num">${s.liveRank}${arrow}</td>
-      <td><b>${esc(s.name)}</b><br><span class="move">${esc(s.addr)}</span></td>
-      <td class="hide-sm">${esc(s.use)}</td>
-      <td class="num">${s.live.toFixed(1)}</td>
+      <td><b>${esc(s.name)}</b><br><span class="muted">${esc(s.addr)}</span></td>
+      <td class="num">${Math.round(s.live)}</td>
       <td class="num">${money(s.value)}</td>
-      <td class="hide-sm">${esc(s.confidence)}</td>
     </tr>`;
   }).join("");
-  $("toggle-rows").textContent = state.showAll ? `Show top ${TABLE_ROWS}` : `Show all ${sites.length}`;
 }
 
 function renderCard(s) {
   const shares = weightShares();
-  const factors = FACTORS.map(([k, label]) => {
+  const total = state.data.sites.length;
+  const factors = FACTORS.map(([k, label, help]) => {
     const part = 100 * shares[k] * s[`f_${k}`];
-    return `<div class="factor"><span>${label}</span><span class="track"><span class="fill" style="width:${Math.min(100, s[`f_${k}`] * 100)}%"></span></span><span>${part.toFixed(1)}</span></div>`;
+    return `<div class="factor" title="${esc(help)}"><span>${label}</span><span class="track"><span class="fill" style="width:${Math.min(100, s[`f_${k}`] * 100)}%"></span></span><span>${part.toFixed(1)}</span></div>`;
   }).join("");
-  $("card").innerHTML = `
-    <h3>#${s.liveRank} ${esc(s.name)}</h3>
-    <p class="addr">${esc(s.addr)}, ${esc(state.data.name)} <span class="badge">${esc(s.confidence)} confidence</span></p>
+  const info = (state.data.tariff.classes || {})[s.rate_class];
+  const source = info ? ` <a href="${esc(info.url)}" target="_blank" rel="noopener">source</a>` : "";
+  const weak = s.weak && s.weak !== "No clear weak point" ? `<p><b>Weak point.</b> ${esc(s.weak)}</p>` : "";
+  const card = $("card");
+  card.hidden = false;
+  card.innerHTML = `
+    <div class="card-top">
+      <h3>#${s.liveRank} ${esc(s.name)}</h3>
+      <button class="close" id="card-close" aria-label="Close">x</button>
+    </div>
+    <p class="addr">${esc(s.addr)}, ${esc(state.data.name)}</p>
+    <div class="big">
+      <div><b>${Math.round(s.live)}</b><span>Battery fit out of 100. Rank ${s.liveRank} of ${total}.</span></div>
+      <div><b>${money(s.value)}</b><span>Money a month, a guess, before battery cost</span></div>
+    </div>
     <dl class="kv">
-      <dt>Score</dt><dd>${s.live.toFixed(1)}</dd>
-      <dt>Use</dt><dd>${esc(s.use)}</dd>
-      <dt>Value</dt><dd>${money(s.value)} a month</dd>
-      <dt>Bill savings</dt><dd>${money(s.bill)}, ${esc(s.rate_class)} at $${s.rate.toFixed(2)}/kW</dd>
-      <dt>Incentive</dt><dd>${money(s.incentive)} a month</dd>
-      <dt>Peak guess</dt><dd>${num(s.peak_kw)} kW, battery ${s.battery_kw} kW</dd>
-      <dt>Floor area</dt><dd>${num(s.floor_area)} m2</dd>
-      <dt>Substation</dt><dd>${num(s.dist_sub)} m, ${esc(s.substation || "unnamed")}</dd>
-      <dt>Open lot</dt><dd>${num(s.open_lot)} m2</dd>
-      <dt>Owner</dt><dd>${esc(s.owner)}</dd>
+      <dt>Lower bill</dt><dd>${money(s.bill)} a month</dd>
+      <dt>Program pay</dt><dd>${money(s.incentive)} a month, from ConnectedSolutions</dd>
     </dl>
-    <div class="factors" aria-label="Score parts">${factors}</div>
-    <p class="pitch">${esc(s.pitch)}</p>`;
+    <div class="why">
+      <p><b>Why it ranks here.</b> ${esc(s.reason)}.</p>
+      ${weak}
+    </div>
+    <p class="small-head">What makes up the fit</p>
+    ${factors}
+    <p class="small-head">Details</p>
+    <dl class="kv">
+      <dt>Business type</dt><dd>${esc(s.use)}</dd>
+      <dt>Peak use, guess</dt><dd>${num(s.peak_kw)} kW</dd>
+      <dt>Battery size</dt><dd>${s.battery_kw} kW</dd>
+      <dt>Rate</dt><dd>${esc(s.rate_class)} at $${s.rate.toFixed(2)} per kW${source}</dd>
+      <dt>Floor area</dt><dd>${num(s.floor_area)} m2</dd>
+      <dt>Open lot</dt><dd>${num(s.open_lot)} m2</dd>
+      <dt>Substation</dt><dd>${num(s.dist_sub)} m, ${esc(s.substation || "unnamed")}</dd>
+      <dt>Land owner</dt><dd>${esc(s.owner)}</dd>
+      <dt>Data quality</dt><dd>${esc(s.confidence)}</dd>
+    </dl>`;
+  $("card-close").addEventListener("click", clearSelection);
 }
 
 function renderLookalikes(s) {
   const list = state.data.lookalikes[s.id] || [];
+  $("look-for").textContent = `like ${s.name}`;
   if (!list.length) {
-    $("lookalikes").innerHTML = `<p class="empty">No lookalikes saved for this site.</p>`;
+    $("lookalikes").innerHTML = `<p class="empty">No similar businesses saved for this site.</p>`;
     return;
   }
   const townName = id => (state.towns.find(t => t.id === id) || { name: id }).name;
@@ -406,11 +485,23 @@ function renderLookalikes(s) {
   }).join("")}</ul>`;
 }
 
+function clearSelection() {
+  const prev = state.markers.get(state.selected);
+  const old = state.selected;
+  state.selected = null;
+  if (prev) prev.setStyle(markerStyle(state.data.sites.find(x => x.id === old)));
+  $("card").hidden = true;
+  $("look-for").textContent = "";
+  $("lookalikes").innerHTML = `<p class="empty">Click a dot or a row. You will see the 5 most similar businesses in all five towns.</p>`;
+  document.querySelectorAll("#rows tr.selected").forEach(tr => tr.classList.remove("selected"));
+}
+
 function select(id, fly) {
   const prev = state.markers.get(state.selected);
+  const old = state.selected;
   state.selected = id;
   const s = state.data.sites.find(x => x.id === id);
-  if (prev) prev.setStyle(markerStyle(state.data.sites.find(x => x.id === prev.siteId)));
+  if (prev) prev.setStyle(markerStyle(state.data.sites.find(x => x.id === old)));
   if (!s) return;
   const m = state.markers.get(id);
   m.setStyle(markerStyle(s));
@@ -423,14 +514,57 @@ function select(id, fly) {
   if (row) row.scrollIntoView({ block: "nearest" });
 }
 
-function renderTariff() {
-  const t = state.data.tariff;
-  const rows = Object.entries(t.classes).map(([cls, info]) =>
-    `<dt>${esc(cls)}</dt><dd>$${info.usd_per_kw.toFixed(2)} per kW. Source text, <q>${info.quotes.map(esc).join("; ")}</q>. <a href="${esc(info.url)}" target="_blank" rel="noopener">PDF</a>${info.effective ? `, effective ${esc(info.effective)}` : ""}</dd>`
-  ).join("");
-  $("tariff").innerHTML = `<h2>${esc(state.data.name)} demand charges</h2>
-    <p class="sub" style="margin:0 0 8px">Utility, ${esc(UTILITY_NAMES[t.utility] || t.utility)}</p>
-    <dl class="kv">${rows}</dl>`;
+function questionScope(q) {
+  const text = q.question;
+  const header = (q.evidence[0] || {}).header || "";
+  if (/home|residential/i.test(text) || /Mass Save/.test(header)) return { kind: "home" };
+  const cls = (text.match(/G-\d/) || [])[0] || null;
+  let utility = null;
+  if (/South Shore/.test(text)) utility = "eversource_south_shore";
+  else if (/Greater Boston/.test(text)) utility = "eversource_greater_boston";
+  else if (/National Grid/.test(text)) utility = "national_grid";
+  if (!utility && /ConnectedSolutions/.test(text)) return { kind: "program" };
+  return { kind: "rate", utility, cls };
+}
+
+function applyFocus() {
+  state.focus = null;
+  const q = state.rag.find(x => x.id === state.question);
+  let message = null;
+  let action = "";
+  if (q) {
+    const scope = questionScope(q);
+    const town = state.data.name;
+    const here = TOWN_UTILITY[state.data.id];
+    if (scope.kind === "home") {
+      message = "This question is about home batteries. The map shows businesses only.";
+    } else if (scope.kind === "program") {
+      state.focus = { test: s => s.incentive > 0 };
+      const n = state.data.sites.filter(state.focus.test).length;
+      message = `${n} of ${state.data.sites.length} sites in ${town} can get this program pay.`;
+    } else if (scope.utility && scope.utility !== here) {
+      const other = Object.keys(TOWN_UTILITY).find(t => TOWN_UTILITY[t] === scope.utility);
+      message = `This rate is for ${UTILITY_NAMES[scope.utility]}. ${town} is on ${UTILITY_NAMES[here]}.`;
+      if (other) action = other;
+      else message += " None of our five towns use it.";
+    } else {
+      state.focus = scope.cls ? { test: s => s.rate_class === scope.cls } : null;
+      const n = state.focus ? state.data.sites.filter(state.focus.test).length : state.data.sites.length;
+      message = scope.cls
+        ? `${n} of ${state.data.sites.length} sites in ${town} are on ${scope.cls}. They are shown in color.`
+        : `All ${n} sites in ${town} use this rate sheet.`;
+    }
+  }
+  const bar = $("focus");
+  if (message) {
+    const townName = (state.towns.find(t => t.id === action) || {}).name;
+    $("focus-text").innerHTML = esc(message) + (action ? ` <button id="focus-go" data-town="${esc(action)}">Go to ${esc(townName)}</button>` : "");
+    bar.hidden = false;
+  } else {
+    bar.hidden = true;
+  }
+  restyle();
+  renderTable();
 }
 
 function highlight(text, terms) {
@@ -449,18 +583,23 @@ function renderQuestions() {
 }
 
 function showAnswer(id) {
-  state.question = id;
+  state.question = state.question === id ? null : id;
   renderQuestions();
-  const q = state.rag.find(x => x.id === id);
+  applyFocus();
+  const q = state.rag.find(x => x.id === state.question);
+  if (!q) {
+    $("answer").innerHTML = `<p class="empty">Pick a question. The map will show which sites it is about.</p>`;
+    return;
+  }
   const numbers = (q.answer || "").match(/\d+(?:\.\d+)?/g) || [];
   const head = q.answer
     ? `<p>${esc(q.answer)}</p>`
-    : `<p class="notice">No model answer. This demo runs without an API key, which is why only the retrieved source text is shown. Add a key and rerun the pipeline to get a cited answer.</p>`;
+    : `<p class="notice">Here is the text we found in the utility's own pages. The key part is usually in the first passage.</p>`;
   const evidence = q.evidence.map(e => `<div class="evidence">
-      <p class="head">${esc(e.header)}, match ${e.score.toFixed(2)}, <a href="${esc(e.url)}" target="_blank" rel="noopener">source</a></p>
+      <p class="head">${esc(e.header)}, <a href="${esc(e.url)}" target="_blank" rel="noopener">open source</a></p>
       <p>${highlight(e.text, numbers)}</p>
     </div>`).join("");
-  $("answer").innerHTML = `<h2>${esc(q.question)}</h2>${head}<p class="status">Top 3 passages found by retrieval${q.retrieval_hit ? "" : ". The expected passage was not in the top 3 for this question"}.</p>${evidence}`;
+  $("answer").innerHTML = `${head}${evidence}`;
 }
 
 async function loadTown(id, selectId) {
@@ -472,9 +611,10 @@ async function loadTown(id, selectId) {
   townLayer = L.layerGroup();
   $("town-select").value = id;
   history.replaceState(null, "", `?town=${encodeURIComponent(id)}`);
-  $("subtitle").textContent = `${data.name}, top ${data.sites.length} battery sites`;
+  $("subtitle").textContent = `Which businesses in ${data.name} would gain the most from a battery. Top ${data.sites.length} shown.`;
 
   const border = L.geoJSON(data.boundary, { style: { color: css("--boundary"), weight: 2, fill: false, dashArray: "4 4" }, interactive: false });
+  map.invalidateSize();
   map.fitBounds(border.getBounds(), { padding: [12, 12] });
   townLayer.addTo(map);
   border.addTo(townLayer);
@@ -483,13 +623,13 @@ async function loadTown(id, selectId) {
     L.marker([s.lat, s.lon], {
       icon: L.divIcon({ className: "", html: `<div class="sq"></div>`, iconSize: [10, 10] }),
       keyboard: false
-    }).bindTooltip(`${esc(s.name)}, ${esc(s.type)}${s.voltage ? ", " + esc(s.voltage) + " V" : ""}`).addTo(townLayer);
+    }).bindTooltip(`${esc(s.name)}, power substation${s.voltage ? ", " + esc(s.voltage) + " V" : ""}`).addTo(townLayer);
   });
 
   const maxValue = Math.max(...data.sites.map(s => s.value));
   data.sites.forEach(s => {
     const m = L.circleMarker([s.lat, s.lon], { radius: 4 + 6 * Math.sqrt(Math.max(s.value, 0) / maxValue) })
-      .bindTooltip(() => `#${s.liveRank} ${esc(s.name)}, score ${s.live.toFixed(1)}, ${money(s.value)} a month`)
+      .bindTooltip(() => `#${s.liveRank} ${esc(s.name)}, fit ${Math.round(s.live)}, ${money(s.value)} a month`)
       .on("click", () => select(s.id, false))
       .addTo(townLayer);
     m.siteId = s.id;
@@ -497,13 +637,15 @@ async function loadTown(id, selectId) {
   });
 
   rescore();
-  renderTariff();
-  $("card").innerHTML = `<p class="empty">Click a dot or a table row to see a site.</p>`;
-  $("lookalikes").innerHTML = `<p class="empty">Pick a site to see the 5 most similar sites in all towns.</p>`;
-  $("status").textContent = `${data.sites.length} sites and ${data.substations.length} substations. Hover a dot for a summary, click it for details.`;
+  clearSelection();
+  applyFocus();
+  $("list-scroll").scrollTop = 0;
   if (selectId) {
     if (data.sites.some(s => s.id === selectId)) select(selectId, true);
-    else $("status").textContent = `That lookalike is not in the top ${data.sites.length} of ${data.name}, which is why it is not on this map.`;
+    else {
+      $("focus-text").textContent = `That business is not in the top ${data.sites.length} of ${data.name}, which is why it is not on this map.`;
+      $("focus").hidden = false;
+    }
   }
 }
 
@@ -522,12 +664,16 @@ async function init() {
   renderQuestions();
 
   $("town-select").addEventListener("change", e => loadTown(e.target.value));
+  $("weights-toggle").addEventListener("click", e => {
+    const open = $("weights").hidden;
+    $("weights").hidden = !open;
+    e.currentTarget.setAttribute("aria-expanded", String(open));
+  });
   $("reset").addEventListener("click", () => {
     state.weights = { ...state.defaults };
     FACTORS.forEach(([k]) => { $(`w-${k}`).value = Math.round(state.weights[k] * 100); });
     rescore();
   });
-  $("toggle-rows").addEventListener("click", () => { state.showAll = !state.showAll; renderTable(); });
   $("rows").addEventListener("click", e => {
     const tr = e.target.closest("tr[data-id]");
     if (tr) select(tr.dataset.id, true);
@@ -546,12 +692,24 @@ async function init() {
     const b = e.target.closest("button[data-q]");
     if (b) showAnswer(b.dataset.q);
   });
+  $("focus").addEventListener("click", e => {
+    const go = e.target.closest("#focus-go");
+    if (go) loadTown(go.dataset.town);
+  });
+  $("focus-clear").addEventListener("click", () => {
+    if (state.question) showAnswer(state.question);
+    else $("focus").hidden = true;
+  });
+  window.addEventListener("resize", () => map.invalidateSize());
 
   const wanted = new URLSearchParams(location.search).get("town");
   await loadTown(towns.some(t => t.id === wanted) ? wanted : towns[0].id);
 }
 
-init().catch(err => { $("status").textContent = `Could not load the data. ${err.message}`; });
+init().catch(err => {
+  $("focus-text").textContent = `Could not load the data. ${err.message}`;
+  $("focus").hidden = false;
+});
 </script>
 </body>
 </html>
