@@ -6,6 +6,9 @@
 <title>PowerCite Site Ranker</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='3' y='8' width='23' height='16' rx='3' fill='%231c5cab'/%3E%3Crect x='26' y='13' width='3' height='6' rx='1' fill='%231c5cab'/%3E%3Cpath d='M16 10l-5 8h4l-1 6 5-8h-4z' fill='%23ffffff'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap">
 <style>
 :root {
   color-scheme: light;
@@ -23,6 +26,10 @@
   --bar: #2a78d6;
   --dim: #c9c8c2;
   --glass: rgba(252, 252, 251, 0.72);
+  --good: #17804a;
+  --good-bg: #e2f3e9;
+  --ink: #141414;
+  --ink-text: #fcfcfb;
   --bin-1: #86b6ef;
   --bin-2: #5598e7;
   --bin-3: #2a78d6;
@@ -46,6 +53,10 @@
     --bar: #3987e5;
     --dim: #3a3a37;
     --glass: rgba(26, 26, 25, 0.72);
+    --good: #5cc98d;
+    --good-bg: rgba(92, 201, 141, 0.14);
+    --ink: #f0efec;
+    --ink-text: #121211;
     --bin-1: #184f95;
     --bin-2: #256abf;
     --bin-3: #3987e5;
@@ -70,6 +81,10 @@
   --bar: #3987e5;
   --dim: #3a3a37;
   --glass: rgba(26, 26, 25, 0.72);
+  --good: #5cc98d;
+  --good-bg: rgba(92, 201, 141, 0.14);
+  --ink: #f0efec;
+  --ink-text: #121211;
   --bin-1: #184f95;
   --bin-2: #256abf;
   --bin-3: #3987e5;
@@ -83,19 +98,32 @@ body {
   margin: 0;
   background: var(--surface-0);
   color: var(--text-primary);
-  font: 14px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif;
+  font: 14px/1.45 "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 .app { height: 100dvh; display: grid; grid-template-rows: auto minmax(0, 1fr); }
 header {
-  display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: center; justify-content: space-between;
+  display: grid; grid-template-columns: 1fr auto 1fr; gap: 8px 20px; align-items: center;
   padding: 10px 16px; background: var(--surface-1); border-bottom: 1px solid var(--border);
   position: relative; z-index: 2000;
 }
-h1 { font-size: 19px; margin: 0; }
-h2 { font-size: 15px; margin: 0; }
+.brand { display: flex; align-items: center; gap: 10px; }
+.brand svg { width: 30px; height: 30px; flex: none; }
+h1 { font: 700 22px/1 "Space Grotesk", "Inter", sans-serif; letter-spacing: -0.02em; margin: 0; }
+h2 { font-size: 15px; font-weight: 600; margin: 0; }
+.town-title { font: 600 22px/1 "Space Grotesk", "Inter", sans-serif; letter-spacing: -0.01em; margin: 0; text-align: center; }
 .sub { color: var(--text-secondary); margin: 0; font-size: 13px; }
-.head-controls { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.head-controls { display: flex; gap: 10px; align-items: center; justify-content: end; flex-wrap: wrap; }
 .pop { position: relative; }
+.tbtn { display: inline-flex; align-items: center; gap: 8px; font-weight: 500; padding: 7px 12px; border-radius: 8px; }
+.tbtn svg { width: 14px; height: 14px; transition: transform 0.15s; }
+.tbtn[aria-expanded="true"] svg { transform: rotate(180deg); }
+.tbtn .tag { font-size: 12px; font-weight: 400; color: var(--text-muted); }
+.menu { position: absolute; top: calc(100% + 8px); right: 0; z-index: 2001; list-style: none; margin: 0; padding: 6px; min-width: 240px; }
+.menu[hidden] { display: none; }
+.menu button { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 12px; border: 0; background: transparent; border-radius: 6px; padding: 8px 10px; text-align: left; }
+.menu button:hover, .menu button:focus-visible { background: color-mix(in srgb, var(--accent) 12%, transparent); }
+.menu button[aria-selected="true"] { font-weight: 600; color: var(--accent); }
+.menu .tag { font-size: 12px; color: var(--text-muted); font-weight: 400; }
 select, button, input[type="text"] {
   font: inherit;
   color: var(--text-primary);
@@ -151,25 +179,52 @@ tbody tr.faded { opacity: 0.45; }
 .close { padding: 2px 8px; line-height: 1.2; }
 .addr { color: var(--text-secondary); margin: 2px 0 10px; }
 .big { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 0 0 10px; }
-.big div { background: var(--surface-2); border-radius: 6px; padding: 8px 10px; }
-.card .big div, .card .factor .track { background: color-mix(in srgb, var(--surface-2) 70%, transparent); }
-.big b { display: block; font-size: 20px; font-variant-numeric: tabular-nums; }
-.big span { font-size: 12px; color: var(--text-secondary); }
+.big div { border-radius: 8px; padding: 10px 12px; }
+.big b { display: block; font: 700 26px/1.1 "Space Grotesk", "Inter", sans-serif; font-variant-numeric: tabular-nums; }
+.big span { font-size: 12px; }
+.big .fit { background: var(--good-bg); border: 1px solid color-mix(in srgb, var(--good) 35%, transparent); }
+.big .fit b { color: var(--good); }
+.big .fit b small { font-size: 14px; font-weight: 500; opacity: 0.8; }
+.big .fit span { color: var(--text-secondary); }
+.big .cash { background: var(--ink); color: var(--ink-text); }
+.big .cash span { color: color-mix(in srgb, var(--ink-text) 75%, transparent); }
 .why { margin: 0 0 10px; font-size: 13px; }
 .why p { margin: 0 0 4px; }
 .kv { display: grid; grid-template-columns: auto 1fr; gap: 3px 12px; margin: 0 0 10px; font-size: 13px; }
 .kv dt { color: var(--text-muted); }
 .kv dd { margin: 0; font-variant-numeric: tabular-nums; }
 .factor { display: grid; grid-template-columns: 120px 1fr 36px; gap: 8px; align-items: center; font-size: 12px; color: var(--text-secondary); margin: 3px 0; }
-.factor .track { height: 8px; background: var(--surface-2); border-radius: 4px; overflow: hidden; }
-.factor .fill { height: 100%; background: var(--bar); border-radius: 0 4px 4px 0; }
+.factor .track {
+  display: block; position: relative; height: 10px; border-radius: 999px; overflow: hidden;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface-2) 80%, transparent);
+}
+.factor .track::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: repeating-linear-gradient(to right, transparent 0 calc(25% - 1px), color-mix(in srgb, var(--surface-1) 70%, transparent) calc(25% - 1px) 25%);
+}
+.factor .fill { display: block; height: 100%; background: linear-gradient(to right, var(--bin-3), var(--bin-5)); border-radius: 999px; }
 .factor span:last-child { text-align: right; font-variant-numeric: tabular-nums; color: var(--text-primary); }
 .small-head { font-size: 12px; font-weight: 600; color: var(--text-secondary); margin: 10px 0 4px; }
 .weights { position: absolute; top: calc(100% + 8px); right: 0; width: min(300px, calc(100vw - 32px)); padding: 12px; z-index: 2001; }
 .slider { margin: 0 0 8px; }
 .slider label { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-secondary); }
 .slider label b { color: var(--text-primary); font-weight: 600; font-variant-numeric: tabular-nums; }
-.slider input { width: 100%; accent-color: var(--accent); }
+.slider input {
+  -webkit-appearance: none; appearance: none; width: 100%; height: 8px; margin: 8px 0 4px;
+  border-radius: 999px; border: 1px solid var(--border); cursor: pointer;
+  background: linear-gradient(to right, var(--accent) 0 var(--val, 50%), var(--surface-2) var(--val, 50%) 100%);
+}
+.slider input::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none; width: 18px; height: 18px; border-radius: 50%;
+  background: var(--surface-1); border: 3px solid var(--accent); box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+}
+.slider input::-moz-range-thumb {
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--surface-1); border: 3px solid var(--accent); box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+}
+.slider input::-moz-range-track { background: transparent; }
+.slider input:active::-webkit-slider-thumb { transform: scale(1.1); }
 .weights p { margin: 4px 0 0; font-size: 12px; color: var(--text-muted); }
 .focus { top: 10px; left: 50%; transform: translateX(-50%); padding: 6px 8px 6px 12px; display: flex; gap: 10px; align-items: center; font-size: 13px; max-width: calc(100% - 140px); }
 .bottom { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 12px; min-height: 0; }
@@ -198,6 +253,10 @@ a { color: var(--accent); }
 @media (max-width: 1100px) {
   .faq { grid-template-columns: 1fr; }
 }
+@media (max-width: 700px) {
+  header { grid-template-columns: 1fr auto; }
+  .town-title { display: none; }
+}
 @media (max-width: 900px) {
   .app { height: auto; display: block; }
   main { grid-template-columns: 1fr; }
@@ -214,16 +273,23 @@ a { color: var(--accent); }
 <body>
 <div class="app">
   <header>
-    <div>
+    <div class="brand">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="8" width="23" height="16" rx="3" fill="#1c5cab"/><rect x="26" y="13" width="3" height="6" rx="1" fill="#1c5cab"/><path d="M16 10l-5 8h4l-1 6 5-8h-4z" fill="#ffffff"/></svg>
       <h1>PowerCite</h1>
-      <p class="sub" id="subtitle">Which businesses would gain the most from a battery</p>
     </div>
+    <p class="town-title" id="town-title" aria-live="polite"></p>
     <div class="head-controls">
-      <label>Town
-        <select id="town-select" aria-label="Choose a town"></select>
-      </label>
       <div class="pop">
-        <button id="weights-toggle" aria-expanded="false" aria-controls="weights">Priorities</button>
+        <button class="tbtn" id="town-toggle" aria-haspopup="listbox" aria-expanded="false" aria-controls="town-menu">
+          <span class="tag">Town</span><span id="town-label"></span>
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <ul class="menu glass" id="town-menu" role="listbox" aria-label="Choose a town" hidden></ul>
+      </div>
+      <div class="pop">
+        <button class="tbtn" id="weights-toggle" aria-expanded="false" aria-controls="weights">Priorities
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
         <section class="weights glass" id="weights" hidden aria-label="Priorities">
           <div id="sliders"></div>
           <button id="reset">Reset</button>
@@ -352,11 +418,29 @@ function buildSliders() {
       <input type="range" id="w-${key}" min="0" max="100" step="5" value="${Math.round(state.weights[key] * 100)}">
     </div>`).join("");
   FACTORS.forEach(([key]) => {
+    paintSlider($(`w-${key}`));
     $(`w-${key}`).addEventListener("input", e => {
       state.weights[key] = Number(e.target.value) / 100;
+      paintSlider(e.target);
       rescore();
     });
   });
+}
+
+function paintSlider(input) {
+  input.style.setProperty("--val", `${input.value}%`);
+}
+
+function renderTownMenu() {
+  const current = state.data ? state.data.id : null;
+  $("town-menu").innerHTML = state.towns.map(t =>
+    `<li><button role="option" data-town="${esc(t.id)}" aria-selected="${t.id === current}">${esc(t.name)}<span class="tag">${esc(UTILITY_NAMES[TOWN_UTILITY[t.id]] || "")}</span></button></li>`
+  ).join("");
+}
+
+function setMenuOpen(menu, toggle, open) {
+  $(menu).hidden = !open;
+  $(toggle).setAttribute("aria-expanded", String(open));
 }
 
 function weightShares() {
@@ -456,8 +540,8 @@ function renderCard(s) {
     </div>
     <p class="addr">${esc(s.addr)}, ${esc(state.data.name)}</p>
     <div class="big">
-      <div><b>${Math.round(s.live)}</b><span>Battery fit out of 100. Rank ${s.liveRank} of ${total}.</span></div>
-      <div><b>${money(s.value)}</b><span>Money a month, a guess, before battery cost</span></div>
+      <div class="fit"><b>${Math.round(s.live)}<small> / 100</small></b><span>Battery fit. Rank ${s.liveRank} of ${total}.</span></div>
+      <div class="cash"><b>${money(s.value)}</b><span>Money a month, a guess, before battery cost</span></div>
     </div>
     <dl class="kv">
       <dt>Lower bill</dt><dd>${money(s.bill)} a month</dd>
@@ -620,9 +704,11 @@ async function loadTown(id, selectId) {
   state.markers.clear();
   townLayer.remove();
   townLayer = L.layerGroup();
-  $("town-select").value = id;
   history.replaceState(null, "", `?town=${encodeURIComponent(id)}`);
-  $("subtitle").textContent = `Which businesses in ${data.name} would gain the most from a battery. Top ${data.sites.length} shown.`;
+  $("town-label").textContent = data.name;
+  $("town-title").textContent = data.name;
+  document.title = `${data.name}, PowerCite`;
+  renderTownMenu();
 
   const border = L.geoJSON(data.boundary, { style: { color: css("--boundary"), weight: 2, fill: false, dashArray: "4 4" }, interactive: false });
   map.invalidateSize();
@@ -667,30 +753,48 @@ async function init() {
   ]);
   state.towns = towns;
   state.rag = rag;
-  $("town-select").innerHTML = towns.map(t => `<option value="${esc(t.id)}">${esc(t.name)}</option>`).join("");
+  renderTownMenu();
   const first = await fetch(`data/${towns[0].id}.json`).then(r => r.json());
   state.defaults = { ...first.weights };
   state.weights = { ...first.weights };
   buildSliders();
   renderQuestions();
 
-  $("town-select").addEventListener("change", e => loadTown(e.target.value));
-  const setWeightsOpen = open => {
-    $("weights").hidden = !open;
-    $("weights-toggle").setAttribute("aria-expanded", String(open));
-  };
-  $("weights-toggle").addEventListener("click", () => setWeightsOpen($("weights").hidden));
+  const menus = [["town-menu", "town-toggle"], ["weights", "weights-toggle"]];
+  menus.forEach(([menu, toggle]) => {
+    $(toggle).addEventListener("click", () => {
+      const open = $(menu).hidden;
+      menus.forEach(([m, t]) => setMenuOpen(m, t, false));
+      setMenuOpen(menu, toggle, open);
+    });
+  });
   document.addEventListener("click", e => {
-    if (!$("weights").hidden && !e.target.closest(".pop")) setWeightsOpen(false);
+    menus.forEach(([menu, toggle]) => {
+      if (!$(menu).hidden && !$(menu).parentElement.contains(e.target)) setMenuOpen(menu, toggle, false);
+    });
   });
   document.addEventListener("keydown", e => {
     if (e.key !== "Escape") return;
-    if (!$("weights").hidden) setWeightsOpen(false);
+    const open = menus.find(([menu]) => !$(menu).hidden);
+    if (open) { setMenuOpen(open[0], open[1], false); $(open[1]).focus(); }
     else if (state.selected) clearSelection();
+  });
+  $("town-menu").addEventListener("click", e => {
+    const b = e.target.closest("button[data-town]");
+    if (!b) return;
+    setMenuOpen("town-menu", "town-toggle", false);
+    if (b.dataset.town !== state.data.id) loadTown(b.dataset.town);
+  });
+  $("town-menu").addEventListener("keydown", e => {
+    if (e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
+    e.preventDefault();
+    const items = [...$("town-menu").querySelectorAll("button")];
+    const i = items.indexOf(document.activeElement);
+    items[(i + (e.key === "ArrowDown" ? 1 : -1) + items.length) % items.length].focus();
   });
   $("reset").addEventListener("click", () => {
     state.weights = { ...state.defaults };
-    FACTORS.forEach(([k]) => { $(`w-${k}`).value = Math.round(state.weights[k] * 100); });
+    FACTORS.forEach(([k]) => { $(`w-${k}`).value = Math.round(state.weights[k] * 100); paintSlider($(`w-${k}`)); });
     rescore();
   });
   $("rows").addEventListener("click", e => {
