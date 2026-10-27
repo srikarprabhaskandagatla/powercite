@@ -20,7 +20,7 @@
   --text-secondary: #4a4946;
   --text-muted: #6b6a65;
   --accent: #c2410c;
-  --ring: #fcfcfb;
+  --ring: #8c8b85;
   --boundary: #52514e;
   --substation: #52514e;
   --bar: #ea580c;
@@ -171,14 +171,16 @@ tbody tr.faded { opacity: 0.45; }
   background: var(--glass);
   -webkit-backdrop-filter: blur(14px) saturate(1.4);
   backdrop-filter: blur(14px) saturate(1.4);
-  border: 1.5px solid color-mix(in srgb, var(--accent) 80%, transparent); border-radius: 10px;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+  border: 1.5px solid var(--accent); border-radius: 10px;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent), 0 6px 24px rgba(0, 0, 0, 0.18);
 }
-.map-wrap .leaflet-bar { border: 1.5px solid color-mix(in srgb, var(--accent) 80%, transparent); border-radius: 10px; overflow: hidden; box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18); }
-.map-wrap .leaflet-bar a {
-  background: var(--glass); color: var(--text-primary); border-bottom-color: var(--border);
+.map-wrap .leaflet-bar {
+  border: 1.5px solid var(--accent) !important; border-radius: 10px; overflow: hidden;
+  background: var(--glass); background-clip: border-box;
   -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent), 0 6px 24px rgba(0, 0, 0, 0.18);
 }
+.map-wrap .leaflet-bar a { background: transparent; color: var(--text-primary); border-bottom-color: var(--border); border-radius: 0 !important; }
 .map-wrap .leaflet-bar a:hover { background: var(--surface-2); color: var(--accent); }
 .map-wrap .leaflet-control-attribution { background: var(--glass); color: var(--text-secondary); }
 .icon-btn { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 34px; padding: 0; border-radius: 8px; }
@@ -264,7 +266,11 @@ tbody tr.faded { opacity: 0.45; }
 .quote { margin: 0; font-size: 13px; color: var(--text-secondary); border-left: 3px solid var(--accent); padding: 2px 0 2px 10px; }
 .quote .head { display: block; font-size: 12px; color: var(--text-muted); margin-top: 4px; }
 .ask input { flex: 1; min-width: 0; }
-.ask input:disabled, .ask button:disabled { opacity: 0.6; cursor: not-allowed; }
+.primary { background: var(--accent); border-color: var(--accent); color: #ffffff; font-weight: 600; padding: 6px 16px; border-radius: 8px; }
+.primary:hover { filter: brightness(1.08); border-color: var(--accent); }
+.chat { margin: 0 0 6px; font-size: 13px; }
+.chat .me { display: inline-block; background: var(--surface-2); border-radius: 10px; padding: 4px 10px; margin: 0 0 6px; }
+.chat .bot { display: block; border-left: 3px solid var(--accent); padding: 2px 0 2px 10px; }
 .qlist { list-style: none; margin: 0; padding: 0; }
 .qlist button { font-size: 13px; }
 .qlist button[aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 3px 0 0 var(--accent); }
@@ -311,7 +317,6 @@ a { color: var(--accent); }
         </button>
         <ul class="menu glass" id="town-menu" role="listbox" aria-label="Choose a town" hidden></ul>
       </div>
-      <button class="tbtn icon-btn" id="theme-toggle" aria-label="Theme" title="Theme"></button>
       <div class="pop">
         <button class="tbtn" id="weights-toggle" aria-expanded="false" aria-controls="weights">Priorities
           <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -322,6 +327,7 @@ a { color: var(--accent); }
           <p id="weight-note"></p>
         </section>
       </div>
+      <button class="tbtn icon-btn" id="theme-toggle" aria-label="Theme" title="Theme"></button>
     </div>
   </header>
 
@@ -361,8 +367,7 @@ a { color: var(--accent); }
       <div class="bottom">
         <section class="panel box" aria-label="Lookalike sites">
           <div class="box-head">
-            <h2>Similar</h2>
-            <span class="muted" id="look-for"></span>
+            <h2>Similar results</h2>
           </div>
           <div class="box-scroll" id="lookalikes"><p class="empty">Pick a site to see 5 like it.</p></div>
         </section>
@@ -370,12 +375,11 @@ a { color: var(--accent); }
         <section class="panel box" aria-label="Questions about rates">
           <div class="box-head">
             <h2>Rates</h2>
-            <span class="muted">From utility pages</span>
           </div>
-          <div class="ask" hidden>
-            <input type="text" placeholder="Ask your own question (coming soon)" disabled aria-label="Ask a question, coming soon">
-            <button disabled>Ask</button>
-          </div>
+          <form class="ask" id="ask">
+            <input type="text" id="ask-input" placeholder="Ask about rates" aria-label="Ask about rates">
+            <button type="submit" class="primary">Ask</button>
+          </form>
           <div class="faq">
             <ul class="qlist" id="questions"></ul>
             <div class="box-scroll" id="answer"><p class="empty">Pick one to see it on the map.</p></div>
@@ -399,6 +403,11 @@ const UTILITY_NAMES = {
   national_grid: "National Grid",
   eversource_south_shore: "Eversource South Shore",
   eversource_greater_boston: "Eversource Greater Boston"
+};
+const SHORT_UTILITY = {
+  national_grid: "National Grid",
+  eversource_south_shore: "Eversource",
+  eversource_greater_boston: "Eversource"
 };
 const TOWN_UTILITY = {
   brockton: "national_grid",
@@ -477,7 +486,7 @@ function paintSlider(input) {
 function renderTownMenu() {
   const current = state.data ? state.data.id : null;
   $("town-menu").innerHTML = state.towns.map(t =>
-    `<li><button role="option" data-town="${esc(t.id)}" aria-selected="${t.id === current}">${esc(t.name)}<span class="tag">${esc(UTILITY_NAMES[TOWN_UTILITY[t.id]] || "")}</span></button></li>`
+    `<li><button role="option" data-town="${esc(t.id)}" aria-selected="${t.id === current}">${esc(t.name)}<span class="tag">${esc(SHORT_UTILITY[TOWN_UTILITY[t.id]] || "")}</span></button></li>`
   ).join("");
 }
 
@@ -501,7 +510,7 @@ function rescore() {
   const changed = FACTORS.some(([k]) => Math.abs(state.weights[k] - state.defaults[k]) > 1e-9);
   $("weight-note").textContent = changed
     ? "Custom."
-    : "Default.";
+    : "";
 
   const sites = state.data.sites;
   sites.forEach(s => {
@@ -532,7 +541,7 @@ function markerStyle(s) {
   const on = inFocus(s) && (!state.selected || selected);
   return {
     color: selected ? css("--text-primary") : css("--ring"),
-    weight: selected ? 3 : on ? 2 : 1,
+    weight: selected ? 3 : on ? 1.5 : 1,
     fillColor: on ? css(`--bin-${s.bin + 1}`) : css("--dim"),
     fillOpacity: on ? 1 : state.selected ? 0.35 : 0.6,
     opacity: on || selected ? 1 : 0.4
@@ -613,7 +622,6 @@ function renderCard(s) {
 
 function renderLookalikes(s) {
   const list = state.data.lookalikes[s.id] || [];
-  $("look-for").textContent = `like ${s.name}`;
   if (!list.length) {
     $("lookalikes").innerHTML = `<p class="empty">No similar businesses saved for this site.</p>`;
     return;
@@ -634,7 +642,6 @@ function clearSelection() {
   state.selected = null;
   restyle();
   $("card").hidden = true;
-  $("look-for").textContent = "";
   $("lookalikes").innerHTML = `<p class="empty">Pick a site to see 5 like it.</p>`;
   document.querySelectorAll("#rows tr.selected").forEach(tr => tr.classList.remove("selected"));
 }
@@ -891,6 +898,14 @@ async function init() {
   $("focus").addEventListener("click", e => {
     const go = e.target.closest("#focus-go");
     if (go) loadTown(go.dataset.town);
+  });
+  $("ask").addEventListener("submit", e => {
+    e.preventDefault();
+    const text = $("ask-input").value.trim();
+    if (!text) return;
+    if (state.question) showAnswer(state.question);
+    $("answer").innerHTML = `<div class="chat"><span class="me">${esc(text)}</span><span class="bot">Haha, got it! Under construction for "${esc(text)}".</span></div>`;
+    $("ask-input").value = "";
   });
   $("focus-clear").addEventListener("click", () => {
     if (state.question) showAnswer(state.question);
