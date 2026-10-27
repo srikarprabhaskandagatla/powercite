@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>PowerCite Site Ranker</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='3' y='8' width='23' height='16' rx='3' fill='%2317804a'/%3E%3Crect x='26' y='13' width='3' height='6' rx='1' fill='%2317804a'/%3E%3Cpath d='M16 10l-5 8h4l-1 6 5-8h-4z' fill='%23ffffff'/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='3' y='8' width='23' height='16' rx='3' fill='%23ea580c'/%3E%3Crect x='26' y='13' width='3' height='6' rx='1' fill='%23ea580c'/%3E%3Cpath d='M16 10l-5 8h4l-1 6 5-8h-4z' fill='%23ffffff'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,24 +17,24 @@
   --surface-2: #efeee9;
   --border: #dddcd6;
   --text-primary: #0b0b0b;
-  --text-secondary: #52514e;
-  --text-muted: #7a7974;
-  --accent: #17804a;
+  --text-secondary: #4a4946;
+  --text-muted: #6b6a65;
+  --accent: #c2410c;
   --ring: #fcfcfb;
   --boundary: #52514e;
   --substation: #52514e;
-  --bar: #17804a;
+  --bar: #ea580c;
   --dim: #c9c8c2;
   --glass: rgba(252, 252, 251, 0.72);
-  --good: #17804a;
-  --good-bg: #e2f3e9;
+  --good: #c2410c;
+  --good-bg: #fff1e6;
   --ink: #141414;
   --ink-text: #fcfcfb;
-  --bin-1: #9fd8b3;
-  --bin-2: #5fbf87;
-  --bin-3: #2b9d5f;
-  --bin-4: #17804a;
-  --bin-5: #0c5a33;
+  --bin-1: #fed7aa;
+  --bin-2: #fdba74;
+  --bin-3: #fb923c;
+  --bin-4: #ea580c;
+  --bin-5: #9a3412;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
@@ -43,25 +43,25 @@
     --surface-1: #1a1a19;
     --surface-2: #242422;
     --border: #383835;
-    --text-primary: #f0efec;
-    --text-secondary: #c3c2b7;
-    --text-muted: #8f8e86;
-    --accent: #5cc98d;
+    --text-primary: #ffffff;
+    --text-secondary: #ecebe6;
+    --text-muted: #c9c8c0;
+    --accent: #fb923c;
     --ring: #1a1a19;
-    --boundary: #c3c2b7;
-    --substation: #c3c2b7;
-    --bar: #2f9e62;
+    --boundary: #ecebe6;
+    --substation: #ecebe6;
+    --bar: #f97316;
     --dim: #3a3a37;
     --glass: rgba(26, 26, 25, 0.72);
-    --good: #5cc98d;
-    --good-bg: rgba(92, 201, 141, 0.14);
-    --ink: #f0efec;
+    --good: #fdba74;
+    --good-bg: rgba(251, 146, 60, 0.16);
+    --ink: #ffffff;
     --ink-text: #121211;
-    --bin-1: #145c36;
-    --bin-2: #1f7d4a;
-    --bin-3: #2f9e62;
-    --bin-4: #5cc98d;
-    --bin-5: #a9e6c3;
+    --bin-1: #7c2d12;
+    --bin-2: #c2410c;
+    --bin-3: #f97316;
+    --bin-4: #fdba74;
+    --bin-5: #ffedd5;
   }
   :root:not([data-theme="light"]) .base-tiles { filter: invert(1) hue-rotate(180deg) brightness(0.9) contrast(0.85); }
 }
@@ -71,33 +71,36 @@
   --surface-1: #1a1a19;
   --surface-2: #242422;
   --border: #383835;
-  --text-primary: #f0efec;
-  --text-secondary: #c3c2b7;
-  --text-muted: #8f8e86;
-  --accent: #5cc98d;
+  --text-primary: #ffffff;
+  --text-secondary: #ecebe6;
+  --text-muted: #c9c8c0;
+  --accent: #fb923c;
   --ring: #1a1a19;
-  --boundary: #c3c2b7;
-  --substation: #c3c2b7;
-  --bar: #2f9e62;
+  --boundary: #ecebe6;
+  --substation: #ecebe6;
+  --bar: #f97316;
   --dim: #3a3a37;
   --glass: rgba(26, 26, 25, 0.72);
-  --good: #5cc98d;
-  --good-bg: rgba(92, 201, 141, 0.14);
-  --ink: #f0efec;
+  --good: #fdba74;
+  --good-bg: rgba(251, 146, 60, 0.16);
+  --ink: #ffffff;
   --ink-text: #121211;
-  --bin-1: #145c36;
-  --bin-2: #1f7d4a;
-  --bin-3: #2f9e62;
-  --bin-4: #5cc98d;
-  --bin-5: #a9e6c3;
+  --bin-1: #7c2d12;
+  --bin-2: #c2410c;
+  --bin-3: #f97316;
+  --bin-4: #fdba74;
+  --bin-5: #ffedd5;
 }
 :root[data-theme="dark"] .base-tiles { filter: invert(1) hue-rotate(180deg) brightness(0.9) contrast(0.85); }
 * { box-sizing: border-box; }
-* { scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--text-muted) 45%, transparent) transparent; }
-::-webkit-scrollbar { width: 8px; height: 8px; background: transparent; }
-::-webkit-scrollbar-track, ::-webkit-scrollbar-corner { background: transparent; }
+@supports not selector(::-webkit-scrollbar) {
+  * { scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--accent) 60%, transparent) transparent; }
+}
+::-webkit-scrollbar { width: 10px; height: 10px; background: transparent; }
 ::-webkit-scrollbar-button { display: none; width: 0; height: 0; }
-::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--text-muted) 45%, transparent); border-radius: 999px; border: 2px solid transparent; background-clip: padding-box; }
+::-webkit-scrollbar-corner { background: transparent; }
+::-webkit-scrollbar-track { background: color-mix(in srgb, var(--border) 45%, transparent); border-radius: 999px; margin: 6px; }
+::-webkit-scrollbar-thumb { background-color: color-mix(in srgb, var(--accent) 55%, transparent); border-radius: 999px; border: 2px solid transparent; background-clip: padding-box; }
 ::-webkit-scrollbar-thumb:hover { background-color: var(--accent); }
 html, body { height: 100%; }
 body {
@@ -168,9 +171,18 @@ tbody tr.faded { opacity: 0.45; }
   background: var(--glass);
   -webkit-backdrop-filter: blur(14px) saturate(1.4);
   backdrop-filter: blur(14px) saturate(1.4);
-  border: 1px solid var(--border); border-radius: 10px;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.14);
+  border: 1.5px solid color-mix(in srgb, var(--accent) 80%, transparent); border-radius: 10px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
 }
+.map-wrap .leaflet-bar { border: 1.5px solid color-mix(in srgb, var(--accent) 80%, transparent); border-radius: 10px; overflow: hidden; box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18); }
+.map-wrap .leaflet-bar a {
+  background: var(--glass); color: var(--text-primary); border-bottom-color: var(--border);
+  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+}
+.map-wrap .leaflet-bar a:hover { background: var(--surface-2); color: var(--accent); }
+.map-wrap .leaflet-control-attribution { background: var(--glass); color: var(--text-secondary); }
+.icon-btn { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 34px; padding: 0; border-radius: 8px; }
+.icon-btn svg { width: 18px; height: 18px; }
 .overlay { position: absolute; z-index: 600; }
 .legend { left: 10px; bottom: 22px; padding: 8px 10px; font-size: 12px; color: var(--text-secondary); max-width: 230px; }
 .legend h3 { font-size: 12px; margin: 0 0 4px; color: var(--text-primary); }
@@ -232,7 +244,7 @@ tbody tr.faded { opacity: 0.45; }
 .slider input::-moz-range-track { background: transparent; }
 .slider input:active::-webkit-slider-thumb { transform: scale(1.1); }
 .weights p { margin: 4px 0 0; font-size: 12px; color: var(--text-muted); }
-.focus { top: 10px; left: 50%; transform: translateX(-50%); padding: 6px 8px 6px 12px; display: flex; gap: 10px; align-items: center; font-size: 13px; max-width: calc(100% - 140px); }
+.focus { top: 10px; left: calc(50% + 20px); transform: translateX(-50%); padding: 6px 8px 6px 12px; display: flex; gap: 10px; align-items: center; font-size: 13px; max-width: calc(100% - 140px); }
 .bottom { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 12px; min-height: 0; }
 .box { display: flex; flex-direction: column; min-height: 0; padding: 10px 12px; }
 .box-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin: 0 0 8px; }
@@ -287,7 +299,7 @@ a { color: var(--accent); }
 <div class="app">
   <header>
     <div class="brand">
-      <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="8" width="23" height="16" rx="3" fill="#17804a"/><rect x="26" y="13" width="3" height="6" rx="1" fill="#17804a"/><path d="M16 10l-5 8h4l-1 6 5-8h-4z" fill="#ffffff"/></svg>
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="8" width="23" height="16" rx="3" fill="#ea580c"/><rect x="26" y="13" width="3" height="6" rx="1" fill="#ea580c"/><path d="M16 10l-5 8h4l-1 6 5-8h-4z" fill="#ffffff"/></svg>
       <h1>PowerCite</h1>
     </div>
     <p class="town-title" id="town-title" aria-live="polite"></p>
@@ -299,6 +311,7 @@ a { color: var(--accent); }
         </button>
         <ul class="menu glass" id="town-menu" role="listbox" aria-label="Choose a town" hidden></ul>
       </div>
+      <button class="tbtn icon-btn" id="theme-toggle" aria-label="Theme" title="Theme"></button>
       <div class="pop">
         <button class="tbtn" id="weights-toggle" aria-expanded="false" aria-controls="weights">Priorities
           <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -315,8 +328,8 @@ a { color: var(--accent); }
   <main>
     <aside class="panel list" aria-label="Ranked sites">
       <div class="list-head">
-        <h2>Best sites for a battery</h2>
-        <p><b>Fit</b> is a mark from 0 to 100. Higher means a better place for a battery. <b>Money</b> is a guess of what a battery could bring each month, before its cost.</p>
+        <h2>Rankings</h2>
+        <p><b>Fit</b> is 0 to 100, higher is better. <b>$/mo</b> is a guess before battery cost.</p>
       </div>
       <div class="list-scroll" id="list-scroll">
         <table>
@@ -341,23 +354,23 @@ a { color: var(--accent); }
         <section class="overlay glass card" id="card" aria-live="polite" hidden></section>
         <div class="overlay glass focus" id="focus" hidden>
           <span id="focus-text"></span>
-          <button class="close" id="focus-clear" aria-label="Show all sites">Show all</button>
+          <button class="close" id="focus-clear" aria-label="Clear">Clear</button>
         </div>
       </div>
 
       <div class="bottom">
         <section class="panel box" aria-label="Lookalike sites">
           <div class="box-head">
-            <h2>Similar businesses</h2>
+            <h2>Similar</h2>
             <span class="muted" id="look-for"></span>
           </div>
-          <div class="box-scroll" id="lookalikes"><p class="empty">Click a dot or a row. You will see the 5 most similar businesses in all five towns.</p></div>
+          <div class="box-scroll" id="lookalikes"><p class="empty">Pick a site to see 5 like it.</p></div>
         </section>
 
         <section class="panel box" aria-label="Questions about rates">
           <div class="box-head">
-            <h2>Questions about electric rates</h2>
-            <span class="muted">Answers come from the utility's own pages</span>
+            <h2>Rates</h2>
+            <span class="muted">From utility pages</span>
           </div>
           <div class="ask" hidden>
             <input type="text" placeholder="Ask your own question (coming soon)" disabled aria-label="Ask a question, coming soon">
@@ -365,7 +378,7 @@ a { color: var(--accent); }
           </div>
           <div class="faq">
             <ul class="qlist" id="questions"></ul>
-            <div class="box-scroll" id="answer"><p class="empty">Pick a question. The map will show which sites it is about.</p></div>
+            <div class="box-scroll" id="answer"><p class="empty">Pick one to see it on the map.</p></div>
           </div>
         </section>
       </div>
@@ -376,11 +389,11 @@ a { color: var(--accent); }
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 const FACTORS = [
-  ["savings", "Bill savings", "How much the battery can cut the bill, compared with other sites"],
-  ["spikiness", "Spiky power use", "Businesses with short, sharp peaks gain more"],
-  ["space", "Room on the lot", "Open land to place a battery"],
-  ["grid", "Close to the grid", "Distance to the nearest substation"],
-  ["confidence", "Data quality", "How much we trust the numbers for this site"]
+  ["savings", "Savings", "How much the battery can cut the bill, compared with other sites"],
+  ["spikiness", "Spikes", "Businesses with short, sharp peaks gain more"],
+  ["space", "Space", "Open land to place a battery"],
+  ["grid", "Grid", "Distance to the nearest substation"],
+  ["confidence", "Data", "How much we trust the numbers for this site"]
 ];
 const UTILITY_NAMES = {
   national_grid: "National Grid",
@@ -396,23 +409,23 @@ const TOWN_UTILITY = {
 };
 const DEMO_QUESTIONS = {
   q02: {
-    label: "National Grid G-3 rate",
+    label: "National Grid",
     short: "Large National Grid customers pay <b>$10.48 per kW</b> of their monthly peak.",
     keys: ["Demand $10.48 per kW"]
   },
   q05: {
-    label: "Eversource G-2 rate",
+    label: "Eversource",
     short: "Eversource South Shore G-2 pays <b>$3.72 + $13.74 per kVA</b>, which is $17.46 in all.",
     keys: ["Distribution Demand Charge (per kVA): $3.72", "Transmission Demand Charge (per kVA): $13.74"]
   },
   q10: {
-    label: "Battery program pay",
+    label: "Program",
     short: "ConnectedSolutions Daily Dispatch pays a business battery <b>$200 per kW</b> each summer.",
     keys: ["$200/kW"]
   }
 };
 const BINS = 5;
-const BIN_WORDS = ["Low", "Below average", "Average", "Good", "Best"];
+const BIN_WORDS = ["Low", "Weak", "Fair", "Good", "Best"];
 
 const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 const money = v => "$" + Math.round(v).toLocaleString("en-US");
@@ -423,7 +436,7 @@ const $ = id => document.getElementById(id);
 const state = { towns: [], data: null, weights: {}, defaults: {}, selected: null, markers: new Map(), rag: [], question: null, focus: null };
 
 const map = L.map("map", { preferCanvas: true, zoomControl: false });
-L.control.zoom({ position: "bottomright" }).addTo(map);
+L.control.zoom({ position: "topleft" }).addTo(map);
 L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
   maxZoom: 19,
   className: "base-tiles",
@@ -441,7 +454,7 @@ function binOf(score, edges) {
 }
 
 function buildSliders() {
-  $("sliders").innerHTML = `<p style="margin:0 0 8px;color:var(--text-secondary)">Move a slider to make that part count more. The list and the map update right away.</p>` +
+  $("sliders").innerHTML = `<p style="margin:0 0 8px;color:var(--text-secondary)">Slide to change what counts most.</p>` +
     FACTORS.map(([key, label, help]) => `
     <div class="slider">
       <label for="w-${key}" title="${esc(help)}">${label}<b id="wv-${key}"></b></label>
@@ -487,8 +500,8 @@ function rescore() {
   FACTORS.forEach(([k]) => { $(`wv-${k}`).textContent = `${Math.round(shares[k] * 100)}%`; });
   const changed = FACTORS.some(([k]) => Math.abs(state.weights[k] - state.defaults[k]) > 1e-9);
   $("weight-note").textContent = changed
-    ? "Your own weights. The list shows how far each site moved."
-    : "Default weights. Bill savings counts the most.";
+    ? "Custom."
+    : "Default.";
 
   const sites = state.data.sites;
   sites.forEach(s => {
@@ -529,11 +542,11 @@ function markerStyle(s) {
 function drawLegend(edges, scores) {
   const bounds = [Math.min(...scores), ...edges, Math.max(...scores)];
   const rows = Array.from({ length: BINS }, (_, i) => BINS - 1 - i).map(i =>
-    `<div class="legend-row"><span class="swatch" style="background:var(--bin-${i + 1})"></span>${BIN_WORDS[i]} fit, ${Math.round(bounds[i])} to ${Math.round(bounds[i + 1])}</div>`
+    `<div class="legend-row"><span class="swatch" style="background:var(--bin-${i + 1})"></span>${BIN_WORDS[i]}, ${Math.round(bounds[i])} to ${Math.round(bounds[i + 1])}</div>`
   ).join("");
-  $("legend").innerHTML = `<h3>Battery fit, 0 to 100</h3>${rows}
-    <div class="legend-row"><span class="sq"></span>Power substation</div>
-    <div class="note">Stronger color means a better fit. Bigger dot means more money a month.</div>`;
+  $("legend").innerHTML = `<h3>Fit</h3>${rows}
+    <div class="legend-row"><span class="sq"></span>Substation</div>
+    <div class="note">Color is fit. Size is money.</div>`;
 }
 
 function renderTable() {
@@ -560,7 +573,7 @@ function renderCard(s) {
   }).join("");
   const info = (state.data.tariff.classes || {})[s.rate_class];
   const source = info ? ` <a href="${esc(info.url)}" target="_blank" rel="noopener">source</a>` : "";
-  const weak = s.weak && s.weak !== "No clear weak point" ? `<p><b>Weak point.</b> ${esc(s.weak)}</p>` : "";
+  const weak = s.weak && s.weak !== "No clear weak point" ? `<p><b>Weak.</b> ${esc(s.weak)}</p>` : "";
   const card = $("card");
   card.hidden = false;
   card.innerHTML = `
@@ -570,30 +583,30 @@ function renderCard(s) {
     </div>
     <p class="addr">${esc(s.addr)}, ${esc(state.data.name)}</p>
     <div class="big">
-      <div class="fit"><b>${Math.round(s.live)}<small> / 100</small></b><span>Battery fit. Rank ${s.liveRank} of ${total}.</span></div>
-      <div class="cash"><b>${money(s.value)}</b><span>Money a month, a guess, before battery cost</span></div>
+      <div class="fit"><b>${Math.round(s.live)}<small> / 100</small></b><span>Fit, rank ${s.liveRank} of ${total}</span></div>
+      <div class="cash"><b>${money(s.value)}</b><span>Per month, before battery cost</span></div>
     </div>
     <dl class="kv">
-      <dt>Lower bill</dt><dd>${money(s.bill)} a month</dd>
-      <dt>Program pay</dt><dd>${money(s.incentive)} a month, from ConnectedSolutions</dd>
+      <dt>Savings</dt><dd>${money(s.bill)} a month</dd>
+      <dt>Program</dt><dd>${money(s.incentive)} a month</dd>
     </dl>
     <div class="why">
-      <p><b>Why it ranks here.</b> ${esc(s.reason)}.</p>
+      <p><b>Why.</b> ${esc(s.reason)}.</p>
       ${weak}
     </div>
-    <p class="small-head">What makes up the fit</p>
+    <p class="small-head">Breakdown</p>
     ${factors}
     <p class="small-head">Details</p>
     <dl class="kv">
-      <dt>Business type</dt><dd>${esc(s.use)}</dd>
-      <dt>Peak use, guess</dt><dd>${num(s.peak_kw)} kW</dd>
-      <dt>Battery size</dt><dd>${s.battery_kw} kW</dd>
+      <dt>Type</dt><dd>${esc(s.use)}</dd>
+      <dt>Peak</dt><dd>${num(s.peak_kw)} kW</dd>
+      <dt>Battery</dt><dd>${s.battery_kw} kW</dd>
       <dt>Rate</dt><dd>${esc(s.rate_class)} at $${s.rate.toFixed(2)} per kW${source}</dd>
-      <dt>Floor area</dt><dd>${num(s.floor_area)} m2</dd>
-      <dt>Open lot</dt><dd>${num(s.open_lot)} m2</dd>
+      <dt>Floor</dt><dd>${num(s.floor_area)} m2</dd>
+      <dt>Lot</dt><dd>${num(s.open_lot)} m2</dd>
       <dt>Substation</dt><dd>${num(s.dist_sub)} m, ${esc(s.substation || "unnamed")}</dd>
-      <dt>Land owner</dt><dd>${esc(s.owner)}</dd>
-      <dt>Data quality</dt><dd>${esc(s.confidence)}</dd>
+      <dt>Owner</dt><dd>${esc(s.owner)}</dd>
+      <dt>Data</dt><dd>${esc(s.confidence)}</dd>
     </dl>`;
   $("card-close").addEventListener("click", clearSelection);
 }
@@ -622,7 +635,7 @@ function clearSelection() {
   restyle();
   $("card").hidden = true;
   $("look-for").textContent = "";
-  $("lookalikes").innerHTML = `<p class="empty">Click a dot or a row. You will see the 5 most similar businesses in all five towns.</p>`;
+  $("lookalikes").innerHTML = `<p class="empty">Pick a site to see 5 like it.</p>`;
   document.querySelectorAll("#rows tr.selected").forEach(tr => tr.classList.remove("selected"));
 }
 
@@ -721,7 +734,7 @@ function showAnswer(id) {
   applyFocus();
   const q = state.rag.find(x => x.id === state.question);
   if (!q) {
-    $("answer").innerHTML = `<p class="empty">Pick a question. The map will show which sites it is about.</p>`;
+    $("answer").innerHTML = `<p class="empty">Pick one to see it on the map.</p>`;
     return;
   }
   const demo = DEMO_QUESTIONS[q.id];
@@ -744,7 +757,7 @@ async function loadTown(id, selectId) {
   document.title = `${data.name}, PowerCite`;
   renderTownMenu();
 
-  const border = L.geoJSON(data.boundary, { style: { color: css("--boundary"), weight: 2, fill: false, dashArray: "4 4" }, interactive: false });
+  const border = state.border = L.geoJSON(data.boundary, { style: { color: css("--boundary"), weight: 2, fill: false, dashArray: "4 4" }, interactive: false });
   map.invalidateSize();
   map.fitBounds(border.getBounds(), { padding: [12, 12] });
   townLayer.addTo(map);
@@ -780,7 +793,33 @@ async function loadTown(id, selectId) {
   }
 }
 
+const SUN = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+const MOON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>';
+
+function currentTheme() {
+  const set = document.documentElement.dataset.theme;
+  if (set) return set;
+  return matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+}
+
+function applyTheme(theme) {
+  document.documentElement.dataset.theme = theme;
+  try { localStorage.setItem("powercite-theme", theme); } catch (e) {}
+  const btn = $("theme-toggle");
+  btn.innerHTML = theme === "dark" ? SUN : MOON;
+  btn.setAttribute("aria-label", theme === "dark" ? "Light theme" : "Dark theme");
+  btn.title = theme === "dark" ? "Light" : "Dark";
+  if (state.data) {
+    if (state.border) state.border.setStyle({ color: css("--boundary") });
+    rescore();
+  }
+}
+
 async function init() {
+  let saved = null;
+  try { saved = localStorage.getItem("powercite-theme"); } catch (e) {}
+  applyTheme(saved === "light" || saved === "dark" ? saved : currentTheme());
+  $("theme-toggle").addEventListener("click", () => applyTheme(currentTheme() === "dark" ? "light" : "dark"));
   const [towns, rag] = await Promise.all([
     fetch("data/towns.json").then(r => r.json()),
     fetch("data/rag.json").then(r => r.json())
